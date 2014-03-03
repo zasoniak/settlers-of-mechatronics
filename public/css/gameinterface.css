@@ -1,0 +1,57 @@
+/* 
+    Created on : 2014-03-03, 14:59:23
+    Author     : KOnrad KOwalewski
+*/
+
+html {
+  background-color: #eeeeee;
+  font-family: 'arial';
+  font-size: 16px;
+}
+
+div#board {
+  outline: 2px dashed green;
+  float: left;
+  display: block;
+  width: 800px;
+  height: 700px;
+}
+
+aside {
+  display: block;
+  width: 500px;
+  float: right;
+}
+
+div.user_card {
+  outline: 2px dashed red;
+  float: left;
+  width: 33%;
+}
+
+div.user_card figure img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+div.user_card figure ul {
+  
+}
+
+nav a {
+  display: block;
+  float: left;
+  background-color: #dddddd;
+  border-radius: 50px;
+}
+
+nav a:hover {
+  background-color: steelblue;
+}
+
+nav a img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}

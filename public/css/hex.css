@@ -1,0 +1,62 @@
+.container {
+  width: 800px; 
+  line-height: 1.3;
+}
+ol.even {
+  position: relative;
+  left: 73px;
+}
+ol.odd {
+  position: relative;
+  margin-top: -6.5%;
+  margin-bottom: -6.5%;
+}
+.hex {
+  position: relative;
+  margin: 1em auto;
+  width: 80px; height: 136px;
+  border-radius: 10px;
+  background: #ccc;
+  -webkit-transform: rotate(-90deg);
+  display: inline-block;
+  margin-right: 61.5px;
+  transition: all 150ms ease-in-out;
+}
+.hex:before, .hex:after {
+  position: absolute;
+  width: inherit; height: inherit;
+  border-radius: inherit;
+  background: inherit;
+  content: '';
+}
+.hex:before {
+  -webkit-transform: rotate(60deg);
+}
+.hex:after {
+  -webkit-transform: rotate(120deg);
+}
+.hex:hover {
+  background: #F58787;
+  cursor: pointer;
+}
+.forest {
+  background-color: forestgreen;
+}
+.desert {
+  background-color: khaki;
+}
+.plain {
+  background-color: greenyellow;
+}
+.mountain {
+  background-color: grey;
+}
+.clay {
+  background-color: coral;
+}
+.wheat {
+  background-color: gold;
+}
+.hidden {
+  visibility: hidden;
+}
