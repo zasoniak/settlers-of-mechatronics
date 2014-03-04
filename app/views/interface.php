@@ -74,6 +74,7 @@
         <a href="#" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
         <a href="#" class="main"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
         <a href="#" class="main"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
+        <a href="#" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>        
       </nav>
     </aside>
   </body>
