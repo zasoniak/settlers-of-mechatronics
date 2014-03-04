@@ -47,24 +47,26 @@ div.user_card figure ul {
 
 nav div {
   display: block;
-  width: 25%;
+  width: 110px;
   height: 110px;
   float: left;
-  outline: 1px dotted black;
 }
 
 nav div a {
   display: block;
+  position: relative;
+  top: 20px;
+  left: 20px;
   background-color: #dddddd;
   border-radius: 50px;
-  margin: auto;
   width: 70%;
 }
 
 nav div a:hover {
+  top: 10px;
+  left: 10px;
   background-color: silver;
-  border-radius: 60px;
-  margin: 5px auto;
+  border-radius: 40px;
   padding: 10px;
   -webkit-transition: 0.2s;
 }
