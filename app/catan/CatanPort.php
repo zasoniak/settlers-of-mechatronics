@@ -12,5 +12,11 @@
  * @author Sony
  */
 class CatanPort {
+    
+    public $port;
+    
+    public function __construct($portType) {
+        ;
+    }
     //put your code here
 }

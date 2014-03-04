@@ -13,10 +13,13 @@
  */
 class CatanField {
     
-    
+    /**
+     *
+     * @var Field field's model for database 
+     */
     public $field;
     
-    public function __construct() {
+    public function __construct($board_id, $fieldType) {
         $this->field = Field::create();
     }
 }

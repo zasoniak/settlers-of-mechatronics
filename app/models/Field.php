@@ -1,5 +1,9 @@
 <?php
 
-class Field extends Eloquent {}
+class Field extends Eloquent {
 
+    public function board(){
+        return $this->belongsTo('Board');
+    }
+}
 ?>
