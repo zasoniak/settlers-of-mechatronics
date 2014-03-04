@@ -11,22 +11,22 @@ html {
 
 div#board {
   outline: 2px dashed green;
-  float: left;
   display: block;
-  width: 65%;
   height: 700px;
 }
 
 aside {
   display: block;
-  width: 35%;
+  width: 450px;
+  height: 700px;
   float: right;
+  outline: solid red;
 }
 
 div.user_card {
   outline: 2px dashed red;
   float: left;
-  width: 33%;
+  width: 150px;
   padding: 5px 0;
 }
 
@@ -45,24 +45,31 @@ div.user_card figure ul {
   
 }
 
-nav a {
+nav div {
   display: block;
+  width: 25%;
+  height: 110px;
   float: left;
-  background-color: #dddddd;
-  border-radius: 50px;
-  margin: 20px;
+  outline: 1px dotted black;
 }
 
-nav a:hover {
+nav div a {
+  display: block;
+  background-color: #dddddd;
+  border-radius: 50px;
+  margin: auto;
+  width: 70%;
+}
+
+nav div a:hover {
   background-color: silver;
   border-radius: 60px;
-  margin: 10px;
+  margin: 5px auto;
   padding: 10px;
-  //box-shadow: 0 0 30px blue;
   -webkit-transition: 0.2s;
 }
 
-nav a img {
+nav div a img {
   width: 70px;
   height: 70px;
   border-radius: 35px;
