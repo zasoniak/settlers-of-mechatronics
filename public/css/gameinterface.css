@@ -7,12 +7,15 @@ html {
   background-color: #eeeeee;
   font-family: 'arial';
   font-size: 16px;
+  padding-right: 450px;
 }
 
 div#board {
   outline: 2px dashed green;
   display: block;
   height: 700px;
+  margin: 0 auto;
+  padding: 30px 0;
 }
 
 aside {
@@ -21,6 +24,7 @@ aside {
   height: 700px;
   float: right;
   outline: solid red;
+  margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
 }
 
 div.user_card {
@@ -59,16 +63,17 @@ nav div a {
   left: 20px;
   background-color: #dddddd;
   border-radius: 50px;
-  width: 70%;
+  width: 70px;
 }
 
 nav div a:hover {
   top: 10px;
   left: 10px;
   background-color: silver;
-  border-radius: 40px;
+  border-radius: 60px;
   padding: 10px;
-  -webkit-transition: 0.2s;
+  -webkit-transition: 1s;
+  -webkit-transform: rotate(360deg);
 }
 
 nav div a img {
