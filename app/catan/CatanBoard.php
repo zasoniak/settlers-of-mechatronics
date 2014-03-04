@@ -17,4 +17,8 @@ class Board
   private $roadList = array();
   private $settelmentList = array();
   private $activeThief;
+  
+  public function __construct() {
+      //dodaje nowy board do bazy
+  }
 }

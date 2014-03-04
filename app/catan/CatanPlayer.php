@@ -5,16 +5,16 @@
  *
  * @author Konrad Kowalewski
  */
-class Player
+class CatanPlayer
 {
   /**
    *
    * @var User user's model
    */
-  public $user;
+  public $player;
   
   public function __construct($id)
   {
-    $this->user = User::find($id);
+    $this->player = Player::find($id);
   }
 }
