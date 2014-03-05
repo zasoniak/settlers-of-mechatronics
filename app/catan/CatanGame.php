@@ -23,6 +23,15 @@ class CatanGame
 
   public function __construct($user_id) {
       $this->game = Game::create(); // new game instance
-      $board = new CatanBoard();
+      
+      $this->board = new CatanBoard();
+      $this->playerList =  CatanPlayer::add($user_id);
+      $this->cardList = $this->generateCardList();
+  }
+  
+  private function generateCardList()
+  {
+      $CardList = array('knight', 'yearOfPleanty', 'roadBuilding', 'monopoly', 'victoryPoint');
+      array_push($this->cardList, new CatanCard(array_rand($CardList)));
   }
 }

@@ -16,7 +16,7 @@ Route::get('/', function()
     return View::make('hello');
 });
 
-Route::get('/', function()
+Route::get('interface', function()
 {
     return View::make('interface');
 });
