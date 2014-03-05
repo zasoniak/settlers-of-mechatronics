@@ -15,8 +15,7 @@ ol.odd {
   margin: 1em auto;
   width: 80px; height: 136px;
   border-radius: 6px;
-  outline: 1px dashed;
-  background: #ccc;
+  background-position: -40px 0;
   -webkit-transform: rotate(-90deg);
   display: inline-block;
   margin-right: 61px;
@@ -24,7 +23,6 @@ ol.odd {
 }
 .hex:before, .hex:after {
   position: absolute;
-  outline: 1px dashed;
   width: inherit;
   height: inherit;
   border-radius: inherit;
@@ -32,12 +30,10 @@ ol.odd {
   content: '';
 }
 .hex:before { 
-  z-index: -1;
   -webkit-transform: rotate(60deg);
 }
 .hex:after {
   -webkit-transform: rotate(-60deg);
-  z-index: -1;
 }
 .hex:after content{
   position: absolute;
@@ -46,8 +42,8 @@ ol.odd {
 }
 .hex:hover {
   cursor: pointer;
-/*  -webkit-transition: 0.4s;
-  -webkit-transform: rotate(-30deg);*/
+  -webkit-transition: 0.4s;
+  -webkit-transform: rotate(-30deg);
 }
 
 .hex p{
@@ -60,24 +56,30 @@ ol.odd {
   border-radius: 20px;
   background: #999999;
   -webkit-transform: rotate(90deg);
+  -webkit-transition: 0.2s;
 }
-.forest:after {
-  content: url('../img/tile_forest.jpg');
+.hex:hover p {
+  cursor: pointer;
+  -webkit-transition: 0.4s;
+  -webkit-transform: rotate(30deg);
+}
+.forest {
+  background-image: url('../img/tile_forest.jpg');
 }
 .desert {
-  background-color: khaki;
+  background-image: url('../img/tile_desert.jpg');
 }
 .plain {
-  background-color: greenyellow;
+  background-image: url('../img/tile_field.jpg');
 }
 .mountain {
-  background-color: grey;
+  background-image: url('../img/tile_mountain.jpg');
 }
 .clay {
-  background-color: coral;
+  background-image: url('../img/tile_clay.jpg');
 }
 .wheat {
-  background-color: gold;
+  background-image: url('../img/tile_wheat.jpg');
 }
 .hidden {
   visibility: hidden;
