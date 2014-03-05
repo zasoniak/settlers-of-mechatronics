@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.6
+-- version 4.0.6deb1
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: 04 Mar 2014, 12:13
--- Server version: 5.6.16
--- PHP Version: 5.5.9
+-- Host: localhost
+-- Generation Time: Mar 05, 2014 at 09:13 PM
+-- Server version: 5.5.35-0ubuntu0.13.10.2
+-- PHP Version: 5.5.3-1ubuntu2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,18 +19,16 @@ SET time_zone = "+00:00";
 --
 -- Database: `catan`
 --
-CREATE DATABASE IF NOT EXISTS `catan` DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-USE `catan`;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `boards`
+-- Table structure for table `boards`
 --
 
 CREATE TABLE IF NOT EXISTS `boards` (
   `id` int(11) NOT NULL,
-  `thief` int(11) NOT NULL,
+  `thief` int(11) NOT NULL DEFAULT '0',
   `finished` tinyint(1) NOT NULL DEFAULT '0',
   `is_changed` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
@@ -39,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `boards` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `cards`
+-- Table structure for table `cards`
 --
 
 CREATE TABLE IF NOT EXISTS `cards` (
@@ -54,24 +52,7 @@ CREATE TABLE IF NOT EXISTS `cards` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `fields`
---
-
-CREATE TABLE IF NOT EXISTS `fields` (
-  `id` int(11) NOT NULL,
-  `type` enum('dessert','stone','wood','clay','sheep','wheat') COLLATE utf8_bin NOT NULL,
-  `x` int(11) NOT NULL,
-  `y` int(11) NOT NULL,
-  `z` int(11) NOT NULL,
-  `probability` int(11) NOT NULL,
-  `board_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `players`
+-- Table structure for table `players`
 --
 
 CREATE TABLE IF NOT EXISTS `players` (
@@ -89,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `players` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `ports`
+-- Table structure for table `ports`
 --
 
 CREATE TABLE IF NOT EXISTS `ports` (
@@ -103,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `ports` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `roads`
+-- Table structure for table `roads`
 --
 
 CREATE TABLE IF NOT EXISTS `roads` (
@@ -117,23 +98,40 @@ CREATE TABLE IF NOT EXISTS `roads` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `settlements`
+-- Table structure for table `settlements`
 --
 
 CREATE TABLE IF NOT EXISTS `settlements` (
   `id` int(11) NOT NULL,
   `is_town` tinyint(1) NOT NULL DEFAULT '0',
   `player_id` int(11) NOT NULL,
-  `field1_id` int(11) NOT NULL,
-  `field2_id` int(11) NOT NULL,
-  `field3_id` int(11) NOT NULL,
+  `tile1_id` int(11) NOT NULL,
+  `tile2_id` int(11) NOT NULL,
+  `tile3_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users`
+-- Table structure for table `tiles`
+--
+
+CREATE TABLE IF NOT EXISTS `tiles` (
+  `id` int(11) NOT NULL,
+  `type` enum('desert','stone','wood','clay','sheep','wheat','sea') COLLATE utf8_bin NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `z` int(11) NOT NULL,
+  `probability` int(11) DEFAULT NULL,
+  `board_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (

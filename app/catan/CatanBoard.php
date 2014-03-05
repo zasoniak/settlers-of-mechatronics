@@ -9,9 +9,9 @@ class CatanBoard
 {
   /**
    * 
-   * @var Board board model
+   * @var Board eloquent model
    */
-    public $board;
+  public $model;
   
   private $fieldList = array();
   private $portList = array();
@@ -20,31 +20,62 @@ class CatanBoard
   private $activeThief;
   
   /**
-   * tutaj będzie bardzo rozbudowany konstruktor 
-   * wywołujący elementy zgodnie z zasadami planszy dla catana
-   * 
-   * trzeba zapewnić logiczną całość i wrzucić wszystko do bazy
+   * tutaj będzie fajny konstruktor wyciągający z bazy danych obiekty należące
    */
   public function __construct() {
       $this->board = Board::create();      //dodaje nowy board do bazy
       
       
-      $this->generateFields(); //create fields
+      $this->generateTiles(); //create fields
       $this->generatePorts(); //create ports
 
   }
   
   /**
-   * creating fields: 4 wood, 3 stone, 3 clay, 4 sheep, 4 wheat and dessert = 19 fields
+   * tworzy nową planszę i dodaje ją do bazy, po czym zwraca obiekt GameBoard
    */
-  private function generateFields()  {
-      $fieldCollection = array('wood','wood','wood','wood','stone','stone','stone','clay','clay','clay','sheep','sheep','sheep','sheep','wheat','wheat','wheat','wheat','dessert');
-      
-      while($fieldCollection!=NULL)
+  public static function generate()
+  {
+    $board = Board::create(); // zapisuje nową instancję boarda do bazy i zwraca
+    $probabilities = array(2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12);
+    $types = array('wood','wood','wood','wood','stone','stone','stone','clay','clay','clay','sheep','sheep','sheep','sheep','wheat','wheat','wheat','wheat','desert');
+    shuffle($probabilities);
+    shuffle($types);
+    for ($x = -3; $x < 4; $x++)
+    {
+      for ($y = -3; $y < 4; $y++)
       {
-           array_push($this->fieldList, new CatanTile(array_rand($fieldCollection))); 
+        for ($z = -3; $z < 4; $z++)
+        {
+          if ($x+$y+z == 0)
+          {
+            $tile = new Tile();
+            $tile->x = $x;
+            $tile->y = $y;
+            $tile->z = $z;
+            if (abs($x) < 3 || abs($y) < 3 || abs($z) < 3)
+            {
+              $tile->type = array_shift($types);
+              if ($tile->type != 'desert')
+              {
+                $tile->probability = array_shift($probabilities);
+              }
+            }
+            else
+            {
+              $tile->type = 'sea';
+            }
+            $tile = $board->tiles()->save($tile);
+            // tu można dodać następującą linijkę
+            // array_push($this->tilesList, new CatanTile($tile));
+            // tylko nie wiem po co, skoro w tym requescie głównie dodajemy do bazy, nie musimy na tym działać
+          }
+        }
       }
-
+    }
+    $instance = new self();
+    $instance->model = $board;
+    return $instance;
   }
   
   /**
