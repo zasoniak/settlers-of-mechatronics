@@ -5,7 +5,7 @@
  *
  * @author konrad
  */
-class Board
+class CatanBoard
 {
   /**
    * 
@@ -16,7 +16,7 @@ class Board
   private $fieldList = array();
   private $portList = array();
   private $roadList = array();
-  private $settelmentList = array();
+  private $settlementList = array();
   private $activeThief;
   
   /**
@@ -25,6 +25,7 @@ class Board
    * 
    * trzeba zapewnić logiczną całość i wrzucić wszystko do bazy
    */
+  
   public function __construct() {
       $this->board = Board::create();      //dodaje nowy board do bazy
       
@@ -34,12 +35,31 @@ class Board
 
   }
   
+  public static function generate(){
+      $board= new CatanBoard();
+      
+      $board->generateFields();
+      $board->generatePorts();
+      
+  }
+  
+  
+  
+  
+  
   /**
    * creating fields: 4 wood, 3 stone, 3 clay, 4 sheep, 4 wheat and dessert = 19 fields
    */
   private function generateFields()  {
       $fieldCollection = array('wood','wood','wood','wood','stone','stone','stone','clay','clay','clay','sheep','sheep','sheep','sheep','wheat','wheat','wheat','wheat','dessert');
       
+      for($x=-3;$x<=3;$x++) {
+          for($y=-3;$y<=3;$y++) {
+              for($z=-3;$z<=3;$z++) {
+                  // tu wkleić kod Konrada co do bazy danych :P
+              }
+          }
+      }
       while($fieldCollection!=NULL)
       {
            array_push($this->fieldList, new CatanField(array_rand($fieldCollection))); 
