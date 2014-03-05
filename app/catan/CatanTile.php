@@ -11,15 +11,15 @@
  *
  * @author Sony
  */
-class CatanField {
+class CatanTile {
     
     /**
      *
-     * @var Field field's model for database 
+     * @var Tile field's model for database 
      */
     public $field;
     
     public function __construct($board_id, $fieldType) {
-        $this->field = Field::create();
+        $this->field = Tile::create();
     }
 }

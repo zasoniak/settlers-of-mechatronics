@@ -1,6 +1,6 @@
 <?php
 
-class Field extends Eloquent {
+class Tile extends Eloquent {
 
     public function board(){
         return $this->belongsTo('Board');
