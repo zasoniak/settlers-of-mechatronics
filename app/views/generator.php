@@ -6,7 +6,7 @@
   </head>
   <body>
     <?php
-    // put your code here
+      $board = CatanBoard::generate();
     ?>
   </body>
 </html>

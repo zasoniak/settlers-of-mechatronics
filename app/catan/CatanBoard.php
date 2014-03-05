@@ -23,21 +23,12 @@ class CatanBoard
    * tutaj będzie fajny konstruktor wyciągający z bazy danych obiekty należące
    */
   
-  public function __construct() {
-      $this->board = Board::create();      //dodaje nowy board do bazy
-      
-      
-      $this->generateTiles(); //create fields
-      $this->generatePorts(); //create ports
-
-  }
-  
   /**
-   * tworzy nową planszę i dodaje ją do bazy, po czym zwraca obiekt GameBoard
+   * tworzy nową planszę i dodaje ją do bazy, po czym na zwraca GameBoard
    */
   public static function generate()
   {
-    $board = Board::create(); // zapisuje nową instancję boarda do bazy i zwraca
+    $board = Board::create(array()); // zapisuje nową instancję boarda do bazy i zwraca
     $probabilities = array(2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12);
     $types = array('wood','wood','wood','wood','stone','stone','stone','clay','clay','clay','sheep','sheep','sheep','sheep','wheat','wheat','wheat','wheat','desert');
     shuffle($probabilities);
@@ -48,23 +39,19 @@ class CatanBoard
       {
         for ($z = -3; $z < 4; $z++)
         {
-          if ($x+$y+z == 0)
+          if ($x+$y+$z == 0)
           {
             $tile = new Tile();
             $tile->x = $x;
             $tile->y = $y;
             $tile->z = $z;
-            if (abs($x) < 3 || abs($y) < 3 || abs($z) < 3)
+            if (abs($x) < 3 && abs($y) < 3 && abs($z) < 3)
             {
               $tile->type = array_shift($types);
               if ($tile->type != 'desert')
               {
                 $tile->probability = array_shift($probabilities);
               }
-            }
-            else
-            {
-              $tile->type = 'sea';
             }
             $tile = $board->tiles()->save($tile);
             // tu można dodać następującą linijkę

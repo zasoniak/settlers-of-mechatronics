@@ -1,5 +1,7 @@
 <?php
 
-class Game extends Eloquent {}
+class Game extends Eloquent {
+   public $timestamps = false;
+}
 
 ?>
