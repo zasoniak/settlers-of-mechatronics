@@ -34,4 +34,9 @@ class CatanGame
       $CardList = array('knight', 'yearOfPleanty', 'roadBuilding', 'monopoly', 'victoryPoint');
       array_push($this->cardList, new CatanCard(array_rand($CardList)));
   }
+  
+  public static function generate()
+  {
+    
+  }
 }
