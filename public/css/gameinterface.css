@@ -72,8 +72,6 @@ nav div a:hover {
   background-color: silver;
   border-radius: 60px;
   padding: 10px;
-  -webkit-transition: 1s;
-  -webkit-transform: rotate(360deg);
 }
 
 nav div a img {
