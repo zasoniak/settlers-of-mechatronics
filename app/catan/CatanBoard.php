@@ -16,12 +16,13 @@ class CatanBoard
   private $fieldList = array();
   private $portList = array();
   private $roadList = array();
-  private $settelmentList = array();
+  private $settlementList = array();
   private $activeThief;
   
   /**
    * tutaj będzie fajny konstruktor wyciągający z bazy danych obiekty należące
    */
+  
   public function __construct() {
       $this->board = Board::create();      //dodaje nowy board do bazy
       
@@ -30,6 +31,18 @@ class CatanBoard
       $this->generatePorts(); //create ports
 
   }
+  
+  public static function generate(){
+      $board= new CatanBoard();
+      
+      $board->generateFields();
+      $board->generatePorts();
+      
+  }
+  
+  
+  
+  
   
   /**
    * tworzy nową planszę i dodaje ją do bazy, po czym zwraca obiekt GameBoard
