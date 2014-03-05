@@ -20,3 +20,8 @@ Route::get('interface', function()
 {
     return View::make('interface');
 });
+
+Route::get('generator', function()
+{
+  return View::make('generator');
+});

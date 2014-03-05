@@ -32,18 +32,6 @@ class CatanBoard
 
   }
   
-  public static function generate(){
-      $board= new CatanBoard();
-      
-      $board->generateFields();
-      $board->generatePorts();
-      
-  }
-  
-  
-  
-  
-  
   /**
    * tworzy nową planszę i dodaje ją do bazy, po czym zwraca obiekt GameBoard
    */
