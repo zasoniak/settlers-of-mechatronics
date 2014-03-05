@@ -3,7 +3,7 @@
 /**
  * Description of Board
  *
- * @author konrad
+ * @author Konrad Kowalewski
  */
 class CatanBoard
 {
@@ -62,7 +62,7 @@ class CatanBoard
       }
       while($fieldCollection!=NULL)
       {
-           array_push($this->fieldList, new CatanField(array_rand($fieldCollection))); 
+           array_push($this->fieldList, new CatanTile(array_rand($fieldCollection))); 
       }
 
   }

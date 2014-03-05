@@ -37,6 +37,6 @@ class CatanGame
   
   public static function generate()
   {
-    
+    $board = new Board();
   }
 }
