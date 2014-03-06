@@ -124,6 +124,27 @@ class CatanBoard
     $port->save($port);
     
     
+    /*
+     * generowanie możliwych położeń miast
+     */
+    
+    
+    /*
+     * generowanie możliwych położeń dróg
+     */
+    for($x=-2;$x<=2;$x++){
+        for($y=-2;$y<=2;$y++) {
+            for($z=-2;$z<=2;$z++) {
+        	if(($x+$y+$z)==0)
+        	{
+                    //here goes road :D
+                }
+            }
+        }
+    }
+    
+    
+    
     $instance = new self();
     $instance->model = $board;
     return $instance;
