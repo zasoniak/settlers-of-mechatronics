@@ -61,21 +61,94 @@ class CatanBoard
         }
       }
     }
+    
+    /*
+     * generowanie portów
+     * 
+     */
+    $portCollection = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
+    shuffle($portCollection);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(1,1,-2);
+    $port->tile2 = Tile::find(1,2,-3);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(0,2,-2);
+    $port->tile2 = Tile::find(-1,3,-2);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(-2,2,0);
+    $port->tile2 = Tile::find(-2,3,-1);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(-2,1,1);
+    $port->tile2 = Tile::find(-3,2,1);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(-2,0,2);
+    $port->tile2 = Tile::find(-3,0,3);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(-1,-1,2);
+    $port->tile2 = Tile::find(-1,-2,3);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(1,-2,1);
+    $port->tile2 = Tile::find(1,-3,2);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(2,-2,0);
+    $port->tile2 = Tile::find(3,-3,0);
+    $port->save($port);
+    
+        $port = new Port();
+    $port->type = array_shift($portCollection);
+    $port->tile1 = Tile::find(2,0,-2);
+    $port->tile2 = Tile::find(3,-1,-2);
+    $port->save($port);
+    
+    
+    /*
+     * generowanie możliwych położeń miast
+     */
+    
+    
+    /*
+     * generowanie możliwych położeń dróg
+     */
+    for($x=-2;$x<=2;$x++){
+        for($y=-2;$y<=2;$y++) {
+            for($z=-2;$z<=2;$z++) {
+        	if(($x+$y+$z)==0)
+        	{
+                    //here goes road :D
+                }
+            }
+        }
+    }
+    
+    
+    
     $instance = new self();
     $instance->model = $board;
     return $instance;
   }
+
   
-  /**
-   * creating ports and locating them
-   */
-  private function generatePorts()  {
-      //default port collection available on board
-      $portCollection = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
-      
-      while($portCollection!=NULL)
-      {
-          array_push($this->portList, new CatanPort(array_rand($portCollection)));
-      }
-  }
 }
