@@ -16,6 +16,11 @@ ol.odd {
   display: inline-block;
 }
 
+.flattop{
+  -webkit-clip-path: polygon(0 50%, 25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%);
+  width: 156px; height: 137px;
+}
+
 .hex p{
   position: absolute;
   left: 44px;
@@ -28,16 +33,23 @@ ol.odd {
   border-radius: 20px;
   background: #999999;
   */
-  color: white;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+  color: rgba(255,255,255,0.7);
+  /*text-shadow: 0 1px 8px rgba(0,0,0,0.8);*/
+  text-shadow: 0.5s;
+  -webkit-transition: 0.5s;
   font-family: 'ubuntu', 'arial';
   font-size: 40px;
   font-weight: bold;
   line-height: 1em;
 }
+.hex:hover{
+  box-shadow: inset 0 0 150px #222;
+  -webkit-transition: 0.5s;
+}
 .hex:hover p {
-  text-shadow: 0 1px 10px red;
-  -webkit-transition: 0.3s;
+  text-shadow: 0 0 10px white;
+  color: #fff;
+  -webkit-transition: 0.5s;
 }
 .forest {
   background-image: url('../img/tile_forest.png');

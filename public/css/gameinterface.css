@@ -86,7 +86,7 @@ nav div a:hover {
   background-color: silver;
   border-radius: 60px;
   padding: 10px;
-  -webkit-transition: 0.2s;
+  -webkit-transition: 0.25s;
 }
 
 nav div a img {
