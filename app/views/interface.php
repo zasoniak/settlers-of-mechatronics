@@ -11,29 +11,53 @@
   </head>
   <body>
     <aside>
-      <div class="user_card" id="user1">
+      <div class="usercard" id="user1">
         <figure><?php echo HTML::image('img/konrad.jpg', 'morda1'); ?></figure>
-        <ul>
-          <li>surowce: 3</li>
-          <li>karty rozwoju: 2</li>
-          <li>karty rycerz: 1</li>
-        </ul>
+        <table>
+          <caption>Fellglen</caption>
+          <tbody>
+            <tr>
+              <th>S</th>
+              <td>3</td>
+            </tr>
+            <tr>
+              <th>R</th>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="user_card" id="user2">
+      <div class="usercard" id="user2">
         <figure><?php echo HTML::image('img/mroova.jpg', 'morda2'); ?></figure>
-        <ul>
-          <li>surowce: 5</li>
-          <li>karty rozwoju: 2</li>
-          <li>karty rycerz: 1</li>
-        </ul>
+        <table>
+          <caption>Mroova</caption>
+          <tbody>
+            <tr>
+              <th>S</th>
+              <td>3</td>
+            </tr>
+            <tr>
+              <th>R</th>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div class="user_card" id="user3">
+      <div class="usercard" id="user3">
         <figure><?php echo HTML::image('img/sony.jpg', 'morda3'); ?></figure>
-        <ul>
-          <li>surowce: 5</li>
-          <li>karty rozwoju: 2</li>
-          <li>karty rycerz: 1</li>
-        </ul>
+        <table>
+          <caption>Sony</caption>
+          <tbody>
+            <tr>
+              <th>S</th>
+              <td>3</td>
+            </tr>
+            <tr>
+              <th>R</th>
+              <td>5</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <nav>
         <div>
