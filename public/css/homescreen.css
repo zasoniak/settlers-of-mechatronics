@@ -1,0 +1,59 @@
+/* 
+    Created on : 2014-03-06, 19:51:25
+    Author     : Konrad Kowalewski <k.j.kowalewski@gmail.com>
+*/
+
+html {
+  background-color: whitesmoke;
+  font-family: 'arial';
+  font-size: 16px;
+}
+
+div.centered {
+  width: 416px;
+  display: block;
+  margin: 150px auto;
+  overflow: auto;
+}
+
+.flattop{
+  float: left;
+  margin-right: -22px;
+  display: block;
+  background-color: silver;
+  -webkit-clip-path: polygon(0 50%, 25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%);
+  width: 120px; height: 106px;
+  color: white;
+  font-family: 'ubuntu', 'arial';
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  line-height: 106px;
+  -webkit-transition: 0.3s;
+}
+.flattop:nth-of-type(2n)
+{
+  margin-top: 56px;
+}
+.flattop:first-of-type {
+  background-color: orangered;
+  font-size: 20px;
+}
+.flattop:nth-of-type(2)
+{
+  background-color: silver;
+  font-size: 32px;
+}
+.flattop:nth-of-type(3)
+{
+  background-color: steelblue;
+}
+.flattop:nth-of-type(4)
+{
+  background-color: greenyellow;
+}
+.flattop img {
+  width: 106px;
+}
