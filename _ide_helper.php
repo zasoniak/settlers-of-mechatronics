@@ -7847,6 +7847,16 @@ class Request extends Illuminate\Support\Facades\Request{
 	 }
 
 	/**
+	 * Get the request method.
+	 *
+	 * @return string
+	 * @static 
+	 */
+	 public static function method(){
+		return Illuminate\Http\Request::method();
+	 }
+
+	/**
 	 * Get the root URL for the application.
 	 *
 	 * @return string
