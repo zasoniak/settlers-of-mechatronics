@@ -5,7 +5,7 @@
  *
  * @author Konrad Kowalewski
  */
-class CatanBoard
+class CatanBoard implements DrawableInterface
 {
   /**
    * 
@@ -13,15 +13,26 @@ class CatanBoard
    */
   public $model;
   
-  private $fieldList = array();
+  public $tileMap = array(array(array()));
   private $portList = array();
   private $roadList = array();
   private $settlementList = array();
   private $activeThief;
   
   /**
-   * tutaj będzie fajny konstruktor wyciągający z bazy danych obiekty należące
+   * wyciąga z bazy danych obiekty należące do planszy
    */
+  public function __construct(Board $board = NULL)
+  {
+    if ($board instanceof Board)
+    {
+      $this->model = $board;
+      foreach ($board->tiles as $tile)
+      {
+        $this->tileMap[$tile->x][$tile->y][$tile->z] = new CatanTile($tile);
+      }
+    }
+  }
   
   /**
    * tworzy nową planszę i dodaje ją do bazy, po czym na zwraca GameBoard
@@ -54,10 +65,8 @@ class CatanBoard
                 $tile->probability = array_pop($probabilities);
               }
             }
-            $board->tiles()->save($tile);
-            // tu można dodać następującą linijkę
-            // array_push($this->tilesList, new CatanTile($tile));
-            // tylko nie wiem po co, skoro w tym requescie głównie dodajemy do bazy, nie musimy na tym działać
+            $tile = $board->tiles()->save($tile);
+            array_push($this->tileList, new CatanTile($tile));
           }
         }
       }
@@ -103,7 +112,6 @@ class CatanBoard
         }
       }
     }
-    
     // generowanie dróg
     for ($x = -20; $x < 21; $x+=10)
     {
@@ -233,5 +241,23 @@ class CatanBoard
     $instance = new self();
     $instance->model = $board;
     return $instance;
+  }
+  
+  public function __toString()
+  {
+    $return = '<div id="board">';
+    for ($z = -30; $z < 31; $z+=10)
+    {
+      for ($x = -30; $x < 31; $x+=10)
+      {
+        $y = 0-$x-$z;
+        if(isset($this->tileMap[$x][$y][$z]))
+        {
+          $return .= $this->tileMap[$x][$y][$z];
+        }
+      }
+    }
+    $return .= '</div>';
+    return $return;
   }
 }
