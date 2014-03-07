@@ -13,8 +13,10 @@ html {
 div#board {
   display: block;
   height: 700px;
+  width: 1200px;
   margin: 0 auto;
   padding: 30px;
+  overflow: hidden;
 }
 
 aside {
@@ -93,4 +95,31 @@ nav div a img {
   width: 70px;
   height: 70px;
   border-radius: 35px;
+}
+
+.sony div{
+    display: none;
+    -webkit-transition: 0.3s;
+}
+.sony:hover div{
+    position: fixed;
+    left: 300px;
+    top: 400px;
+    display: block;
+    width: 500px;
+    font-size: 700%;
+    font-weight: bold;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    z-index: 5;
+    -webkit-animation-name: blinker;  
+    -webkit-animation-iteration-count: infinite;  
+    -webkit-animation-timing-function: cubic-bezier(.5, 0, 1, 1);
+    -webkit-animation-duration: 0.3s; 
+}
+@-webkit-keyframes blinker {  
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
 }
