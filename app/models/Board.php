@@ -22,6 +22,11 @@ class Board extends Eloquent {
     {
       return $this->hasMany('Road');
     }
+    
+    public function ports()
+    {
+      return $this->hasMany('Port');
+    }
 }
 
 ?>

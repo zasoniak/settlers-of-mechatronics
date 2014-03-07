@@ -62,68 +62,29 @@ class CatanBoard
         }
       }
     }
-    
     // generowanie portów
-    /*
-    $portLocations = array();
+    $portLocations = array(
+        array(15,10,-25),
+        array(-5,25,-20),
+        array(-20,25,-5),
+        array(-25,15,10),
+        array(-25,0,25),
+        array(-10,-15,25),
+        array(10,-25,15),
+        array(25,-25,0),
+        array(25,-5,-20)
+    );
     $portTypes = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
     shuffle($portTypes);
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $tile1 = Tile::findByCoords($board->id, array(1,1,-2));
-    $port->tile1 = $tile1->id;
-    $tile2 = Tile::findByCoords($board->id, array(1,1,-3));  
-    $port->tile2 = $tile2->id;
-    $port=$port->save($port);
-        
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(0,2,-2));
-    $port->tile2 = Tile::findByCoords($board->id, array(-1,3,-2));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(-2,2,0));
-    $port->tile2 = Tile::findByCoords($board->id, array(-2,3,-1));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(-2,1,1));
-    $port->tile2 = Tile::findByCoords($board->id, array(-3,2,1));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(-2,0,2));
-    $port->tile2 = Tile::findByCoords($board->id, array(-3,0,3));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(-1,-1,2));
-    $port->tile2 = Tile::findByCoords($board->id, array(-1,-2,3));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(1,-2,1));
-    $port->tile2 = Tile::findByCoords($board->id, array(1,-3,2));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(2,-2,0));
-    $port->tile2 = Tile::findByCoords($board->id, array(3,-3,0));
-    $port->save($port);
-    
-        $port = new Port();
-    $port->type = array_shift($portCollection);
-    $port->tile1 = Tile::findByCoords($board->id, array(2,0,-2));
-    $port->tile2 = Tile::findByCoords($board->id, array(3,-1,-2));
-    $port->save($port);
-    */
+    foreach ($portLocations as $location)
+    {
+      $port = new Port();
+      $port->type = array_pop($portTypes);
+      $port->x = $location[0];
+      $port->y = $location[1];
+      $port->z = $location[2];
+      $board->ports()->save($port);
+    }
     // generowanie możliwych osad
     for ($x = -25; $x < 30; $x+=10)
     {
