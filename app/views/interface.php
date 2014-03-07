@@ -43,7 +43,8 @@
           </tbody>
         </table>
       </div>
-      <div class="usercard" id="user3">
+      <div class="usercard sony" id="user3">
+        <div>zjebałeś</div>
         <figure><?php echo HTML::image('img/sony.jpg', 'morda3'); ?></figure>
         <table>
           <caption>Sony</caption>
@@ -74,7 +75,7 @@
         </div>
       </nav>
     </aside>
-    <div class="container" id="board">
+    <div id="board">
       <div class="hex ocean"></div>
       <div class="hex ocean"></div>
       <div class="hex ocean"></div>
