@@ -12,6 +12,16 @@ class Board extends Eloquent {
     {
       return $this->hasMany('Tile');
     }
+    
+    public function settlements()
+    {
+      return $this->hasMany('Settlement');
+    }
+    
+    public function roads()
+    {
+      return $this->hasMany('Road');
+    }
 }
 
 ?>

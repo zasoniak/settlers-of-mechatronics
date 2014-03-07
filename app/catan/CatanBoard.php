@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of Board
+ * Description of CatanBoard
  *
  * @author Konrad Kowalewski
  */
@@ -29,15 +29,16 @@ class CatanBoard
   public static function generate()
   {
     $board = Board::create(array()); // zapisuje nową instancję boarda do bazy i zwraca
+    // generowanie pól
     $probabilities = array(2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12);
     $types = array('wood','wood','wood','wood','stone','stone','stone','clay','clay','clay','sheep','sheep','sheep','sheep','wheat','wheat','wheat','wheat','desert');
     shuffle($probabilities);
     shuffle($types);
-    for ($x = -3; $x < 4; $x++)
+    for ($x = -30; $x < 31; $x+=10)
     {
-      for ($y = -3; $y < 4; $y++)
+      for ($y = -30; $y < 31; $y+=10)
       {
-        for ($z = -3; $z < 4; $z++)
+        for ($z = -30; $z < 31; $z+=10)
         {
           if ($x+$y+$z == 0)
           {
@@ -45,15 +46,15 @@ class CatanBoard
             $tile->x = $x;
             $tile->y = $y;
             $tile->z = $z;
-            if (abs($x) < 3 && abs($y) < 3 && abs($z) < 3)
+            if (abs($x) < 30 && abs($y) < 30 && abs($z) < 30)
             {
-              $tile->type = array_shift($types);
+              $tile->type = array_pop($types);
               if ($tile->type != 'desert')
               {
-                $tile->probability = array_shift($probabilities);
+                $tile->probability = array_pop($probabilities);
               }
             }
-            $tile = $board->tiles()->save($tile);
+            $board->tiles()->save($tile);
             // tu można dodać następującą linijkę
             // array_push($this->tilesList, new CatanTile($tile));
             // tylko nie wiem po co, skoro w tym requescie głównie dodajemy do bazy, nie musimy na tym działać
@@ -62,13 +63,11 @@ class CatanBoard
       }
     }
     
+    // generowanie portów
     /*
-     * generowanie portów
-     * 
-     */
-    $portCollection = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
-    shuffle($portCollection);
-    /*
+    $portLocations = array();
+    $portTypes = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
+    shuffle($portTypes);
         $port = new Port();
     $port->type = array_shift($portCollection);
     $tile1 = Tile::findByCoords($board->id, array(1,1,-2));
@@ -125,15 +124,83 @@ class CatanBoard
     $port->tile2 = Tile::findByCoords($board->id, array(3,-1,-2));
     $port->save($port);
     */
+    // generowanie możliwych osad
+    for ($x = -25; $x < 30; $x+=10)
+    {
+      for ($y = -25; $y < 30; $y+=10)
+      {
+        for ($z = -25; $z < 30; $z+=10)
+        {
+          if ($x+$y+$z == 5 || $x+$y+$z == -5)
+          {
+            $settle = new Settlement();
+            $settle->x = $x;
+            $settle->y = $y;
+            $settle->z = $z;
+            $board->settlements()->save($settle);
+          } 
+        }
+      }
+    }
     
+    // generowanie dróg
+    for ($x = -20; $x < 21; $x+=10)
+    {
+      for ($y = -25; $y < 26; $y+=10)
+      {
+        for ($z = -25; $z < 26; $z+=10)
+        {
+          if($x+$y+$z == 0)
+          {
+            $road = new Road();
+            $road->x = $x;
+            $road->y = $y;
+            $road->z = $z;
+            $board->roads()->save($road);
+          }
+        }
+      }
+    }
+    for ($z = -20; $z < 21; $z+=10)
+    {
+      for ($y = -25; $y < 26; $y+=10)
+      {
+        for ($x = -25; $x < 26; $x+=10)
+        {
+          if($x+$y+$z == 0)
+          {
+            $road = new Road();
+            $road->x = $x;
+            $road->y = $y;
+            $road->z = $z;
+            $board->roads()->save($road);
+          }
+        }
+      }
+    }
+    for ($y = -20; $y < 21; $y+=10)
+    {
+      for ($x = -25; $x < 26; $x+=10)
+      {
+        for ($z = -25; $z < 26; $z+=10)
+        {
+          if($x+$y+$z == 0)
+          {
+            $road = new Road();
+            $road->x = $x;
+            $road->y = $y;
+            $road->z = $z;
+            $board->roads()->save($road);
+          }
+        }
+      }
+    }
     /*
-     * generowanie możliwych położeń miast i dróg
-         */
-
     for($x=-2;$x<=2;$x++){
         for($y=-2;$y<=2;$y++) {
             for($z=-2;$z<=2;$z++) {
-        	if(($x+$y+$z)==0)
+        	
+     * if(($x+$y+$z)==0)
         	{
                     //sprawdzic jak to bedzie by wygenerować algorytm ktory nie bedzie powtarzal miejsc wspolnych dla sasiednich tile'i????
                     
@@ -147,8 +214,6 @@ class CatanBoard
                             $road->tile2_id=Tile::findByCoords($board->id, array($x+1,$y-1,$z))->id;
                             $road->save();
                         }
-
-                            /*
                         if(!Road::find(tile::find(x,y,z),tile::find(x+1,y-1,z)))
         	Road::create(tile::find(x,y,z),tile::find(x+1,y-1,z))
 
@@ -167,7 +232,6 @@ class CatanBoard
         	if(!Road::find(tile::find(x,y,z),tile::find(x,y-1,z+1)))
         	Road::create(tile::find(x,y,z),tile::find(x,y-1,z+1))
 
-                */
                              
                     }
                     {
@@ -180,7 +244,7 @@ class CatanBoard
                          $settlement->tile2_id=Tile::findByCoords($board->id, array($x+1,$y-1,$z))->id;
                          $settlement->tile3_id=Tile::findByCoords($board->id, array($x+1,$y,$z-1))->id;
                          $settlement=$settlement->save($settlement);
-                        /*  
+                         
         	if(!Settlement::find(tile::find(x,y,z),tile::find(x+1,y-1,z),tile::find(x+1,y,z-1)))
         	Settlement::create(tile::find(x,y,z),tile::find(x+1,y-1,z),tile::find(x+1,y,z-1))
 
@@ -190,29 +254,23 @@ class CatanBoard
 	        if(!Settlement::find(tile::find(x,y,z),tile::find(x-1,y+1,z),tile::find(x,y+1,z-1)))
 	        	Settlement::create(tile::find(x,y,z),tile::find(x-1,y+1,z),tile::find(x,y+1,z-1))
 
-	        if(!Settlement::find(tile::find(x,y,z),tile::find(x-1,y+1,z),tile::find(x-1,y,z+1)))
+	        if(!ettlement::find(tile::find(x,y,z),tile::find(x-1,y+1,z),tile::find(x-1,y,z+1)))
 	        	Settlement::create(tile::find(x,y,z),tile::find(x-1,y+1,z),tile::find(x-1,y,z+1))
 
 	        if(!Settlement::find(tile::find(x,y,z),tile::find(x,y-1,z+1),tile::find(x-1,y,z+1)))
 	        	Settlement::create(tile::find(x,y,z),tile::find(x,y-1,z+1),tile::find(x-1,y,z+1))
 
 	        if(!Settlement::find(tile::find(x,y,z),tile::find(x,y-1,z+1),tile::find(x+1,y-1,z)))
-	        	Settlement::create(tile::find(x,y,z),tile::find(x,y-1,z+1),tile::find(x+1,y-1,z))
-                        
-                            
-                         */
+	        	Settlement::create(tile::find(x,y,z),tile::find(x,y-1,z+1),tile::find(x+1,y-1,z))           
                     }
                     
                 }
             }
         }
     }
-  
-    
+    */
     $instance = new self();
     $instance->model = $board;
     return $instance;
   }
-
-  
 }
