@@ -2,26 +2,18 @@
 
 class Settlement extends Eloquent {
   public $timestamps = false;
-
-    public function tile1(){
-        return $this->hasOne('Tile');
-    }
     
-    public function tile2(){
-        return $this->hasOne('Tile');
-    }
-    
-    public function tile3() {
-        return $this->hasOne('Tile');
-    }
-    
-    public function player()
+    public function board()
     {
-        return $this->hasOne('Player');
+        return $this->belongsTo('Board');
     }
     
-    public static function findByTiles(array $tiles)
+    public static function findByCoords($board_id, array $coords)
     {
-      return self::where('tile1_id', $tiles[0])->where('tile2_id', $tiles[1])->where('tile3_id', $tiles[2])->first();
+      return Board::find($board_id)->settlements()
+              ->whereX($coords[0])
+              ->whereY($coords[1])
+              ->whereZ($coords[2])
+              ->first();
     }
 }

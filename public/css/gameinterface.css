@@ -10,15 +10,6 @@ html {
   padding-right: 450px;
 }
 
-div#board {
-  display: block;
-  height: 700px;
-  width: 1200px;
-  margin: 0 auto;
-  padding: 30px;
-  overflow: hidden;
-}
-
 aside {
   display: block;
   width: 450px;

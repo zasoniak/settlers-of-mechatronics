@@ -11,15 +11,27 @@
  *
  * @author Sony
  */
-class CatanTile {
-    
+class CatanTile implements DrawableInterface
+{
     /**
      *
-     * @var Tile field's model for database 
+     * @var Tile tile's model for database 
      */
-    public $field;
+    public $model;
     
-    public function __construct($board_id, $fieldType) {
-        $this->field = Tile::create();
+    public function __construct(Tile $tile) {
+        $this->model = $tile;
+    }
+    
+    public function __toString()
+    {
+      $return = '<div class="hex '.$this->model->type.'">';
+      if (!is_null($this->model->probability))
+      {
+        $return .= '<p>'.$this->model->probability.'</p>';
+      }
+      $return .= '<span>'.$this->model->x.';'.$this->model->y.';'.$this->model->z.'</span>';
+      $return .= '</div>';
+      return $return;
     }
 }

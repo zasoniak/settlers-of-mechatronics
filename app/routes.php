@@ -16,9 +16,14 @@ Route::get('/', function()
     return View::make('hello');
 });
 
+Route::get('game/{id}', function($id){
+  $board = new CatanBoard(Board::find($id));
+  return View::make('game')->with('board', $board);
+});
+
 Route::get('interface', function()
 {
-    return View::make('interface');
+  return View::make('interface');
 });
 
 Route::get('generator', function()
