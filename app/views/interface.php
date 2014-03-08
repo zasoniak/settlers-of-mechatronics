@@ -80,54 +80,41 @@
       <div class="hex ocean"></div>
       <div class="hex ocean"></div>
       <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex ocean"></div><br>
       
       <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex mountain"><p>8</p></div>
+      <div class="hex sheep"><p>8</p></div>
       <div class="hex wheat"><p>8</p></div>
-      <div class="hex plain"><p>8</p></div>
+      <div class="hex sheep"><p>8</p></div>
       <div class="hex ocean"></div>
-      <div class="hex ocean"></div><br>
       
       <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex mountain"><p>8</p></div>
-      <div class="hex wheat"><p>8</p></div>
-      <div class="hex plain"><p>8</p></div>
+      <div class="hex stone"><p>8</p></div>
+      <div class="hex clay"><p>8</p></div>
+      <div class="hex wood"><p>8</p></div>
       <div class="hex clay"><p>8</p></div>
       <div class="hex ocean"></div><br>
       
       <div class="hex ocean"></div>
       <div class="hex clay"><p>8</p></div>
-      <div class="hex forest"><p>8</p></div>
+      <div class="hex wood"><p>8</p></div>
       <div class="hex desert"><p>8</p></div>
-      <div class="hex plain"><p>8</p></div>
-      <div class="hex forest"><p>8</p></div>
-      <div class="hex ocean"></div><br>
+      <div class="hex stone"><p>8</p></div>
+      <div class="hex wood"><p>8</p></div>
+      <div class="hex ocean"></div>
       
       <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex mountain"><p>8</p></div>
       <div class="hex wheat"><p>8</p></div>
-      <div class="hex plain"><p>8</p></div>
-      <div class="hex forest"><p>8</p></div>
-      <div class="hex ocean"></div><br>
-      
-      <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex mountain"><p>8</p></div>
       <div class="hex wheat"><p>8</p></div>
-      <div class="hex plain"><p>8</p></div>
+      <div class="hex sheep"><p>8</p></div>
+      <div class="hex wood"><p>8</p></div>
       <div class="hex ocean"></div>
-      <div class="hex ocean"></div><br>
       
+      <div class="hex ocean"></div>
+      <div class="hex stone"><p>8</p></div>
+      <div class="hex wheat"><p>8</p></div>
+      <div class="hex sheep"><p>8</p></div>
+      <div class="hex ocean"></div>
 
-      <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
-      <div class="hex ocean"></div>
       <div class="hex ocean"></div>
       <div class="hex ocean"></div>
       <div class="hex ocean"></div>
