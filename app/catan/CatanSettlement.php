@@ -1,16 +1,28 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of CatanSettlement
+ * klasa odpowiedzialna za mechanikę i wyświetlanie osad i miast
  *
  * @author Sony
  */
-class CatanSettlement {
-    //put your code here
+class CatanSettlement implements DrawableInterface
+{
+  /**
+   *
+   * @var Settlement settlement's Eloquent model
+   */
+  public $model;
+  
+  public function __construct(Settlement $settlement)
+  {
+    if($settlement instanceof Settlement)
+    {
+      $this->model = $settlement;
+    }
+  }
+  
+  public function __toString()
+  {
+    return '<div class="settle"></div>';
+  }
 }

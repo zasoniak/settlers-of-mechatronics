@@ -1,13 +1,7 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of CatanField
+ * klasa odpowiedzialna za mechanikę i wyświetlanie pól planszy
  *
  * @author Sony
  */
@@ -15,12 +9,15 @@ class CatanTile implements DrawableInterface
 {
     /**
      *
-     * @var Tile tile's model for database 
+     * @var Tile tile's Eloquent model 
      */
     public $model;
     
     public function __construct(Tile $tile) {
+      if($tile instanceof Tile)
+      {
         $this->model = $tile;
+      }   
     }
     
     public function __toString()

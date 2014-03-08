@@ -1,16 +1,28 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of CatanRoad
+ * klasa odpowiedzialna za mechanikę i wyświetlanie dróg i autostrad :P
  *
  * @author Sony
  */
-class CatanRoad {
-    //put your code here
+class CatanRoad implements DrawableInterface
+{
+  /**
+   *
+   * @var Road road's Eloquent model
+   */
+  public $model;
+  
+  public function __construct(Road $road)
+  {
+    if($road instanceof Road)
+    {
+      $this->model = $road;
+    }
+  }
+  
+  public function __toString()
+  {
+    return '<div class="road"></div>';
+  }
 }
