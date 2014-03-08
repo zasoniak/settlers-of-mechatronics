@@ -66,7 +66,7 @@ class CatanBoard implements DrawableInterface
               }
             }
             $tile = $board->tiles()->save($tile);
-            array_push($this->tileList, new CatanTile($tile));
+//            array_push($this->tileList, new CatanTile($tile));
           }
         }
       }

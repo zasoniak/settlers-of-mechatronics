@@ -7,6 +7,7 @@ div#board {
 }
 .hex {
   cursor: pointer;
+  position: absolute;
   background-position: center;
   -webkit-clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
   width: 137px; height: 156px;
@@ -14,7 +15,7 @@ div#board {
   display: inline-block;
   -webkit-transition: 0.4s;
 }
-.hex:nth-of-type(1),.hex:nth-of-type(34){
+/*.hex:nth-of-type(1),.hex:nth-of-type(34){
   margin-left: 230px;
 }
 .hex:nth-of-type(5),.hex:nth-of-type(29){
@@ -22,7 +23,7 @@ div#board {
 }
 .hex:nth-of-type(10),.hex:nth-of-type(23){
   margin-left: 80px;
-}
+}*/
 .hex span {
   position: absolute;
   display: block;

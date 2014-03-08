@@ -7,7 +7,6 @@ html {
   background-color: whitesmoke;
   font-family: 'arial';
   font-size: 16px;
-  padding-right: 450px;
 }
 
 aside {
@@ -15,7 +14,6 @@ aside {
   width: 450px;
   height: 700px;
   float: right;
-  margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
 }
 
 div.usercard {
