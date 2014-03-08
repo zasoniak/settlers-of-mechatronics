@@ -2,6 +2,7 @@ div#board {
   display: block;
   width: 1080px;
   height: 900px;
+  padding: -70px -60px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -10,7 +11,7 @@ div#board {
   position: absolute;
   background-position: center;
   -webkit-clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-  width: 137px; height: 156px;
+  width: 120px; height: 138px;
   margin: 0 5px -35px 5px;
   display: inline-block;
   -webkit-transition: 0.4s;
