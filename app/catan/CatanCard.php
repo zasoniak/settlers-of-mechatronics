@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,10 +26,9 @@ class CatanCard {
     public $owner;
     public $isUsed;
     
-    public function __construct($cardType) {
-       $this->type = $cardType;
-       $this->owner = NULL;
-       $this->isUsed=false;
+    public function __construct() {
+
+        
     }
     
     public function takeAction()

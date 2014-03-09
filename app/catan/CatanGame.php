@@ -21,17 +21,38 @@ class CatanGame
   private $playerList = array();
   private $cardList = array();
 
-  public function __construct($user_id) {
-      $this->game = Game::create(); // new game instance
-      
-      $this->board = new CatanBoard();
-      $this->playerList =  CatanPlayer::add($user_id);
-      $this->cardList = $this->generateCardList();
+  public function __construct() {
+
   }
   
-  private function generateCardList()
+  public function generate(array $users)
   {
-      $CardList = array('knight', 'yearOfPleanty', 'roadBuilding', 'monopoly', 'victoryPoint');
-      array_push($this->cardList, new CatanCard(array_rand($CardList)));
+      $game = Game::create(); // new game instance
+      
+      //generacja planszy
+      $board = CatanBoard::generate();
+      
+      //dodanie graczy do gry
+      foreach($users as $user) {
+      $player = new Player($user->id);
+      $player->wood=0;
+      $player->stone=0;
+      $player->sheep=0;
+      $player->clay=0;
+      $player->wheat=0;
+      $player=$game->player()->save($player);  
+      }
+      
+      //generacja zestawu kart do gry  
+      $CardTypeList = array('knight', 'yearOfPleanty', 'roadBuilding', 'victoryPoint', 'monopoly');
+      $card;
+      for($i=0;$i<14;$i++) {
+          $card = new Card();
+          $card->type=$CardTypeList[rand(0,4)];
+          $card->is_used=false;
+          $card->player_id=NULL;
+          $card = $game->card()->save($card);
+      }
   }
+  
 }
