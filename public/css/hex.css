@@ -1,7 +1,14 @@
+div#whole{
+  display: block;
+}
+
+
 div#board {
   display: block;
-  margin: 0 auto;
-  overflow: hidden;
+  margin: 20px auto;
+  height: 650px;
+  width: 840px;
+  position: relative;
 }
 .hex {
   cursor: pointer;
@@ -9,7 +16,6 @@ div#board {
   background-position: center;
   -webkit-clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
   width: 108px; height: 125px;
-  margin: 0 5px -35px 5px;
   display: inline-block;
   -webkit-transition: 0.4s;
 }
