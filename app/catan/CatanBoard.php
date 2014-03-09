@@ -31,6 +31,10 @@ class CatanBoard implements DrawableInterface
       {
         $this->tileMap[$tile->x][$tile->y][$tile->z] = new CatanTile($tile);
       }
+      foreach ($board->settlements as $i=>$settle)
+      {
+        $this->settlementList[$i] = new CatanSettlement($settle);
+      }
     }
   }
   
@@ -255,6 +259,13 @@ class CatanBoard implements DrawableInterface
         {
           $return .= $this->tileMap[$x][$y][$z];
         }
+      }
+    }
+    for ($i = 0; $i < 54; $i+=1)
+    {
+      if(isset($this->settlementList[$i]))
+      {
+        $return .= $this->settlementList[$i];
       }
     }
     $return .= '</div></div>';

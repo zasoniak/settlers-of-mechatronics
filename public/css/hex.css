@@ -1,11 +1,12 @@
 div#whole{
   display: block;
+  height: 100%;
 }
 
 
 div#board {
   display: block;
-  margin: 20px auto;
+  margin: 0 auto;
   height: 650px;
   width: 840px;
   position: relative;
@@ -83,4 +84,16 @@ div#board {
 }
 .hidden {
   visibility: hidden;
+}
+
+
+.settle {
+  position: absolute;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: -21px;
+  border-radius: 15px;
+  background-color: blue;
+  opacity: 0.7;
 }
