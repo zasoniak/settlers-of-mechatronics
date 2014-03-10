@@ -11,9 +11,28 @@
 |
 */
 
-Route::get('/', function()
-{
-    return View::make('hello');
+Route::get('/', array('as' => 'home', function() {
+		return View::make('hello');
+}));
+
+Route::post('login', function() {
+		$login = array(
+			'email' => Input::get('email'),
+			'password' => Input::get('password')
+		);
+
+		if (Auth::attempt($login))
+		{
+			Auth::user()->touch();
+			return Redirect::home();
+		}
+
+		return Redirect::home();
+});
+
+Route::get('logout', function() {
+	Auth::logout();
+	return Redirect::home();
 });
 
 Route::get('game/{id}', function($id){

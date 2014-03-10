@@ -36,21 +36,6 @@ class CatanGame
     $this->model->players()->save($player);
   }
   
-  public function endMove()
-  {
-      //jesli doszedl do konca nowa tura
-      if($this->model->current_player==4)
-      {
-          $this->model->turn_number++;
-          $this->model->current_player=1;
-      }else //inaczej następny gracz
-        {
-          $this->model->current_player++;
-        }
-        $this->model->is_changed=true;
-        $this->model->save();
-  }
-  
   public static function generate(User $user)
   {
     $game = Game::create(array()); // new game instance
@@ -91,9 +76,21 @@ class CatanGame
    */
   
   
- 
-
- 
+  public function endMove()
+  {
+      //jesli doszedl do konca nowa tura
+      if($this->model->current_player==4)
+      {
+        $this->model->turn_number++;
+        $this->model->current_player=1;
+      }
+      else //inaczej następny gracz
+      {
+        $this->model->current_player++;
+      }
+      $this->model->is_changed=1;
+      $this->model->save();
+  }
   
   /*
   public function throwDice()

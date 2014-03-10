@@ -12,16 +12,14 @@
  * @author Sony
  */
 class CatanThief {
-    public $thief;
     public $location;
     
     public function __construct($thiefLocation) {
-        $this->thief = new CatanThief;
         $this->location=$thiefLocation;
     }
-    public function setThief($newThiefLocation, $knightCard)
+    public function setThief($newLocation, $knightCard)
     {
-        $this->location=$newThiefLocation;
+        $this->location=$newLocation;
         if(!$knightCard)
         {
             $this->stealResources();
