@@ -21,11 +21,11 @@ class CatanGame
   private $playerList = array();
   private $cardList = array();
 
-  public function __construct(Game $game=NULL) {
+  public function __construct(Game $game) {
     if($game instanceof Game)
     {
       $this->model = $game;
-      $this->board = new CatanBoard($this->model->board);
+      // $this->board = new CatanBoard($this->model->board);
     }
   }
   
@@ -36,10 +36,7 @@ class CatanGame
     $this->model->players()->save($player);
   }
   
-  
-  
-  
-   public function endMove()
+  public function endMove()
   {
       //jesli doszedl do konca nowa tura
       if($this->model->current_player==4)
@@ -54,16 +51,12 @@ class CatanGame
         $this->model->save();
   }
   
-  
-  
-  
-  public static function generate($user)
+  public static function generate(User $user)
   {
-      $game = Game::create(array()); // new game instance
-      
-      
-    $instance = new self();
-      //dodanie hosta gry
+    $game = Game::create(array()); // new game instance
+    
+    $instance = new self($game);
+    //dodanie hosta gry
     $instance->model = $game;
     $instance->addPlayer($user);
     return $instance;
