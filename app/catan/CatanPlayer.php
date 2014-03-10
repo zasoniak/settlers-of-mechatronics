@@ -9,12 +9,12 @@ class CatanPlayer
 {
   /**
    *
-   * @var User user's model
+   * @var Player player's eloquent model
    */
-  public $player;
+  public $model;
   
-  public function __construct($id)
+  public function __construct(Player $player)
   {
-    $this->player = Player::find($id);
+    $this->model = $player;
   }
 }
