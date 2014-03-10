@@ -15,12 +15,25 @@ body {
     height: 100%;
 }
 
-aside {
-  display: block;
-  width: 450px;
-  height: 100%;
-  float: right;
-  margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
+@media all and (min-device-height: 700px) {
+  aside {
+    display: block;
+    width: 450px;
+    height: 100%;
+    float: right;
+    margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
+  }
+}
+
+@media all and (max-device-height: 700px) {
+  aside {
+    display: block;
+    width: 450px;
+    height: 100%;
+    float: right;
+    margin-top: 70px;
+    margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
+  }
 }
 
 div.usercard {
