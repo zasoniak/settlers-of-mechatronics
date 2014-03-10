@@ -11,7 +11,7 @@ class CatanGame
    * 
    * @var Game game's model
    */
-  private $game;
+  private $model;
   
   /**
    *
@@ -20,28 +20,41 @@ class CatanGame
   private $board;
   private $playerList = array();
   private $cardList = array();
-
-  public function __construct() {
-
+  
+  
+  public function __construct(Game $game) 
+  {
+      if($game instanceof Game)
+      {
+        $this->model=$game;
+      }     
   }
   
   public function generate(array $users)
   {
       $game = Game::create(); // new game instance
       
+      //dodanie hosta gry
+      $player = new Player($user->id);
+      $player=$game->players()->save($player);  
+      
+  }
+  
+  public function addPlayer($user)
+  {
+    if ($game instanceof Game)
+    {
+      $player = new Player($user->id);
+      $player=$game->players()->save($player);
+    }
+  }
+  
+  
+  public function gameStart() 
+  {
       //generacja planszy
       $board = CatanBoard::generate();
-      
-      //dodanie graczy do gry
-      foreach($users as $user) {
-      $player = new Player($user->id);
-      $player->wood=0;
-      $player->stone=0;
-      $player->sheep=0;
-      $player->clay=0;
-      $player->wheat=0;
-      $player=$game->player()->save($player);  
-      }
+      $board = $game->board()->save($board);
       
       //generacja zestawu kart do gry  
       $CardTypeList = array('knight', 'yearOfPleanty', 'roadBuilding', 'victoryPoint', 'monopoly');
@@ -49,10 +62,50 @@ class CatanGame
       for($i=0;$i<14;$i++) {
           $card = new Card();
           $card->type=$CardTypeList[rand(0,4)];
-          $card->is_used=false;
-          $card->player_id=NULL;
-          $card = $game->card()->save($card);
-      }
+          $card = $game->cards()->save($card);
+          }
   }
+  
+  
+  public function endMove()
+  {
+      //jesli doszedl do konca nowa tura
+      if($this->model->current_player==4)
+      {
+          $this->model->turn_number++;
+          $this->model->current_player=1;
+      }else //inaczej następny gracz
+        {
+          $this->model->current_player++;
+        }
+        $this->model->is_changed=true;
+        $this->model->save();
+  }
+  
+  
+  public function throwDice()
+  {
+      $dice=rand(1,6)+rand(1,6);
+      
+      
+  }
+  
+  public function shop()
+  {
+      
+  }
+  
+  public function build()
+  {
+      
+  }
+  
+  public function playCard()
+  {
+      
+  }
+  
+
+  
   
 }

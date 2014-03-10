@@ -17,7 +17,6 @@ class CatanBoard implements DrawableInterface
   private $portList = array();
   private $roadList = array();
   private $settlementList = array();
-  private $activeThief;
   
   /**
    * wyciąga z bazy danych obiekty należące do planszy
