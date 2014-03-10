@@ -34,6 +34,10 @@ class CatanBoard implements DrawableInterface
       {
         array_push($this->settlementList, new CatanSettlement($settle));
       }
+      foreach ($board->roads as $road)
+      {
+        array_push($this->roadList, new CatanRoad($road));
+      }
     }
   }
   
@@ -186,6 +190,10 @@ class CatanBoard implements DrawableInterface
           $return .= $this->tileMap[$x][$y][$z];
         }
       }
+    }
+    foreach($this->roadList as $road)
+    {
+      $return .= $road;
     }
     foreach($this->settlementList as $settle)
     {

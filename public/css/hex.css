@@ -66,32 +66,31 @@ div#board {
 }
 
 .wood {
-  background-image: url('../img/tile_forest.png');
+  background-image: url('../img/tile2_forest.png');
 }
 
 .desert {
-  background-image: url('../img/tile_desert.png');
+  background-image: url('../img/tile2_desert.png');
 }
 
 .sheep {
-  background-image: url('../img/tile_plain.png');
+  background-image: url('../img/tile2_plain.png');
 }
 
 .stone {
-  background-image: url('../img/tile_mountain.png');
+  background-image: url('../img/tile2_stone.png');
 }
 
 .clay {
-  background-image: url('../img/tile_clay.png');
+  background-image: url('../img/tile2_clay.png');
 }
 
 .wheat {
-  background-image: url('../img/tile_wheat.png');
+  background-image: url('../img/tile2_wheat.png');
 }
 
 .ocean {
-  background-image: url('../img/tile_ocean.png');
-  opacity: 0.5;
+  background-image: url('../img/tile2_ocean.png');
 }
 
 .settle {
@@ -101,11 +100,32 @@ div#board {
   height: 16px;
   margin: -15px;  /*half of settlement radius*/
   border-radius: 15px;
-  border: 7px solid blue;
-  background-color: blue;
+  border: 7px solid lightseagreen;
+  background-color: lightseagreen;
 }
 
 .town {
-    background-color: whitesmoke;
+  background-color: whitesmoke;
 }
 
+.road {
+  display: inline-block;
+  width: 12px;
+  height: 62px;
+  background: lightgreen;
+  position: absolute;
+  margin-top: -66px;
+  margin-left: -6px;
+}
+
+.x {
+  -webkit-transform: rotate(240deg);
+  margin-top: -14px;
+  margin-left: -36px;
+}
+
+.y {
+  -webkit-transform: rotate(120deg);
+  margin-top: -14px;
+  margin-left: 24px;
+}
