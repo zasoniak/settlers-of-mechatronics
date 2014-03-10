@@ -2,23 +2,21 @@ div#whole{
   display: block;
   height: 100%;
 }
-
-@media all and (min-device-height: 700px) {
-  div#board {
-    display: block;
-    margin: 0 auto;
-    height: 650px;
-    width: 840px;
-    position: relative;
+div#board {
+  display: block;
+  height: 650px;
+  width: 840px;
+  position: relative;
+}
+  
+@media all and (min-device-height: 800px) {
+  #board {
+    margin: 0px auto;
   }
 }
-@media all and (max-device-height: 700px) {
+@media all and (max-device-height: 800px) {
   #board {
-    display: block;
     margin: -70px auto;
-    height: 650px;
-    width: 840px;
-    position: relative;
   }
 }
 
