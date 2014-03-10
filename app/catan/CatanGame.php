@@ -89,6 +89,8 @@ class CatanGame
         $this->model->is_changed=true;
         $this->model->save();
   }
+   *
+   */
   
   /*
   public function throwDice()
