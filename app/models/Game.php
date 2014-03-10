@@ -4,7 +4,7 @@ class Game extends Eloquent {
    public $timestamps = false;
    
    
-   public function card() {
+   public function cards() {
        return $this->hasMany('Card');
    }
    
@@ -12,7 +12,7 @@ class Game extends Eloquent {
        return $this->hasOne('Board');
    }
    
-   public function player() {
+   public function players() {
        return $this->hasMany('Player');
    }
    

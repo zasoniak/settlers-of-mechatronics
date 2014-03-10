@@ -9,22 +9,33 @@ class CatanGame
 {
   /**
    * 
-   * @var Game game's model
+   * @var Game game's eloquent model
    */
-  private $game;
+  private $model;
   
   /**
    *
-   * @var CatanBoard board's model
+   * @var CatanBoard board's catan class
    */
   private $board;
   private $playerList = array();
   private $cardList = array();
 
-  public function __construct() {
-
+  public function __construct(Game $game) {
+    if($game instanceof Game)
+    {
+      $this->model = $game;
+      $this->board = new CatanBoard($this->model->board);
+    }
   }
   
+  public function addPlayer(User $user)
+  {
+    $player = new Player();
+    $player->user_id = $user->id;
+    $this->model->players()->save($player);
+  }
+  /*
   public function generate(array $users)
   {
       $game = Game::create(); // new game instance
@@ -54,5 +65,7 @@ class CatanGame
           $card = $game->card()->save($card);
       }
   }
+   *
+   */
   
 }
