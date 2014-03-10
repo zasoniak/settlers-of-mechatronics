@@ -11,15 +11,7 @@
  *
  * @author Sony
  */
-class CardType extends SplEnum{
-    const __default = self::knight;
     
-    const knight=0;
-    const yearOfPlenty=1;
-    const roadBuilding=2;
-    const victoryPoint=3;
-    const monopoly=4;
-}
 class CatanCard {
    
     public $type;

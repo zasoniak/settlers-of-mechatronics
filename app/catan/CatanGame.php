@@ -21,7 +21,7 @@ class CatanGame
   private $playerList = array();
   private $cardList = array();
 
-  public function __construct(Game $game) {
+  public function __construct(Game $game=NULL) {
     if($game instanceof Game)
     {
       $this->model = $game;
@@ -35,17 +35,40 @@ class CatanGame
     $player->user_id = $user->id;
     $this->model->players()->save($player);
   }
-  /*
-  public function generate(array $users)
+  
+  
+  
+  
+   public function endMove()
   {
-      $game = Game::create(); // new game instance
-      
-      //dodanie hosta gry
-      $player = new Player($user->id);
-      $player=$game->players()->save($player);  
-      
+      //jesli doszedl do konca nowa tura
+      if($this->model->current_player==4)
+      {
+          $this->model->turn_number++;
+          $this->model->current_player=1;
+      }else //inaczej następny gracz
+        {
+          $this->model->current_player++;
+        }
+        $this->model->is_changed=true;
+        $this->model->save();
   }
   
+  
+  
+  
+  public static function generate($user)
+  {
+      $game = Game::create(array()); // new game instance
+      
+      
+    $instance = new self();
+      //dodanie hosta gry
+    $instance->model = $game;
+    $instance->addPlayer($user);
+    return $instance;
+  }
+  /*
   public function addPlayer($user)
   {
     if ($game instanceof Game)
@@ -75,22 +98,9 @@ class CatanGame
    */
   
   
-  public function endMove()
-  {
-      //jesli doszedl do konca nowa tura
-      if($this->model->current_player==4)
-      {
-          $this->model->turn_number++;
-          $this->model->current_player=1;
-      }else //inaczej następny gracz
-        {
-          $this->model->current_player++;
-        }
-        $this->model->is_changed=true;
-        $this->model->save();
-  }
+ 
 
-   */
+ 
   
   /*
   public function throwDice()
