@@ -17,4 +17,17 @@ class CatanPlayer
   {
     $this->model = $player;
   }
+  
+    public function addResource($tile, $isTown)
+  {
+      if($isTown)
+      {
+          $this->model->{$type}+=2;
+      }else
+      {
+          $this->model->{$type}+=1;
+      }
+      $this->model->save();
+      
+  }
 }

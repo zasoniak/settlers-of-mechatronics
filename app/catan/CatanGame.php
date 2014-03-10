@@ -47,16 +47,7 @@ class CatanGame
     return $instance;
   }
   /*
-  public function addPlayer($user)
-  {
-    if ($game instanceof Game)
-    {
-      $player = new Player($user->id);
-      $player=$game->players()->save($player);
-    }
-  }
-  
-  
+
   public function gameStart() 
   {
       //generacja planszy
@@ -92,27 +83,27 @@ class CatanGame
       $this->model->save();
   }
   
-  /*
-  public function throwDice()
+ public function throwDice()
   {
       $dice=rand(1,6)+rand(1,6);
+      $tiles=Tile::findByProb($this->model->id, $dice);
+      $settlements;
       
+      if($dice==7)
+      {
+          //thief!!!
+      }
+      else
+      {
+          foreach($tiles as $tile)
+          {
+            array_push($settlements, $tile->nearestSettlement);
+          }
+          foreach($settlements as $settle)
+          {
+              //
+          }
+      }
       
   }
-  
-  public function shop()
-  {
-      
-  }
-  
-  public function build()
-  {
-      
-  }
-  
-  public function playCard()
-  {
-      
-  }
-  */
 }
