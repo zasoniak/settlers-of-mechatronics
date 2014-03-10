@@ -36,7 +36,7 @@ class CatanTile implements DrawableInterface
       $return .= '" style="left: ';
       $return .= $this->mapX(108, 12, 0); // (hex width + hex horizontal margin)/10
       $return .= 'px; top: ';
-      $return .= $this->mapY(125, -21, 0); // (hex height + hex vertical margin)/10
+      $return .= $this->mapY(124, -21, 0); // (hex height + hex vertical margin)/10
       $return .= 'px;">';
       if (!is_null($this->model->probability))
       {
