@@ -25,7 +25,6 @@ class CatanGame
     if($game instanceof Game)
     {
       $this->model = $game;
-      $this->playerList=$game->players()->get();
       // $this->board = new CatanBoard($this->model->board);
     }
   }
@@ -40,7 +39,6 @@ class CatanGame
   public static function generate(User $user)
   {
     $game = Game::create(array()); // new game instance
-    
     $instance = new self($game);
     //dodanie hosta gry
     $instance->model = $game;
@@ -71,7 +69,8 @@ class CatanGame
   public function endMove()
   {
       //liczy ilosc graczy w danej grze
-      $playersQuantity=count($this->model->players()->get());
+      //$playersQuantity=$this->model->players()->count();
+      $playersQuantity=4;
        //jesli doszedl do konca nowa tura
       if($this->model->current_player==$playersQuantity)
       {
@@ -90,14 +89,18 @@ class CatanGame
   {
       $dice=rand(1,6)+rand(1,6);
       $tiles=Tile::findByProb($this->model->id, $dice);
-      $settlements;
+      $settlements=array();
       
       if($dice==7)
       {
 
-          $this->model->board()->thief=1;
-          $this->model->board()->save();
-          stealResources($this->playerList);
+          $board=$this->model->board();
+          $board->thief=1;
+          $board->save();
+          foreach($this->playerList as $player)
+          {
+              $player->model->stealHalf();
+          }
           //send request for a player to move thief
           
       }
@@ -110,6 +113,7 @@ class CatanGame
           }
           foreach($settlements as $settle)
           {
+              echo $settle;
               //find owner of $settle and ->addResource($tile->type,$settle->is_town);
           }
       }
