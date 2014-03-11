@@ -14,25 +14,12 @@
       <div class="flattop"><?php echo HTML::image('img/WM3.png', 'mchtr'); ?></div>
     </div>
     <?php
-    if(Auth::guest()) :
-      echo Form::open(array('url'=>'login','class'=>'centered'));
+      echo Form::open(array('url'=>'signup','class'=>'centered'));
       echo Form::email('email', null, array('placeholder'=>'email'));
       echo Form::password('password', array('placeholder'=>'password'));
-      echo Form::submit('zaloguj');
+      echo Form::password('password_confirmation', array('placeholder'=>'retype password'));
+      echo Form::submit('zarejestruj');
       echo Form::close();
     ?>
-    <nav class="centered">
-      <?php echo HTML::link('signup', 'zarejestruj się'); ?>
-    </nav>
-    <?php
-    endif;
-    ?>
-    <?php if(Auth::check()): ?>
-    <nav class="centered">
-      <?php echo HTML::link('game/create', 'utwórz stół'); ?>
-      <?php echo HTML::link('game', 'dołącz do gry'); ?>
-      <?php echo HTML::link('login', 'wyloguj się'); ?>
-    </nav>
-    <?php endif; ?>
   </body>
 </html>
