@@ -38,6 +38,10 @@ class CatanBoard implements DrawableInterface
       {
         array_push($this->roadList, new CatanRoad($road));
       }
+      foreach ($board->ports as $port)
+      {
+        array_push($this->portList, new CatanPort($port));
+      }
     }
   }
   
@@ -78,17 +82,23 @@ class CatanBoard implements DrawableInterface
         }
       }
     }
+    //zapisanie złodzieja
+    $tile = $board->tiles()->where('type', 'desert')->first();
+    echo $tile->id;
+    echo $tile->type;
+    $board->thief_location=$tile->id;
+    $board->save();
     // generowanie portów
     $portLocations = array(
-        array(15,10,-25),
-        array(-5,25,-20),
-        array(-20,25,-5),
-        array(-25,15,10),
-        array(-25,0,25),
         array(-10,-15,25),
+        array(0,25,-25),
         array(10,-25,15),
+        array(25,-10,-15),
+        array(-25,0,25),
+        array(15,10,-25),
+        array(-15,25,-10),
         array(25,-25,0),
-        array(25,-5,-20)
+        array(-25,15,10)
     );
     $portTypes = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
     shuffle($portTypes);
@@ -198,6 +208,10 @@ class CatanBoard implements DrawableInterface
     foreach($this->settlementList as $settle)
     {
       $return .= $settle;
+    }
+    foreach($this->portList as $port)
+    {
+      $return .= $port;
     }
     $return .= '</div></div>';
     return $return;

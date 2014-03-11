@@ -13,6 +13,7 @@
  */
 class CatanThief {
     public $location;
+    public $isActive;
     
     public function __construct($thiefLocation) {
         $this->location=$thiefLocation;
@@ -25,7 +26,7 @@ class CatanThief {
             $this->stealResources();
         }
     }
-    public static function stealResources($playerList)
+    public function stealResources($playerList)
     {
         $sum;
         foreach($playerList as $player)
@@ -60,7 +61,6 @@ class CatanThief {
                 $playerThief->{$resource}+=1;      //dodaje 2 graczowi
                 $check=1;
             }
-        }
-        
+        }   
     }
 }
