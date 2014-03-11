@@ -35,6 +35,15 @@ Route::get('logout', function() {
 	return Redirect::home();
 });
 
+Route::get('signup', function() {
+  return View::make('signup');
+});
+
+Route::post('signup', function() {
+  $user = new User;
+  $password = Hash::make(Input::get('password'));
+});
+
 Route::get('game/{id}', function($id){
   $board = new CatanBoard(Board::find($id));
   return View::make('game')->with('board', $board);

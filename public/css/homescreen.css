@@ -70,7 +70,7 @@ html {
 
 input[type="email"], input[type="password"] {
   border: 0 solid white;
-  background-color: gainsboro;
+  background-color: white;
   display: block;
   font-size: 14px;
   font-family: inherit;
@@ -78,7 +78,7 @@ input[type="email"], input[type="password"] {
   margin: 20px auto;
   width: 220px;
   border-radius: 16px;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.5);
+  box-shadow: 0 -1px 0 rgba(0,0,0,0.5);
 }
 
 nav a {
