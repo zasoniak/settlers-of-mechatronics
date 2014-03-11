@@ -30,7 +30,7 @@ class CatanPort implements DrawableInterface
       }
       elseif($this->model->x==0)
       {
-        $return .= ' dir4';
+        $return .= ' dir1';
         $return .= '" style="left: ';
         $return .= '180px; top: 0px;"';
       }

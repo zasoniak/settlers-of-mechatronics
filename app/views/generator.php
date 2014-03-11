@@ -8,7 +8,7 @@
     <?php
       $board = CatanBoard::generate();
       $game = CatanGame::generate(User::find(1));
-      $game = new CatanGame(Game::find(9));
+      $game = new CatanGame(Game::find(1));
       $game->endMove();
       $game->throwDice();
     ?>

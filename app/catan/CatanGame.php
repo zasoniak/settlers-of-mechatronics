@@ -93,10 +93,8 @@ class CatanGame
       
       if($dice==7)
       {
-
-          $board=$this->model->board();
-          $board->thief=1;
-          $board->save();
+          $this->model->active_thief=1;
+          $this->model->save();
           foreach($this->playerList as $player)
           {
               $player->model->stealHalf();

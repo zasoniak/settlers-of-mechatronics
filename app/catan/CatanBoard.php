@@ -181,7 +181,6 @@ class CatanBoard implements DrawableInterface
         }
       }
     }
-    
     $instance = new self();
     $instance->model = $board;
     return $instance;
