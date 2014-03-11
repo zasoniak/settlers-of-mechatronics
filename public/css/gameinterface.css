@@ -15,14 +15,14 @@ body {
     height: 100%;
 }
 
-  aside {
-    position: relative;
-    display: block;
-    width: 450px;
-    height: 100%;
-    float: right;
-    margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
-  }
+aside {
+  position: relative;
+  display: block;
+  width: 450px;
+  height: 100%;
+  float: right;
+  margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
+}
 
 @media all and (max-device-height: 800px) {
   aside {
