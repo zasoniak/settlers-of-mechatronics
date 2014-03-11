@@ -82,6 +82,12 @@ class CatanBoard implements DrawableInterface
         }
       }
     }
+    //zapisanie złodzieja
+    $tile = $board->tiles()->where('type', 'desert')->first();
+    echo $tile->id;
+    echo $tile->type;
+    $board->thief_location=$tile->id;
+    $board->save();
     // generowanie portów
     $portLocations = array(
         array(-10,-15,25),
