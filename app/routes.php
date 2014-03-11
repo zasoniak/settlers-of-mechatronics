@@ -23,11 +23,9 @@ Route::post('login', function() {
 
 		if (Auth::attempt($login))
 		{
-			Auth::user()->touch();
 			return Redirect::home();
 		}
-
-		return Redirect::home();
+		return Redirect::home()->with('message', 'Email lub hasło są niepoprawne');
 });
 
 Route::get('logout', function() {
@@ -40,8 +38,27 @@ Route::get('signup', function() {
 });
 
 Route::post('signup', function() {
-  $user = new User;
-  $password = Hash::make(Input::get('password'));
+  $messages = array(
+      'required' => 'Atrybut :attribute jest wymagany.',
+      'min' => 'Atrybut :attribute musi mieć przynajmniej :min znaków',
+      'between' => 'Atrybut :attribute musi być dłuższy niż :min i krótszy niż :max'
+  );
+  $rules = array(
+      'nick' => array('required', 'between:3,20'),
+      'email' => array('required', 'email'),
+      'password' => array('required', 'confirmed', 'min:8')
+  );
+  $valid = Validator::make(Input::all(), $rules, $messages);
+  if($valid->passes())
+  {
+    $user = new User;
+    $user->email = Input::get('email');
+    $user->password = Hash::make(Input::get('password'));
+    $user->nickname = Input::get('nick');
+    $user->save();
+    return Redirect::home()->with('message', 'rejestracja zakończyła się sukcesem');
+  }
+  return Redirect::to('signup')->withErrors($valid);
 });
 
 Route::get('game/{id}', function($id){
