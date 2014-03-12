@@ -65,25 +65,13 @@ class CatanGame
     echo $instance->addPlayer($user,true);
     return $instance;
   }
-  /*
 
-  public function gameStart() 
+
+  public function start() 
   {
       //generacja planszy
-      $board = CatanBoard::generate();
-      $board = $game->board()->save($board);
-      
-      //generacja zestawu kart do gry  
-      $CardTypeList = array('knight', 'yearOfPleanty', 'roadBuilding', 'victoryPoint', 'monopoly');
-      $card;
-      for($i=0;$i<14;$i++) {
-          $card = new Card();
-          $card->type=$CardTypeList[rand(0,4)];
-          $card = $game->cards()->save($card);
-          }
+      $board = CatanBoard::generate($this->model);
   }
-   *
-   */
   
   public function endMove()
   {

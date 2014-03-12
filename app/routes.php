@@ -63,6 +63,7 @@ Route::post('signup', function() {
 
 Route::get('game/create', function(){
   $game = CatanGame::generate(Auth::user());
+  $game->start();
   return Redirect::to('game/'.$game->model->id);
 });
 
@@ -84,7 +85,7 @@ Route::get('game', function(){
 Route::get('game/{id}/join', function($id) {
   $game = new CatanGame(Game::find($id));
   if($game->addPlayer(Auth::user()))
-  {
+  {  
     return Redirect::to("game/$id");
   }
   return Redirect::home()->with('message', 'Coś poszło nie tak, sorry.');

@@ -7,10 +7,6 @@ class Game extends Eloquent {
     return self::has('players', '<', 4)->where('created_at','>', time()+15*60)->get();
   }
 
-  public function cards() {
-    return $this->hasMany('Card');
-  }
-
   public function board() {
     return $this->hasOne('Board');
   }

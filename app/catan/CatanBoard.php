@@ -182,6 +182,16 @@ class CatanBoard implements DrawableInterface
         }
       }
     }
+    /*
+      //generacja zestawu kart do gry  
+      $CardTypeList = array('knight', 'yearOfPleanty', 'roadBuilding', 'victoryPoint', 'monopoly');
+      for($i=0;$i<14;$i++) {
+          $card = new Card();
+          $card->type=$CardTypeList[rand(0,4)];
+          $card = $board->cards()->save($card);
+          }
+    
+    */
     $instance = new self();
     $instance->model = $board;
     return $instance;

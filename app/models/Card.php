@@ -4,7 +4,7 @@ class Card extends Eloquent {
    
   public $timestamps = false;
   
-    public function game(){
-        return $this->belongsTo('Game');
+    public function board(){
+        return $this->belongsTo('Board');
     }
 }
