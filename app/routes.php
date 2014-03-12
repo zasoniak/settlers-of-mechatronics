@@ -76,6 +76,20 @@ Route::get('game/{id}', function($id){
   return View::make('game')->with('game',$game);
 });
 
+Route::get('game', function(){
+  $games = Game::waiting();
+  return View::make('gamelist')->with('games', $games);
+});
+
+Route::get('game/{id}/join', function($id) {
+  $game = new CatanGame(Game::find($id));
+  if($game->addPlayer(Auth::user()))
+  {
+    return Redirect::to("game/$id");
+  }
+  return Redirect::home()->with('message', 'Coś poszło nie tak, sorry.');
+});
+
 Route::get('interface', function()
 {
   return View::make('interface');

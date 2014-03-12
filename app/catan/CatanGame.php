@@ -33,11 +33,27 @@ class CatanGame
     }
   }
   
-  public function addPlayer(User $user)
+  public function addPlayer(User $user, $host = false)
   {
+    foreach($this->model->players() as $player)
+    {
+      if($player->user->id == Auth::user()->id)
+      {
+        return false;
+      }
+    }
+    if($this->model->players()->count() > 3)
+    {
+      return false;
+    }
     $player = new Player();
     $player->user_id = $user->id;
-    $player = $this->model->players()->save($player);
+    if($host)
+    {
+      $player->is_host = 1;
+    }
+    $this->model->players()->save($player);
+    return true;
   }
   
   public static function generate(User $user)
@@ -46,7 +62,7 @@ class CatanGame
     $instance = new self($game);
     //dodanie hosta gry
     $instance->model = $game;
-    $instance->addPlayer($user);
+    echo $instance->addPlayer($user,true);
     return $instance;
   }
   /*

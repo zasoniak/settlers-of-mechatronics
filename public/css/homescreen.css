@@ -97,12 +97,19 @@ nav a {
   display: block;
   text-align: center;
   padding: 8px;
-  margin-bottom: 20px;
+  margin-top: 20px;
   border-radius: 10px;
   color: inherit;
   font-size: larger;
   text-transform: uppercase;
   -webkit-transition: 0.3s;
+}
+
+nav p {
+  font-size: smaller;
+  text-align: center;
+  padding: 4px;
+  color: inherit;
 }
 
 nav a:hover {
