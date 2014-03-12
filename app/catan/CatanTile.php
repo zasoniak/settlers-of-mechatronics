@@ -40,9 +40,8 @@ class CatanTile implements DrawableInterface
       $return .= 'px;">';
       if (!is_null($this->model->probability))
       {
-        $return .= '<p>'.$this->model->probability.'</p>';
+        $return .= '<span>'.$this->model->probability.'</span>';
       }
-      $return .= '<span>'.$this->model->x.';'.$this->model->y.';'.$this->model->z.'</span>';
       $return .= '</div>';
       return $return;
     }

@@ -76,7 +76,6 @@ Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
   $board = new CatanBoard(Board::findByGame($id));
   return View::make('game')->with('game',$game)->with('board', $board);
-  //return View::make('board')->with('board', $board);
 });
 
 Route::get('game', function(){
