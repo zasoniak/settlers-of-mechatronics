@@ -32,6 +32,11 @@ class Board extends Eloquent {
     {
         return $this->hasMany('Card');
     }
+    
+    public static function findByGame($game_id)
+    {
+        return self::where('game_id', $game_id)->first();
+    }
 }
 
 ?>

@@ -42,5 +42,6 @@
         </div>
       </nav>
     </aside>
+      <?php echo $board; ?>
   </body>
 </html>
