@@ -11,7 +11,7 @@ class CatanGame
    * 
    * @var Game game's eloquent model
    */
-  private $model;
+  public $model;
   
   /**
    *
@@ -22,10 +22,14 @@ class CatanGame
   private $cardList = array();
 
   public function __construct(Game $game) {
-    if($game instanceof Game)
+    $this->model = $game;
+    if($this->model->board()->count())
     {
-      $this->model = $game;
-      // $this->board = new CatanBoard($this->model->board);
+      $this->board = new CatanBoard($this->model->board);
+      foreach ($this->model->players as $player)
+      {
+        array_push($this->playerList, $player);
+      }
     }
   }
   
@@ -33,7 +37,7 @@ class CatanGame
   {
     $player = new Player();
     $player->user_id = $user->id;
-    $this->model->players()->save($player);
+    $player = $this->model->players()->save($player);
   }
   
   public static function generate(User $user)
@@ -65,7 +69,6 @@ class CatanGame
    *
    */
   
-  
   public function endMove()
   {
       //liczy ilosc graczy w danej grze
@@ -87,7 +90,7 @@ class CatanGame
   
  public function throwDice()
   {
-      $dice=rand(1,6)+rand(1,6);
+      $dice=mt_rand(1,6)+mt_rand(1,6);
       $tiles=Tile::findByProb($this->model->id, $dice);
       $settlements=array();
       
@@ -100,7 +103,6 @@ class CatanGame
               $player->model->stealHalf();
           }
           //send request for a player to move thief
-          
       }
       else
       {
@@ -117,7 +119,29 @@ class CatanGame
       }
   }
   
+  public function getPlayers()
+  {
+    $return = array();
+    foreach ($this->model->players as $player)
+    {
+      array_push($return, new CatanPlayer($player));
+    }
+    return $return;
+  }
   
+  public function getOpponents()
+  {
+    $players = $this->getPlayers();
+    $return = array();
+    foreach($players as $player)
+    {
+      if($player->model->user->id != Auth::user()->id)
+      {
+        array_push($return, $player);
+      }
+    }
+    return $return;
+  }
   
   
 }

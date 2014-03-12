@@ -48,9 +48,10 @@ class CatanBoard implements DrawableInterface
   /**
    * tworzy nową planszę i dodaje ją do bazy, po czym na zwraca GameBoard
    */
-  public static function generate()
+  public static function generate(Game $game)
   {
-    $board = Board::create(array()); // zapisuje nową instancję boarda do bazy i zwraca
+    $board = new Board;
+    $board = $game->board()->save($board);
     // generowanie pól
     $probabilities = array(2,3,3,4,4,5,5,6,6,8,8,9,9,10,10,11,11,12);
     $types = array('wood','wood','wood','wood','stone','stone','stone','clay','clay','clay','sheep','sheep','sheep','sheep','wheat','wheat','wheat','wheat','desert');

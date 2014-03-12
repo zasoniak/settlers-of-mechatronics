@@ -14,7 +14,7 @@ class Player extends Eloquent{
     
     public function countResources()
     {
-        $sum;
+        $sum = 0;
         $sum+=$this->wood;
         $sum+=$this->stone;
         $sum+=$this->clay;

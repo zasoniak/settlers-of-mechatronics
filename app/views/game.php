@@ -9,55 +9,24 @@
   </head>
   <body>
     <aside>
-      <div class="usercard" id="user1">
-        <figure><?php echo HTML::image('img/konrad.jpg', 'morda1'); ?></figure>
+      <?php foreach($game->getOpponents() as $player): ?>
+      <div class="usercard" player="<?php echo $player->model->id; ?>">
+        <figure><?php echo HTML::image('img/WM3.png', 'morda'); ?></figure>
         <table>
-          <caption>Fellglen</caption>
+          <caption><?php echo $player->model->nickname; ?></caption>
           <tbody>
             <tr>
               <th>S</th>
-              <td>3</td>
+              <td><?php echo $player->model->countResources(); ?></td>
             </tr>
             <tr>
               <th>R</th>
-              <td>5</td>
+              <td>?</td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div class="usercard" id="user2">
-        <figure><?php echo HTML::image('img/mroova.jpg', 'morda2'); ?></figure>
-        <table>
-          <caption>Mroova</caption>
-          <tbody>
-            <tr>
-              <th>S</th>
-              <td>3</td>
-            </tr>
-            <tr>
-              <th>R</th>
-              <td>5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="usercard sony" id="user3">
-        <div>zjebałeś</div>
-        <figure><?php echo HTML::image('img/sony.jpg', 'morda3'); ?></figure>
-        <table>
-          <caption>Sony</caption>
-          <tbody>
-            <tr>
-              <th>S</th>
-              <td>3</td>
-            </tr>
-            <tr>
-              <th>R</th>
-              <td>5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <?php endforeach; ?>
       <nav>
         <div>
           <a href="#" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
@@ -73,6 +42,5 @@
         </div>
       </nav>
     </aside>
-    <?php echo $board; ?>
   </body>
 </html>

@@ -61,9 +61,19 @@ Route::post('signup', function() {
   return Redirect::to('signup')->withErrors($valid);
 });
 
-Route::get('game/{id}', function($id){
+Route::get('game/create', function(){
+  $game = CatanGame::generate(Auth::user());
+  return Redirect::to('game/'.$game->model->id);
+});
+
+Route::get('board/{id}', function($id){
   $board = new CatanBoard(Board::find($id));
-  return View::make('game')->with('board', $board);
+  return View::make('board')->with('board', $board);
+});
+
+Route::get('game/{id}', function($id){
+  $game = new CatanGame(Game::find($id));
+  return View::make('game')->with('game',$game);
 });
 
 Route::get('interface', function()
