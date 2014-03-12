@@ -56,4 +56,54 @@ class CatanSettlement implements DrawableInterface
     $return .= '</div>';
     return $return;
   }
+  
+  private function costCheck(Player $player=NULL)
+  {
+      if($player->clay>=1 && $player->sheep>=1 && $player->wood>=1 && $player->wheat>=1)
+      {
+          $player->clay-=1;
+          $player->sheep-=1;
+          $player->wood-=1; 
+          $player->wheat-=1;
+          return true;
+      }
+      else
+      {
+          echo "nie stać cię na osadę!";
+          return false;
+      }   
+  }
+  
+  public function buy(Player $player=NULL)
+  {
+      if($player instanceof Player)
+      {
+            if($this->model->player_id==$player->id)
+            {
+                 $this->upgrade($player);
+            }
+            else if($this->model->player_id==0)
+            {
+                if($this->costCheck($player))
+                {
+                    $this->model->player_id=$player->id;
+                    $this->model->save();
+                } 
+            }
+      }
+
+  }
+  
+  private function upgrade($player)
+  {
+      if($player->stone>=3 && $player->wheat>=2)
+      {
+          $player->stone-=3; 
+          $player->wheat-=2;
+          $this->model->is_town=1;
+          $this->model->save();
+      }
+      else
+          echo "nie stać cię na miasto!";
+  }
 }

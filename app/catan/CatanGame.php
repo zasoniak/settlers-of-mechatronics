@@ -18,7 +18,7 @@ class CatanGame
    * @var CatanBoard board's catan class
    */
   private $board;
-  private $playerList = array();
+  public $playerList = array();
   private $cardList = array();
 
   public function __construct(Game $game) {
@@ -26,9 +26,9 @@ class CatanGame
     if($this->model->board()->count())
     {
       $this->board = new CatanBoard($this->model->board);
-      foreach ($this->model->players as $player)
+      foreach ($this->model->players()->get() as $player)
       {
-        array_push($this->playerList, $player);
+        array_push($this->playerList, new CatanPlayer($player));
       }
     }
   }
@@ -71,6 +71,17 @@ class CatanGame
   {
       //generacja planszy
       $board = CatanBoard::generate($this->model);
+      /*
+      $playerOrder = array(array());
+      foreach($this->model->players()->get() as $player)
+      {
+          $result = mt_rand(1,6)+mt_rand(1,6);
+          array_push($playerOrder, array($player->id,$result));
+      }
+       * 
+       */
+      
+            
   }
   
   public function endMove()
@@ -102,9 +113,10 @@ class CatanGame
       {
           $this->model->active_thief=1;
           $this->model->save();
-          foreach($this->playerList as $player)
+          foreach($this->model->players()->get() as $player)
           {
-              $player->model->stealHalf();
+              echo $player;
+              $player->stealHalf();
           }
           //send request for a player to move thief
       }
@@ -147,5 +159,12 @@ class CatanGame
     return $return;
   }
   
+  
+  public function buy($player_id, $item)
+  {   
+      $buyer=$this->model->players()->where('id', $player_id)->first();
+      $item->buy($buyer);
+      
+  }
   
 }

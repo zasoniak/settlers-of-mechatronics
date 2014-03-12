@@ -26,6 +26,9 @@ class Player extends Eloquent{
     public function stealHalf()
     {
         $sum=$this->countResources();
+        echo "tyle ma razem surowki: ";
+        echo $sum;
+        echo "<br>";
         if($sum>=8)
         {
             $sum=floor($sum/=2);
@@ -33,7 +36,7 @@ class Player extends Eloquent{
             $resource;
             while($sum>0)
             {
-                $resource=$resourceList[rand(0,4)];
+                $resource=$resourceList[mt_rand(0,4)];
                 if($this->{$resource}>0)
                 {
                     $this->{$resource}-=1;

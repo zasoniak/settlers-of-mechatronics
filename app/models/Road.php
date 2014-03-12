@@ -16,8 +16,9 @@ class Road extends Eloquent {
         return $this->hasOne('Player');
     }
     
-    public static function findByTiles(array $tiles)
+    public static function findByCoords(array $coords)
     {
-      return self::where('tile1_id', $tiles[0])->where('tile2_id', $tiles[1])->first();
+      return self::where('x', $coords[0])->where('y', $coords[1])->where('z', $coords[2])->first();
     }
+    
 }

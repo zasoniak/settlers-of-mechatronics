@@ -102,3 +102,10 @@ Route::get('generator', function()
 {
   return View::make('generator');
 });
+
+
+Route::get('game/{id}/next', function($id) {
+    $game = new CatanGame(Game::find($id));
+    $game->endMove();
+    return Redirect::to("game/$id");
+});
