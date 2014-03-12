@@ -17,16 +17,17 @@
           <tbody>
             <tr>
               <th>S</th>
-              <td><?php echo $player->model->countResources(); ?></td>
+              <td></td>
             </tr>
             <tr>
               <th>R</th>
-              <td>?</td>
+              <td><?php echo $player->model->countResources(); ?></td>
             </tr>
           </tbody>
         </table>
       </div>
       <?php endforeach; ?>
+      Graczy: <?php echo $game->model->players()->count(); ?>
       <nav>
         <div>
           <a href="#" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>

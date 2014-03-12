@@ -13,6 +13,7 @@ html {
 
 body {
     height: 100%;
+    overflow-x: hidden;
 }
 
 aside {
@@ -21,6 +22,7 @@ aside {
   width: 450px;
   height: 100%;
   float: right;
+  z-index: 1;
   margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
 }
 
@@ -30,7 +32,7 @@ aside {
   }
 }
 
-/*@media all and (max-device-width: 1200px) {
+@media all and (max-device-width: 1200px) {
   aside {
     left: 350px;    
     -webkit-transition: 0.4s;
@@ -39,7 +41,7 @@ aside {
     left: 0;
     -webkit-transition: 0.4s;
   }
-}*/
+}
 
 div.usercard {
   float: left;
