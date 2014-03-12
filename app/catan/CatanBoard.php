@@ -46,7 +46,7 @@ class CatanBoard implements DrawableInterface
   }
   
   /**
-   * tworzy nową planszę i dodaje ją do bazy, po czym na zwraca GameBoard
+   * tworzy nową planszę i dodaje ją do bazy, po czym zwraca GameBoard
    */
   public static function generate(Game $game)
   {
@@ -192,9 +192,7 @@ class CatanBoard implements DrawableInterface
           }
     
     */
-    $instance = new self();
-    $instance->model = $board;
-    return $instance;
+    return new self($board);
   }
   
   public function __toString()

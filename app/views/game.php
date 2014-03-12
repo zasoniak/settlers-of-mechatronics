@@ -41,7 +41,14 @@
           <a href="#" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
       </nav>
+      <?php 
+      if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
+      {
+        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+      }
+      ?>
+      <?php echo Session::get('message'); ?>
     </aside>
-      <?php echo $board; ?>
+    <?php echo $game->renderBoard(); ?>
   </body>
 </html>
