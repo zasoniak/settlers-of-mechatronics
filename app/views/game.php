@@ -9,11 +9,12 @@
   </head>
   <body>
     <aside>
-      <?php foreach($game->getOpponents() as $player): ?>
+      <?php $opps = $game->getOpponents(); ?>
+      <?php foreach($opps as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
         <figure><?php echo HTML::image('img/WM3.png', 'morda'); ?></figure>
         <table>
-          <caption><?php echo $player->model->nickname; ?></caption>
+          <caption><?php echo $player->model->user->nickname; ?></caption>
           <tbody>
             <tr>
               <th>S</th>
@@ -42,7 +43,15 @@
           <a href="#" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
       </nav>
+      <?php 
+      if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
+      {
+        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+      }
+      ?>
+      <?php echo Session::get('message'); ?>
+      Graczy: <?php echo $game->model->players()->count(); ?>
     </aside>
-      <?php echo $board; ?>
+    <?php echo $game->renderBoard(); ?>
   </body>
 </html>

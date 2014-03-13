@@ -2,23 +2,20 @@
 
 class Road extends Eloquent {
   public $timestamps = false;
+    
+  public function board()
+  {
+    return $this->belongsTo('Board');
+  }
+  
+  public function player()
+  {
+    return $this->belongsTo('Player');
+  }
 
-    public function tile1(){
-        return $this->hasOne('Tile');
-    }
-    
-    public function tile2(){
-        return $this->hasOne('Tile');
-    }
-    
-    public function player()
-    {
-        return $this->hasOne('Player');
-    }
-    
-    public static function findByCoords(array $coords)
-    {
-      return self::where('x', $coords[0])->where('y', $coords[1])->where('z', $coords[2])->first();
-    }
+  public static function findByCoords(array $coords)
+  {
+    return self::where('x', $coords[0])->where('y', $coords[1])->where('z', $coords[2])->first();
+  }
     
 }

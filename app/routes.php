@@ -63,7 +63,6 @@ Route::post('signup', function() {
 
 Route::get('game/create', function(){
   $game = CatanGame::generate(Auth::user());
-  $game->start();
   return Redirect::to('game/'.$game->model->id);
 });
 
@@ -74,8 +73,7 @@ Route::get('board/{id}', function($id){
 
 Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
-  $board = new CatanBoard(Board::findByGame($id));
-  return View::make('game')->with('game',$game)->with('board', $board);
+  return View::make('game')->with('game',$game);
 });
 
 Route::get('game', function(){
@@ -90,6 +88,16 @@ Route::get('game/{id}/join', function($id) {
     return Redirect::to("game/$id");
   }
   return Redirect::home()->with('message', 'Coś poszło nie tak, sorry.');
+});
+
+Route::get('game/{id}/start', function($id) {
+  $game = new CatanGame(Game::find($id));
+  if($game->model->players()->count() > 1)
+  {
+    $game->start();
+    return Redirect::to("game/$id");
+  }
+  return Redirect::back()->with('message', 'Coś spierdoliłeś!!! Na pewno masz 4 graczy?');
 });
 
 Route::get('interface', function()

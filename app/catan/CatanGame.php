@@ -17,27 +17,28 @@ class CatanGame
    *
    * @var CatanBoard board's catan class
    */
-  private $board;
-  public $playerList = array();
-  private $cardList = array();
+  private $board = NULL;
+  private $playerList = array();
 
   public function __construct(Game $game) {
     $this->model = $game;
+    // dodanie CatanPlayers do listy
+    foreach ($this->model->players as $player)
+    {
+      array_push($this->playerList, new CatanPlayer($player));
+    }
+    // warunkowe dodanie CatanBoard
     if($this->model->board()->count())
     {
       $this->board = new CatanBoard($this->model->board);
-      foreach ($this->model->players()->get() as $player)
-      {
-        array_push($this->playerList, new CatanPlayer($player));
-      }
     }
   }
   
   public function addPlayer(User $user, $host = false)
   {
-    foreach($this->model->players() as $player)
+    foreach($this->playerList as $player)
     {
-      if($player->user->id == Auth::user()->id)
+      if($player->model->user->id == Auth::user()->id)
       {
         return false;
       }
@@ -60,12 +61,11 @@ class CatanGame
   {
     $game = Game::create(array()); // new game instance
     $instance = new self($game);
-    //dodanie hosta gry
     $instance->model = $game;
-    echo $instance->addPlayer($user,true);
+    //dodanie hosta gry
+    $instance->addPlayer($user,true);
     return $instance;
   }
-
 
   public function start() 
   {
@@ -124,8 +124,8 @@ class CatanGame
       {
           foreach($tiles as $tile)
           {
-              if($this->model->thief_location!=$tile->id)
-            array_push($settlements, $tile->nearestSettlement);
+            if($this->model->thief_location!=$tile->id)
+              array_push($settlements, $tile->nearestSettlement);
           }
           foreach($settlements as $settle)
           {
@@ -159,12 +159,38 @@ class CatanGame
     return $return;
   }
   
+  public function getHost()
+  {
+    foreach ($this->playerList as $player)
+    {
+      if($player->model->is_host)
+      {
+        return $player;
+      }
+    }
+  }
   
-  public function buy($player_id, $item)
+  public function isBoard()
+  {
+    if(is_null($this->board))
+    {
+      return false;
+    }
+    return true;
+  }
+  
+  public function renderBoard()
+  {
+    if (is_null($this->board))
+    {
+      return '';
+    }
+    return (string)$this->board;
+  }
+  
+  public function buy($player_id, BuyableInterface $item)
   {   
       $buyer=$this->model->players()->where('id', $player_id)->first();
       $item->buy($buyer);
-      
   }
-  
 }
