@@ -5,5 +5,5 @@
  */
 interface BuyableInterface {
     
-    public function buy();
+    public function buy(Player $player);
 }

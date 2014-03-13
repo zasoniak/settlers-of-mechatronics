@@ -69,8 +69,19 @@ class CatanGame
 
   public function start() 
   {
-    //generacja planszy
-    $this->board = CatanBoard::generate($this->model);
+      //generacja planszy
+      $board = CatanBoard::generate($this->model);
+      /*
+      $playerOrder = array(array());
+      foreach($this->model->players()->get() as $player)
+      {
+          $result = mt_rand(1,6)+mt_rand(1,6);
+          array_push($playerOrder, array($player->id,$result));
+      }
+       * 
+       */
+      
+            
   }
   
   public function endMove()
@@ -102,9 +113,10 @@ class CatanGame
       {
           $this->model->active_thief=1;
           $this->model->save();
-          foreach($this->playerList as $player)
+          foreach($this->model->players()->get() as $player)
           {
-              $player->model->stealHalf();
+              echo $player;
+              $player->stealHalf();
           }
           //send request for a player to move thief
       }
@@ -112,8 +124,8 @@ class CatanGame
       {
           foreach($tiles as $tile)
           {
-              if($this->model->thief_location!=$tile->id)
-            array_push($settlements, $tile->nearestSettlement);
+            if($this->model->thief_location!=$tile->id)
+              array_push($settlements, $tile->nearestSettlement);
           }
           foreach($settlements as $settle)
           {
@@ -174,5 +186,11 @@ class CatanGame
       return '';
     }
     return (string)$this->board;
+  }
+  
+  public function buy($player_id, BuyableInterface $item)
+  {   
+      $buyer=$this->model->players()->where('id', $player_id)->first();
+      $item->buy($buyer);
   }
 }

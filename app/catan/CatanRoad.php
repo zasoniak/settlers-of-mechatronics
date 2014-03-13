@@ -68,4 +68,32 @@ class CatanRoad implements DrawableInterface
     $return .= '</div>';
     return $return;
   }
+  
+  public function costCheck(Player $player=NULL)
+  {
+      if($player->clay>=1 && $player->wood>=1)
+      {
+          $player->clay-=1;
+          $player->wood-=1; 
+          return true;
+      }
+      else
+          return false;
+  }
+  
+  public function buy(Player $player=NULL)
+  {
+      
+      if($this->costCheck($player))
+      {
+          $this->model->player_id=$player->id;
+          $this->model->save();
+      }
+      else
+      {
+          echo "nie stać cię na drogę!";
+      }
+  }
+  
+  
 }
