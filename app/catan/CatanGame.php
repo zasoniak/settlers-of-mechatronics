@@ -87,51 +87,57 @@ class CatanGame
   public function endMove()
   {
       //liczy ilosc graczy w danej grze
-      //$playersQuantity=$this->model->players()->count();
-      $playersQuantity=4;
-       //jesli doszedl do konca nowa tura
-      if($this->model->current_player==$playersQuantity)
+      if($this->orderCheck())
       {
-        $this->model->turn_number++;
-        $this->model->current_player=1;
+            $playersQuantity=$this->model->players()->count();
+            //$playersQuantity=4;
+             //jesli doszedl do konca nowa tura
+            if($this->model->current_player==$playersQuantity)
+            {
+              $this->model->turn_number++;
+              $this->model->current_player=1;
+            }
+            else //inaczej następny gracz
+            {
+              $this->model->current_player++;
+            }
+            $this->model->is_changed=1;
+            $this->model->save();
       }
-      else //inaczej następny gracz
-      {
-        $this->model->current_player++;
-      }
-      $this->model->is_changed=1;
-      $this->model->save();
   }
   
  public function throwDice()
   {
-      $dice=mt_rand(1,6)+mt_rand(1,6);
-      $tiles=Tile::findByProb($this->model->id, $dice);
-      $settlements=array();
-      
-      if($dice==7)
+      if($this->orderCheck())
       {
-          $this->model->active_thief=1;
-          $this->model->save();
-          foreach($this->model->players()->get() as $player)
-          {
-              echo $player;
-              $player->stealHalf();
-          }
-          //send request for a player to move thief
-      }
-      else
-      {
-          foreach($tiles as $tile)
-          {
-            if($this->model->thief_location!=$tile->id)
-              array_push($settlements, $tile->nearestSettlement);
-          }
-          foreach($settlements as $settle)
-          {
-              echo $settle;
-              //find owner of $settle and ->addResource($tile->type,$settle->is_town);
-          }
+            $dice=mt_rand(1,6)+mt_rand(1,6);
+            $tiles=Tile::findByProb($this->model->id, $dice);
+            $settlements=array();
+
+            if($dice==7)
+            {
+                $this->model->active_thief=1;
+                $this->model->save();
+                foreach($this->model->players()->get() as $player)
+                {
+                    echo $player;
+                    $player->stealHalf();
+                }
+                //send request for a player to move thief
+            }
+            else
+            {
+                foreach($tiles as $tile)
+                {
+                  if($this->model->thief_location!=$tile->id)
+                    array_push($settlements, $tile->nearestSettlement);
+                }
+                foreach($settlements as $settle)
+                {
+                    echo $settle;
+                    //find owner of $settle and ->addResource($tile->type,$settle->is_town);
+                }
+            }
       }
   }
   
@@ -190,7 +196,21 @@ class CatanGame
   
   public function buy($player_id, BuyableInterface $item)
   {   
-      $buyer=$this->model->players()->where('id', $player_id)->first();
-      $item->buy($buyer);
+       if($this->orderCheck())
+      {
+            $buyer=$this->model->players()->where('id', $player_id)->first();
+            $item->buy($buyer);
+      }
+  }
+  
+  private function orderCheck()
+  {
+      $player = Player::where('turn_order',$this->model->current_player)->first();
+      if($player->user_id == Auth::user()->id) {
+                 return true;   
+      } else {    
+          echo "to nie twoja tura!";
+      return false;
+      }
   }
 }

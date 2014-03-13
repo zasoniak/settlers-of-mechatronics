@@ -40,7 +40,7 @@
           <a href="#" class="main"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div>
-          <a href="#" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
+          <a href="<?php echo $game->model->id ?>/next" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
       </nav>
       <?php 
@@ -51,6 +51,8 @@
       ?>
       <?php echo Session::get('message'); ?>
       Graczy: <?php echo $game->model->players()->count(); ?>
+      Tura: <?php echo $game->model->turn_number; ?>
+      Obecny gracz: <?php echo $game->model->current_player;?>
     </aside>
     <?php echo $game->renderBoard(); ?>
   </body>
