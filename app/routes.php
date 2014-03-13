@@ -114,5 +114,6 @@ Route::get('generator', function()
 Route::get('game/{id}/next', function($id) {
     $game = new CatanGame(Game::find($id));
     $game->endMove();
+    $game->throwDice();
     return Redirect::to("game/$id");
 });
