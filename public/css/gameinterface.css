@@ -81,9 +81,17 @@ div.usercard td {
 }
 
 nav {
-  display: block;
   overflow: auto;
   width: 100%;
+}
+
+.slide1, .slide2 {
+  display: none;
+}
+
+.slide2 img {
+    width: 150px;
+    height:150px;
 }
 
 nav div {

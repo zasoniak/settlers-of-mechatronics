@@ -80,11 +80,12 @@ div#board {
 }
 
 .settle.active {
-  background: #eee;
+  background: #e8e8e8;
   width: 28px;
   height: 28px;
-  border: 1px solid #ccc;
+  border: 1px solid #bbb;
   border-radius: 15px;
+  display: none;
 }
 .settle.active:hover {
   background: #fff;
@@ -121,11 +122,12 @@ div#board {
 }
 
 .road.active {
-  background: #eee;
+  background: #e8e8e8;
   width: 10px;
   height: 60px;
-  border: 1px solid #ccc;
+  border: 1px solid #bbb;
   border-radius: 4px;
+  display: none;
 }
 .road.active:hover {
   background: #fff;
