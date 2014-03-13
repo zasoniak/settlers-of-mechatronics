@@ -74,8 +74,9 @@ class CatanGame
       $order=1;
       foreach($this->model->players()->get() as $player)
       {
-          $player->turn_oder=$order;
+          $player->turn_order=$order;
           $order++;
+          $player->save();
       }
       
             

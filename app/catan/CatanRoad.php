@@ -58,7 +58,7 @@ class CatanRoad implements DrawableInterface
   
   public function __toString()
   {
-    $return = '<div class="road';
+    $return = '<div class="road active';
     $return .= $this->cssRotation();
     $return .= '" style="left: ';
     $return .= $this->mapX(108, 12, 0); // (hex width + hex horizontal margin)/10

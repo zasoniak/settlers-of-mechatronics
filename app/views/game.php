@@ -43,6 +43,17 @@
           <a href="<?php echo $game->model->id ?>/next" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
       </nav>
+      <nav>
+        <div>
+          <a href="#" class="main"><?php echo HTML::image('img/icon_house.png', 'hammer'); ?></a>
+        </div>
+        <div>
+          <a href="#" class="main"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
+        </div>
+        <div>
+          <a href="#" class="main"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
+        </div>
+      </nav>
       <?php 
       if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
       {

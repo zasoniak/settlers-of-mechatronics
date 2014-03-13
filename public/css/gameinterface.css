@@ -80,6 +80,12 @@ div.usercard td {
   font-weight: bold;
 }
 
+nav {
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
 nav div {
   display: block;
   width: 110px;
@@ -106,6 +112,8 @@ nav div a:hover {
   padding: 10px;
   -webkit-transition: 0.25s;
 }
+
+
 
 nav div a img {
   width: 70px;
