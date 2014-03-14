@@ -21,6 +21,8 @@ div#board {
   }
 }
 
+/****************TILE*****************/
+
 .hex {
   cursor: pointer;
   position: absolute;
@@ -56,6 +58,7 @@ div#board {
   -webkit-transition: 0.4s;
 }
 
+/******************************SETTLEMENT***********************/
 
 .settle {
   position: absolute;
@@ -72,6 +75,29 @@ div#board {
 .town {
   background-color: whitesmoke;
 }
+.hidden {
+  visibility: hidden;
+}
+
+.settle.active {
+  background: #e8e8e8;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #bbb;
+  border-radius: 15px;
+  display: none;
+}
+.settle.active:hover {
+  background: #fff;
+  border-color: #aaa;
+  box-shadow: 0 0 10px #fff;
+  cursor: pointer; 
+}
+.settle.blocked {
+  display: none;
+}
+
+/******************************ROAD***********************/
 
 .road {
   display: block;
@@ -95,23 +121,23 @@ div#board {
   margin-left: 24px;
 }
 
-.potetnial {
-  visibility: hidden;
-}
-
-.active {
-  background: #eee;
+.road.active {
+  background: #e8e8e8;
   width: 10px;
   height: 60px;
-  border: 1px solid #ccc;
+  border: 1px solid #bbb;
   border-radius: 4px;
+  display: none;
 }
-.active:hover {
+.road.active:hover {
   background: #fff;
   border-color: #aaa;
   box-shadow: 0 0 10px #fff;
   cursor: pointer; 
 }
+
+/******************************PORT***********************/
+
 .port {
   display: block;
   position: absolute;

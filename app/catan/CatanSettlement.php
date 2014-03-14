@@ -46,7 +46,7 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
   
   public function __toString()
   {
-    $return = '<div class="settle" style="left: ';
+    $return = '<div class="settle active" style="left: ';
     $return .= $this->mapX(108, 12, 0); // (hex width + hex horizontal margin)/10
     $return .= 'px; top: ';
     $return .= $this->mapY(124, -21, 0); // (hex height + hex vertical margin)/10

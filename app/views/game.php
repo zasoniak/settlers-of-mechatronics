@@ -6,6 +6,27 @@
     <?php echo HTML::style('css/gameinterface.css'); ?>
     <?php echo HTML::style('css/hex.css'); ?>
     <title>Settlers of Mechatronics</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $(".build").click(function(){
+        $(".slide1").slideToggle('300');
+        $(".slide2").slideUp('300');
+      });
+      $(".buy_card").click(function(){
+        $(".slide2").slideToggle('300');
+        $(".slide1").slideUp('300');
+      });
+      $(".build_settle").click(function(){
+        $(".road.active").hide('400');
+        $(".settle.active").toggle('400');
+      });
+      $(".build_road").click(function(){
+        $(".settle.active").hide('400');
+        $(".road.active").toggle('400');
+      });
+    });
+    </script>
   </head>
   <body>
     <aside>
@@ -30,17 +51,33 @@
       Graczy: <?php echo $game->model->players()->count(); ?>
       <nav>
         <div>
-          <a href="#" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
+          <a href="#" class="build"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
         </div>
         <div>
-          <a href="#" class="main"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
+          <a href="#" class="trade"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
         </div>
         <div>
-          <a href="#" class="main"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
+          <a href="#" class="buy_card"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div>
-          <a href="#" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
+          <a href="<?php echo $game->model->id ?>/next" class="endturn"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
+      </nav>
+      <nav class="slide1">
+        <div>
+          <a href="#" class="build_settle"><?php echo HTML::image('img/icon_house.png', 'hammer'); ?></a>
+        </div>
+        <div>
+          <a href="#" class="build_city"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
+        </div>
+        <div>
+          <a href="#" class="build_road"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
+        </div>
+      </nav>
+      <nav class="slide2">
+        A tu się będzie kupowało karcioszki!</br>
+        Stasiu, jebnij tu jakieś takie obrazki z kartami. Na razie wrzucam zdjęcie znanej japońskiej korporacji :P
+        <?php echo HTML::image('img/sony.jpg');?>
       </nav>
       <?php 
       if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
@@ -50,6 +87,8 @@
       ?>
       <?php echo Session::get('message'); ?>
       Graczy: <?php echo $game->model->players()->count(); ?>
+      Tura: <?php echo $game->model->turn_number; ?>
+      Obecny gracz: <?php echo $game->model->current_player;?>
     </aside>
     <?php echo $game->renderBoard(); ?>
   </body>
