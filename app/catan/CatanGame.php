@@ -85,7 +85,7 @@ class CatanGame
   public function endMove()
   {
       //liczy ilosc graczy w danej grze
-      if($this->orderCheck())
+      if($this->turnCheck())
       {
             $playersQuantity=$this->model->players()->count();
             //$playersQuantity=4;
@@ -106,7 +106,7 @@ class CatanGame
   
  public function throwDice()
   {
-      if($this->orderCheck())
+      if($this->turnCheck())
       {
             $dice=mt_rand(1,6)+mt_rand(1,6);
             $tiles=Tile::findByProb($this->model->id, $dice);
