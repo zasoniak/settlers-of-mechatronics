@@ -9,8 +9,7 @@
   </head>
   <body>
     <aside>
-      <?php $opps = $game->getOpponents(); ?>
-      <?php foreach($opps as $player): ?>
+      <?php foreach($game->getOpponents() as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
         <figure><?php echo HTML::image('img/WM3.png', 'morda'); ?></figure>
         <table>

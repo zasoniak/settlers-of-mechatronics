@@ -14,7 +14,11 @@ class Game extends Eloquent {
   public function players() {
     return $this->hasMany('Player');
   }
-   
+  
+  public function users()
+  {
+    return $this->belongsToMany('User', 'players');
+  }
 }
 
 ?>

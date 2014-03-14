@@ -5,7 +5,7 @@
  *
  * @author Sony
  */
-class CatanSettlement implements DrawableInterface
+class CatanSettlement implements DrawableInterface, PurchasableInterface
 {
   /**
    *
@@ -15,11 +15,9 @@ class CatanSettlement implements DrawableInterface
   
   public function __construct(Settlement $settlement)
   {
-    if($settlement instanceof Settlement)
-    {
-      $this->model = $settlement;
-    }
+    $this->model = $settlement;
   }
+  
   private function mapX($width,$margin,$offset)
   {
     $sum=$this->model->x+$this->model->y+$this->model->z;
@@ -57,9 +55,30 @@ class CatanSettlement implements DrawableInterface
     return $return;
   }
   
-  private function costCheck(Player $player=NULL)
+  public function cost()
   {
-      if($player->clay>=1 && $player->sheep>=1 && $player->wood>=1 && $player->wheat>=1)
+    if (is_null($this->model->player_id))
+    {
+      return array('clay'=>1,'wood'=>1,'sheep'=>1,'wheat'=>1); 
+    }
+    return array('stone'=>3,'wheat'=>2);
+  }
+  
+  public function buy(Player $player)
+  {
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      if($player->{$resource} < $quantity)
+      {
+        return false;
+      }
+    }
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      $player->{$resource} -= $quantity;
+    }
+    /*
+    if($player->clay>=1 && $player->sheep>=1 && $player->wood>=1 && $player->wheat>=1)
       {
           $player->clay-=1;
           $player->sheep-=1;
@@ -67,31 +86,20 @@ class CatanSettlement implements DrawableInterface
           $player->wheat-=1;
           return true;
       }
-      else
-      {
-          echo "nie stać cię na osadę!";
-          return false;
-      }   
-  }
-  
-  public function buy(Player $player=NULL)
-  {
-      if($player instanceof Player)
-      {
-            if($this->model->player_id==$player->id)
-            {
-                 $this->upgrade($player);
-            }
-            else if($this->model->player_id==0)
-            {
-                if($this->costCheck($player))
-                {
-                    $this->model->player_id=$player->id;
-                    $this->model->save();
-                } 
-            }
-      }
-
+     *
+     */
+    if($this->model->player_id==$player->id)
+    {
+         $this->upgrade($player);
+    }
+    else if($this->model->player_id==0)
+    {
+        if($this->costCheck($player))
+        {
+            $this->model->player_id=$player->id;
+            $this->model->save();
+        } 
+    }
   }
   
   private function upgrade($player)
@@ -104,6 +112,6 @@ class CatanSettlement implements DrawableInterface
           $this->model->save();
       }
       else
-          echo "nie stać cię na miasto!";
+          return false;
   }
 }

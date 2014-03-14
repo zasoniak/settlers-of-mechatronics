@@ -221,7 +221,7 @@ class CatanBoard implements DrawableInterface
     {
       $return .= $port;
     }
-    $return .= '</div></div>';
+    $return .= "</div></div>";
     return $return;
   }
 }

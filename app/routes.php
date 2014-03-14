@@ -71,6 +71,8 @@ Route::get('board/{id}', function($id){
   return View::make('board')->with('board', $board);
 });
 
+/* game routes */
+
 Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
   return View::make('game')->with('game',$game);
@@ -100,6 +102,25 @@ Route::get('game/{id}/start', function($id) {
   return Redirect::back()->with('message', 'Coś spierdoliłeś!!! Na pewno masz 4 graczy?');
 });
 
+Route::get('game/{id}/next', function($id) {
+    $game = new CatanGame(Game::find($id));
+    $game->endMove();
+    return Redirect::to("game/$id");
+});
+
+
+Route::post('game/{id}/build', function($id){
+  if(Request::ajax())
+  {
+    $item = Input::get('item');
+    $user = Auth::user();
+    
+  }
+  return Response::make('Zabronione','403');
+});
+
+/* pierdolnik */
+
 Route::get('interface', function()
 {
   return View::make('interface');
@@ -110,9 +131,3 @@ Route::get('generator', function()
   return View::make('generator');
 });
 
-
-Route::get('game/{id}/next', function($id) {
-    $game = new CatanGame(Game::find($id));
-    $game->endMove();
-    return Redirect::to("game/$id");
-});

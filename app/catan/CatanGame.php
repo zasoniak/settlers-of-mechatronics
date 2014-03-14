@@ -188,9 +188,13 @@ class CatanGame
     return (string)$this->board;
   }
   
-  public function buy($player_id, BuyableInterface $item)
+  public function buyItem($player_id, BuyableInterface $item)
   {   
       $buyer=$this->model->players()->where('id', $player_id)->first();
       $item->buy($buyer);
+      if($item instanceof BuildableInterface)
+      {
+        $item->build;
+      }
   }
 }
