@@ -18,12 +18,18 @@
         $(".slide1").slideUp('300');
       });
       $(".build_settle").click(function(){
-        $(".road.active").hide('400');
+        $(".road.active").hide('800');
         $(".settle.active").toggle('400');
       });
       $(".build_road").click(function(){
-        $(".settle.active").hide('400');
+        $(".settle.active").hide('800');
         $(".road.active").toggle('400');
+      });
+      $(".settle").click(function(){
+        $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
+                .done(function(data){
+                  $("#whole").html(data);
+                });
       });
     });
     </script>
@@ -90,6 +96,8 @@
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->current_player;?>
     </aside>
-    <?php echo $game->renderBoard(); ?>
+    <div id="whole">
+      <?php echo $game->renderBoard(); ?>
+    </div>
   </body>
 </html>

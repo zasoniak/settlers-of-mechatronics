@@ -17,7 +17,7 @@ class CatanGame
    *
    * @var CatanBoard board's catan class
    */
-  private $board = NULL;
+  public $board = NULL;
   private $playerList = array();
 
   public function __construct(Game $game) {
@@ -192,23 +192,26 @@ class CatanGame
     return (string)$this->board;
   }
   
-  public function buyItem($player_id, BuyableInterface $item)
+  public function buyItem(PurchasableInterface $item)
   {   
-       if($this->orderCheck())
+    if($this->turnCheck())
+    {
+      $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
+      if($item->buy($buyer))
       {
-            $buyer=$this->model->players()->where('id', $player_id)->first();
-            $item->buy($buyer);
+        return true;
       }
+      throw new Exception('Nie wyszedl buy()');
+    }
+    throw new Exception('Nie wyszedl turnCheck()');
   }
   
-  private function orderCheck()
+  private function turnCheck()
   {
-      $player = Player::where('turn_order',$this->model->current_player)->first();
-      if($player->user_id == Auth::user()->id) {
-                 return true;   
-      } else {    
-          echo "to nie twoja tura!";
-      return false;
-      }
+    $player = Player::where('turn_order',$this->model->current_player)->first();
+    if($player->user_id == Auth::user()->id) {
+      return true;   
+    }
+    return false;
   }
 }

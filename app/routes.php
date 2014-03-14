@@ -112,9 +112,15 @@ Route::get('game/{id}/next', function($id) {
 Route::post('game/{id}/build', function($id){
   if(Request::ajax())
   {
-    $item = Input::get('item');
-    $user = Auth::user();
-    
+    $itemname = Input::get('item');
+    $game = new CatanGame(Game::find($id));
+    $itemlist = $itemname.'List';
+    $item = $game->board->{$itemlist}[(int)Input::get('id')];
+    if($game->buyItem($item))
+    {
+      return $game->renderBoard();
+    }
+    return Response::make('Błąd','204');
   }
   return Response::make('Zabronione','403');
 });

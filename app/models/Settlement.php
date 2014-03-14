@@ -8,6 +8,11 @@ class Settlement extends Eloquent {
         return $this->belongsTo('Board');
     }
     
+    public function player()
+    {
+      return $this->belongsTo('Player');
+    }
+    
     public static function findByCoords($board_id, array $coords)
     {
       return Board::find($board_id)->settlements()

@@ -16,7 +16,7 @@ class CatanBoard implements DrawableInterface
   public $tileMap = array(array(array()));
   private $portList = array();
   private $roadList = array();
-  private $settlementList = array();
+  public $settlementList = array();
   
   /**
    * wyciąga z bazy danych obiekty należące do planszy
@@ -32,7 +32,7 @@ class CatanBoard implements DrawableInterface
       }
       foreach ($board->settlements as $settle)
       {
-        array_push($this->settlementList, new CatanSettlement($settle));
+        $this->settlementList[$settle->id] = new CatanSettlement($settle);
       }
       foreach ($board->roads as $road)
       {
@@ -197,7 +197,7 @@ class CatanBoard implements DrawableInterface
   
   public function __toString()
   {
-    $return = '<div id="whole"><div id="board">';
+    $return = '<div id="board">';
     for ($z = -30; $z < 31; $z+=10)
     {
       for ($x = -30; $x < 31; $x+=10)
@@ -221,7 +221,7 @@ class CatanBoard implements DrawableInterface
     {
       $return .= $port;
     }
-    $return .= "</div></div>";
+    $return .= "</div>";
     return $return;
   }
 }

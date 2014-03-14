@@ -63,12 +63,10 @@ div#board {
 .settle {
   position: absolute;
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 30px;
+  height: 30px;
   margin: -15px;  /*half of settlement radius*/
   border-radius: 15px;
-  border: 7px solid lightseagreen;
-  background-color: lightseagreen;
   /*visibility: hidden;*/
 }
 
@@ -103,7 +101,7 @@ div#board {
   display: block;
   width: 12px;
   height: 62px;
-  background: lightgreen;
+  background: gainsboro;
   position: absolute;
   margin-top: -66px;
   margin-left: -6px;
@@ -122,7 +120,7 @@ div#board {
 }
 
 .road.active {
-  background: #e8e8e8;
+  background-color: #e8e8e8;
   width: 10px;
   height: 60px;
   border: 1px solid #bbb;
@@ -130,7 +128,7 @@ div#board {
   display: none;
 }
 .road.active:hover {
-  background: #fff;
+  background-color: #fff;
   border-color: #aaa;
   box-shadow: 0 0 10px #fff;
   cursor: pointer; 
@@ -208,4 +206,18 @@ div#board {
 .dir5 {
   margin-top: 42px;
   margin-left: 6px;
+}
+
+/****************COLORS*******************/
+
+.green {
+  background-color: yellowgreen;
+}
+
+.blue {
+  background-color: steelblue;
+}
+
+.red {
+  background-color: orangered;
 }

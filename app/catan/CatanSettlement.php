@@ -46,7 +46,16 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
   
   public function __toString()
   {
-    $return = '<div class="settle active" style="left: ';
+    $colors = array(1=>'red',2=>'blue');
+    if(is_null($this->model->player_id))
+    {
+      $class = 'settle active';
+    }
+    else
+    {
+      $class = 'settle '.$colors[$this->model->player->turn_order];
+    }
+    $return = '<div settle="'.$this->model->id.'" class="'.$class.'" style="left: ';
     $return .= $this->mapX(108, 12, 0); // (hex width + hex horizontal margin)/10
     $return .= 'px; top: ';
     $return .= $this->mapY(124, -21, 0); // (hex height + hex vertical margin)/10
@@ -77,41 +86,16 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     {
       $player->{$resource} -= $quantity;
     }
-    /*
-    if($player->clay>=1 && $player->sheep>=1 && $player->wood>=1 && $player->wheat>=1)
-      {
-          $player->clay-=1;
-          $player->sheep-=1;
-          $player->wood-=1; 
-          $player->wheat-=1;
-          return true;
-      }
-     *
-     */
-    if($this->model->player_id==$player->id)
+    if(is_null($this->model->player_id))
     {
-         $this->upgrade($player);
+      $this->model->player_id = $player->id;
     }
-    else if($this->model->player_id==0)
+    else
     {
-        if($this->costCheck($player))
-        {
-            $this->model->player_id=$player->id;
-            $this->model->save();
-        } 
+      $this->model->is_town = 1;
     }
-  }
-  
-  private function upgrade($player)
-  {
-      if($player->stone>=3 && $player->wheat>=2)
-      {
-          $player->stone-=3; 
-          $player->wheat-=2;
-          $this->model->is_town=1;
-          $this->model->save();
-      }
-      else
-          return false;
+    $player->save();
+    $this->model->save();
+    return true;
   }
 }
