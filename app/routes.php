@@ -118,11 +118,11 @@ Route::post('game/{id}/build', function($id){
     $item = $game->board->{$itemlist}[(int)Input::get('id')];
     if($game->buyItem($item))
     {
-      return $game->renderBoard();
+      return Response::make('OK!',200);
     }
-    return Response::make('Błąd','204');
+    return Response::make('Nie bylo Cie stac','403');
   }
-  return Response::make('Zabronione','403');
+  return Response::make('Zabronione nieajaxowe wywolanie','403');
 });
 
 /* pierdolnik */

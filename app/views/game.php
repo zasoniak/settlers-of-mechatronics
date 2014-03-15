@@ -25,10 +25,16 @@
         $(".settle.active").hide('800');
         $(".road.active").toggle('400');
       });
-      $(".settle").click(function(){
+      $(".settle").click(function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
                 .done(function(data){
-                  $("#whole").html(data);
+                  $(event.target).removeClass("active").addClass("red");
+                });
+      });
+      $(".road").click(function(event){
+        $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"road", id:$(this).attr("road") })
+                .done(function(data){
+                  $(event.target).removeClass("active").addClass("red");
                 });
       });
     });

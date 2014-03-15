@@ -201,14 +201,14 @@ class CatanGame
       {
         return true;
       }
-      throw new Exception('Nie wyszedl buy()');
+      return false;
     }
-    throw new Exception('Nie wyszedl turnCheck()');
+    return false;
   }
   
   private function turnCheck()
   {
-    $player = Player::where('turn_order',$this->model->current_player)->first();
+    $player = $this->model->players()->where('turn_order',$this->model->current_player)->first();
     if($player->user_id == Auth::user()->id) {
       return true;   
     }

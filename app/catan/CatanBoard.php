@@ -15,7 +15,7 @@ class CatanBoard implements DrawableInterface
   
   public $tileMap = array(array(array()));
   private $portList = array();
-  private $roadList = array();
+  public $roadList = array();
   public $settlementList = array();
   
   /**
@@ -36,7 +36,7 @@ class CatanBoard implements DrawableInterface
       }
       foreach ($board->roads as $road)
       {
-        array_push($this->roadList, new CatanRoad($road));
+        $this->roadList[$road->id] = new CatanRoad($road);
       }
       foreach ($board->ports as $port)
       {

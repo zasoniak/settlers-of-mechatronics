@@ -5,7 +5,7 @@
  *
  * @author Sony
  */
-class CatanRoad implements DrawableInterface
+class CatanRoad implements DrawableInterface, PurchasableInterface
 {
   /**
    *
@@ -58,7 +58,16 @@ class CatanRoad implements DrawableInterface
   
   public function __toString()
   {
-    $return = '<div class="road active';
+    $colors = array(1=>'red',2=>'blue');
+    if(is_null($this->model->player_id))
+    {
+      $class = 'road active';
+    }
+    else
+    {
+      $class = 'road '.$colors[$this->model->player->turn_order];
+    }
+    $return = '<div road="'.$this->model->id.'" class="'.$class;
     $return .= $this->cssRotation();
     $return .= '" style="left: ';
     $return .= $this->mapX(108, 12, 0); // (hex width + hex horizontal margin)/10
@@ -69,30 +78,28 @@ class CatanRoad implements DrawableInterface
     return $return;
   }
   
-  public function costCheck(Player $player=NULL)
+  public function cost()
   {
-      if($player->clay>=1 && $player->wood>=1)
-      {
-          $player->clay-=1;
-          $player->wood-=1; 
-          return true;
-      }
-      else
-          return false;
+    return array('wood'=>1,'clay'=>1);
   }
   
-  public function buy(Player $player=NULL)
+  public function buy(Player $player)
   {
-      
-      if($this->costCheck($player))
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      if($player->{$resource} < $quantity)
       {
-          $this->model->player_id=$player->id;
-          $this->model->save();
+        return false;
       }
-      else
-      {
-          echo "nie stać cię na drogę!";
-      }
+    }
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      $player->{$resource} -= $quantity;
+    }
+    $this->model->player_id = $player->id;
+    $player->save();
+    $this->model->save();
+    return true;
   }
   
   
