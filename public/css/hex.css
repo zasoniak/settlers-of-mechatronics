@@ -105,6 +105,7 @@ div#board {
   position: absolute;
   margin-top: -66px;
   margin-left: -6px;
+  border-radius: 4px;
 }
 
 .x {
@@ -124,7 +125,6 @@ div#board {
   width: 10px;
   height: 60px;
   border: 1px solid #bbb;
-  border-radius: 4px;
   display: none;
 }
 .road.active:hover {

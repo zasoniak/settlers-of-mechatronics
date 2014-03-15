@@ -98,9 +98,23 @@
       }
       ?>
       <?php echo Session::get('message'); ?>
-      Graczy: <?php echo $game->model->players()->count(); ?>
       Tura: <?php echo $game->model->turn_number; ?>
-      Obecny gracz: <?php echo $game->model->current_player;?>
+      Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
+      <nav>
+        <?php
+          $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
+          $resources['stone']=$game->model->players()->where('user_id',Auth::user()->id)->first()->stone;
+          $resources['sheep']=$game->model->players()->where('user_id',Auth::user()->id)->first()->sheep;
+          $resources['clay']=$game->model->players()->where('user_id',Auth::user()->id)->first()->clay;
+          $resources['wheat']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wheat;
+          foreach($resources as $type=>$count): ?>
+        <div class="res_card <?php echo $type; ?>">
+          <span>
+            <?php echo $count; ?>
+          </span>
+        </div>
+        <?php endforeach; ?>
+      </nav>
     </aside>
     <div id="whole">
       <?php echo $game->renderBoard(); ?>

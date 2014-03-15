@@ -121,12 +121,33 @@ nav div a:hover {
   -webkit-transition: 0.25s;
 }
 
-
-
 nav div a img {
   width: 70px;
   height: 70px;
   border-radius: 35px;
+}
+
+.res_card {
+    width: 70px;
+    height: 110px;
+    margin: 5px;
+    outline: 1px dotted pink;
+    background-position: center;
+    background-size: cover;
+}
+
+.res_card span {
+    display: block;
+    margin-top: 36px;
+    text-align: center;
+    z-index: 1;
+    color: rgba(255,255,255,0.8);
+    text-shadow: 0 0 4px rgba(0,0,0,0.4);
+    -webkit-transition: 0.4s;
+    font-family: 'ubuntu', 'arial';
+    font-size: 52px;
+    font-weight: bold;
+    line-height: 1em;
 }
 
 .sony div{
