@@ -1,8 +1,7 @@
 div#whole{
   display: block;
-  height: 100%;
 }
-div#board {
+div#board, div#jsontarget {
   display: block;
   height: 650px;
   width: 840px;
@@ -45,6 +44,10 @@ div#board {
   font-size: 52px;
   font-weight: bold;
   line-height: 1em;
+}
+
+.hex span:empty {
+  visibility: hidden;
 }
 
 .hex:hover{

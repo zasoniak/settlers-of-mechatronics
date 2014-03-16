@@ -25,7 +25,7 @@ class CatanGame
     // dodanie CatanPlayers do listy
     foreach ($this->model->players as $player)
     {
-      array_push($this->playerList, new CatanPlayer($player));
+      $this->playerList[$player->id] = new CatanPlayer($player);
     }
     // warunkowe dodanie CatanBoard
     if($this->model->board()->count())
@@ -141,19 +141,13 @@ class CatanGame
   
   public function getPlayers()
   {
-    $return = array();
-    foreach ($this->model->players as $player)
-    {
-      array_push($return, new CatanPlayer($player));
-    }
-    return $return;
+    return $this->playerList;
   }
   
   public function getOpponents()
   {
-    $players = $this->getPlayers();
     $return = array();
-    foreach($players as $player)
+    foreach($this->playerList as $player)
     {
       if($player->model->user->id != Auth::user()->id)
       {
@@ -213,5 +207,12 @@ class CatanGame
       return true;   
     }
     return false;
+  }
+  
+  public function toJSON()
+  {
+    return array(
+        'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)]->toJSON(),
+    );
   }
 }

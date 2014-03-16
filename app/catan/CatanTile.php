@@ -45,4 +45,13 @@ class CatanTile implements DrawableInterface
       $return .= '</div>';
       return $return;
     }
+    
+    public function toJSON()
+    {
+      return array(
+          'classes' => 'hex '.$this->model->type,
+          'styles' => array('left'=>$this->mapX(108, 12, 0).'px','top'=>$this->mapY(124, -21, 0).'px'),
+          'prob' => $this->model->probability
+      );
+    }
 }
