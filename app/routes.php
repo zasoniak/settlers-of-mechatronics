@@ -61,17 +61,17 @@ Route::post('signup', function() {
   return Redirect::to('signup')->withErrors($valid);
 });
 
-Route::get('game/create', function(){
-  $game = CatanGame::generate(Auth::user());
-  return Redirect::to('game/'.$game->model->id);
-});
-
 Route::get('board/{id}', function($id){
   $board = new CatanBoard(Board::find($id));
   return View::make('board')->with('board', $board);
 });
 
 /* game routes */
+
+Route::get('game/create', function(){
+  $game = CatanGame::generate(Auth::user());
+  return Redirect::to('game/'.$game->model->id);
+});
 
 Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
@@ -84,12 +84,16 @@ Route::get('game', function(){
 });
 
 Route::get('game/{id}/join', function($id) {
+  return View::make('join');
+});
+
+Route::post('game/{id}/join', function($id) {
   $game = new CatanGame(Game::find($id));
-  if($game->addPlayer(Auth::user()))
+  if($game->addPlayer(Auth::user(),Input::get('color')))
   {  
-    return Redirect::to("game/$id");
+    return Response::make('OK',200);
   }
-  return Redirect::home()->with('message', 'Coś poszło nie tak, sorry.');
+  return Response::make('Błąd',403);
 });
 
 Route::get('game/{id}/start', function($id) {
@@ -129,7 +133,7 @@ Route::get('game/{id}/update', function($id){
   if(Request::ajax())
   {
     $game = new CatanGame(Game::find($id));
-    return Response::json($game->board->toJSON());
+    return Response::json($game->toJSON());
   }
   return Response::make('Zabronione nieajaxowe wywolanie','403');
 });

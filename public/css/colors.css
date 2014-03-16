@@ -1,0 +1,34 @@
+/* 
+    Created on : 2014-03-16, 22:12:23
+    Author     : Konrad Kowalewski <k.j.kowalewski@gmail.com>
+*/
+
+.green {
+  background-color: forestgreen;
+  border-color: forestgreen;
+}
+
+.blue {
+  background-color: royalblue;
+  border-color: royalblue;
+}
+
+.red {
+  background-color: red;
+  border-color: red;
+}
+
+.yellow {
+  background-color: gold;
+  border-color: gold;
+}
+
+.orange {
+  background-color: darkorange;
+  border-color: darkorange;
+}
+
+.violet {
+  background-color: darkviolet;
+  border-color: darkviolet;
+}

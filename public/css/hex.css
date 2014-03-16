@@ -210,17 +210,3 @@ div#board, div#jsontarget {
   margin-top: 42px;
   margin-left: 6px;
 }
-
-/****************COLORS*******************/
-
-.green {
-  background-color: yellowgreen;
-}
-
-.blue {
-  background-color: steelblue;
-}
-
-.red {
-  background-color: orangered;
-}

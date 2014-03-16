@@ -34,7 +34,7 @@ class CatanGame
     }
   }
   
-  public function addPlayer(User $user, $host = false)
+  public function addPlayer(User $user, $color = 'red', $host = false)
   {
     foreach($this->playerList as $player)
     {
@@ -49,6 +49,7 @@ class CatanGame
     }
     $player = new Player();
     $player->user_id = $user->id;
+    $player->color = $color;
     if($host)
     {
       $player->is_host = 1;
@@ -211,8 +212,15 @@ class CatanGame
   
   public function toJSON()
   {
+    $opponents = array();
+    foreach ($this->getOpponents() as $player)
+    {
+      $opponents[$player->model->id] = $player->toJSON();
+    }
     return array(
-        'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)]->toJSON(),
+        'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(),
+        'opponents' => $opponents,
+        'board' => $this->board->toJSON()
     );
   }
 }

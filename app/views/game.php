@@ -5,6 +5,7 @@
     <?php echo HTML::style('css/reset.css'); ?>
     <?php echo HTML::style('css/gameinterface.css'); ?>
     <?php echo HTML::style('css/hex.css'); ?>
+    <?php echo HTML::style('css/colors.css'); ?>
     <title>Settlers of Mechatronics</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
@@ -40,19 +41,22 @@
       $("#loadjson").click(function(){
         $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
                 .done(function(data){
-                  $.each(data.tiles, function(index,item){
+                  $.each(data.board.tiles, function(index,item){
                     $("<div>")
                             .addClass(item.classes)
                             .css(item.styles)
                             .append($("<span>").html(item.prob))
                             .appendTo("#jsontarget");
                   });
-                  $.each(data.settlements, function(index,item){
+                  $.each(data.board.settlements, function(index,item){
                     $("<div>")
                             .addClass(item.classes)
                             .css(item.styles)
                             .attr(item.attr)
                             .appendTo("#jsontarget");
+                  });
+                  $.each(data.opponents, function(index,item){
+                    $("[player="+index+"]").find("td").last().html(item);
                   });
                 });
       });
@@ -63,7 +67,7 @@
     <aside>
       <?php foreach($game->getOpponents() as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
-        <figure><?php echo HTML::image('img/WM3.png', 'morda'); ?></figure>
+        <figure><?php echo HTML::image('img/sony.jpg', 'morda', array('class'=>$player->model->color)); ?></figure>
         <table>
           <caption><?php echo $player->model->user->nickname; ?></caption>
           <tbody>
@@ -117,9 +121,11 @@
       }
       ?>
       <?php echo Session::get('message'); ?>
+      <?php if($game->isBoard()) : ?>
       <a href="#" id="loadjson">Pobierz JSON</a>
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
+      <?php endif; ?>
       <nav>
         <?php
           $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
