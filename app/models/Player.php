@@ -12,6 +12,17 @@ class Player extends Eloquent{
         return $this->belongsTo('Game');
     }
     
+    public function getResources()
+    {
+      return array(
+          'wood' => $this->wood,
+          'clay' => $this->clay,
+          'stone' => $this->stone,
+          'wheat' => $this->wheat,
+          'sheep' => $this->sheep,
+      );
+    }
+    
     public function countResources()
     {
         $sum = 0;

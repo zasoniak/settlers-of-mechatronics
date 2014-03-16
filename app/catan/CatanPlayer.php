@@ -47,4 +47,17 @@ class CatanPlayer
           }
       }   
   }
+  
+  public function toJSON($hidden = true)
+  {
+    if($hidden)
+    {
+      return array(
+          'resources' => $this->model->countResources()
+      );
+    }
+    return array(
+        'resources' => $this->model->getResources()
+    );
+  }
 }
