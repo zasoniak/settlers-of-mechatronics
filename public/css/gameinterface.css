@@ -132,8 +132,6 @@ nav div a img {
 .res_card {
     width: 70px;
     height: 110px;
-    margin: 5px;
-    outline: 1px dotted pink;
     background-position: center;
     background-size: cover;
 }
@@ -150,6 +148,35 @@ nav div a img {
     font-size: 52px;
     font-weight: bold;
     line-height: 1em;
+}
+
+#trade {
+    width: 100%;
+    height: auto;
+    display: none;
+}
+
+nav table {
+    margin: 0 auto;
+}
+.trade_up td {
+    width: 0;
+    height: 20px;
+    border-bottom: 15px solid green;
+    border-right: 35px solid transparent;
+    border-left: 35px solid transparent;
+}
+
+.trade_quantity td {
+    text-align: center;
+}
+
+.trade_down td {
+    width: 0;
+    height: 20px;
+    border-top: 15px solid red;
+    border-right: 35px solid transparent;
+    border-left: 35px solid transparent;
 }
 
 .sony div{

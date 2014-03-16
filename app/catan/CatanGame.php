@@ -200,7 +200,7 @@ class CatanGame
     }
     return false;
   }
-  
+ 
   private function turnCheck()
   {
     $player = $this->model->players()->where('turn_order',$this->model->current_player)->first();

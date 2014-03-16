@@ -149,4 +149,3 @@ Route::get('generator', function()
 {
   return View::make('generator');
 });
-
