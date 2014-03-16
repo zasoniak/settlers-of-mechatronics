@@ -46,14 +46,13 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
   
   public function __toString()
   {
-    $colors = array(1=>'red',2=>'blue',3=>'green');
     if(is_null($this->model->player_id))
     {
       $class = 'settle active';
     }
     else
     {
-      $class = 'settle '.$colors[$this->model->player->turn_order];
+      $class = 'settle '.$this->model->player->color;
     }
     $return = '<div settle="'.$this->model->id.'" class="'.$class.'" style="left: ';
     $return .= $this->mapX(108, 12, 0); // (hex width + hex horizontal margin)/10
@@ -66,14 +65,13 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
   
   public function toJSON()
   {
-    $colors = array(1=>'red',2=>'blue',3=>'green');
     if(is_null($this->model->player_id))
     {
       $classes = 'settle active';
     }
     else
     {
-      $classes = 'settle '.$colors[$this->model->player->turn_order];
+      $classes = 'settle '.$this->model->player->color;
     }
     return array(
         'classes' => $classes,

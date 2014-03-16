@@ -58,14 +58,13 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
   
   public function __toString()
   {
-    $colors = array(1=>'red',2=>'blue');
     if(is_null($this->model->player_id))
     {
       $class = 'road active';
     }
     else
     {
-      $class = 'road '.$colors[$this->model->player->turn_order];
+      $class = 'road '.$this->model->player->color;
     }
     $return = '<div road="'.$this->model->id.'" class="'.$class;
     $return .= $this->cssRotation();
@@ -76,6 +75,24 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     $return .= 'px;">';
     $return .= '</div>';
     return $return;
+  }
+  
+  public function toJSON()
+  {
+    if(is_null($this->model->player_id))
+    {
+      $classes = 'road active';
+    }
+    else
+    {
+      $classes = 'road '.$this->model->player->color;
+    }
+    $classes .= $this->cssRotation();
+    return array(
+        'classes' => $classes,
+        'attr' => array('road'=>$this->model->id),
+        'styles' => array('left'=>$this->mapX(108, 12, 0).'px','top'=>$this->mapY(124, -21, 0).'px')
+    );
   }
   
   public function cost()

@@ -64,7 +64,7 @@ class CatanGame
     $instance = new self($game);
     $instance->model = $game;
     //dodanie hosta gry
-    $instance->addPlayer($user,true);
+    $instance->addPlayer($user,'red',true);
     return $instance;
   }
 

@@ -55,6 +55,13 @@
                             .attr(item.attr)
                             .appendTo("#jsontarget");
                   });
+                  $.each(data.board.roads, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .attr(item.attr)
+                            .appendTo("#jsontarget");
+                  });
                   $.each(data.opponents, function(index,item){
                     $("[player="+index+"]").find("td").last().html(item);
                   });

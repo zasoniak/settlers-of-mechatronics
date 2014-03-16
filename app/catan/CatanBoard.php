@@ -227,7 +227,7 @@ class CatanBoard implements DrawableInterface
   
   public function toJSON()
   {
-    $return = array('tiles'=>array(),'settlements'=>array());
+    $return = array('tiles'=>array(),'settlements'=>array(),'roads'=>array());
     for ($z = -30; $z < 31; $z+=10)
     {
       for ($x = -30; $x < 31; $x+=10)
@@ -242,6 +242,10 @@ class CatanBoard implements DrawableInterface
     foreach($this->settlementList as $settle)
     {
       array_push($return['settlements'], $settle->toJSON());
+    }
+    foreach($this->roadList as $road)
+    {
+      array_push($return['roads'], $road->toJSON());
     }
     return $return;
   }
