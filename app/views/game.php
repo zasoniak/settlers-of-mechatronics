@@ -9,13 +9,12 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
-      $(".build").click(function(){
+      $(".build_button").click(function(){
         $(".slide1").slideToggle('300');
         $(".slide2").slideUp('300');
-      });
-      $(".buy_card").click(function(){
-        $(".slide2").slideToggle('300');
-        $(".slide1").slideUp('300');
+        $("#trade").slideUp('300');
+        $(".road.active").hide('800');
+        $(".settle.active").hide('800');
       });
       $(".build_settle").click(function(){
         $(".road.active").hide('800');
@@ -24,6 +23,17 @@
       $(".build_road").click(function(){
         $(".settle.active").hide('800');
         $(".road.active").toggle('400');
+      });
+      $(".buy_card_button").click(function(){
+        $(".slide2").slideToggle('300');
+        $(".slide1").slideUp('300');
+        $("#trade").slideUp('300');
+      });
+      $(".trade_button").click(function(){
+        $("#trade").slideToggle();
+        $(".slide1").slideUp('300');
+        $(".slide2").slideUp('300');
+        
       });
       $(".settle").click(function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
@@ -60,16 +70,20 @@
         </table>
       </div>
       <?php endforeach; ?>
+      <div>
       Graczy: <?php echo $game->model->players()->count(); ?>
+      Tura: <?php echo $game->model->turn_number; ?> <br>
+      Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?> 
+      </div>
       <nav>
         <div>
-          <a href="#" class="build"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
+          <a href="#" class="build_button"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
         </div>
         <div>
-          <a href="#" class="trade"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
+          <a href="#" class="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
         </div>
         <div>
-          <a href="#" class="buy_card"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
+          <a href="#" class="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div>
           <a href="<?php echo $game->model->id ?>/next" class="endturn"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
@@ -98,8 +112,6 @@
       }
       ?>
       <?php echo Session::get('message'); ?>
-      Tura: <?php echo $game->model->turn_number; ?>
-      Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <nav>
         <?php
           $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
@@ -107,13 +119,47 @@
           $resources['sheep']=$game->model->players()->where('user_id',Auth::user()->id)->first()->sheep;
           $resources['clay']=$game->model->players()->where('user_id',Auth::user()->id)->first()->clay;
           $resources['wheat']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wheat;
-          foreach($resources as $type=>$count): ?>
-        <div class="res_card <?php echo $type; ?>">
-          <span>
-            <?php echo $count; ?>
-          </span>
+        ?>
+        <nav>
+        <table>
+          <tr>
+            <?php foreach($resources as $type=>$count): ?>
+            <td class="res_card <?php echo $type; ?>">
+              <span>
+                <?php echo $count; ?>
+              </span>
+            </td>
+            <?php endforeach; ?>
+          </tr>
+        </table>
+        </nav> 
+        <div id="trade">
+          <table>
+          <tbody>
+            <tr class="trade_up">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr class="trade_quantity">
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr class="trade_down">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
         </div>
-        <?php endforeach; ?>
       </nav>
     </aside>
     <div id="whole">
