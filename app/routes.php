@@ -125,6 +125,15 @@ Route::post('game/{id}/build', function($id){
   return Response::make('Zabronione nieajaxowe wywolanie','403');
 });
 
+Route::get('game/{id}/update', function($id){
+  if(Request::ajax())
+  {
+    $game = new CatanGame(Game::find($id));
+    return Response::json($game->board->toJSON());
+  }
+  return Response::make('Zabronione nieajaxowe wywolanie','403');
+});
+
 /* pierdolnik */
 
 Route::get('interface', function()

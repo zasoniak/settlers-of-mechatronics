@@ -37,6 +37,25 @@
                   $(event.target).removeClass("active").addClass("red");
                 });
       });
+      $("#loadjson").click(function(){
+        $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
+                .done(function(data){
+                  $.each(data.tiles, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .append($("<span>").html(item.prob))
+                            .appendTo("#jsontarget");
+                  });
+                  $.each(data.settlements, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .attr(item.attr)
+                            .appendTo("#jsontarget");
+                  });
+                });
+      });
     });
     </script>
   </head>
@@ -98,6 +117,7 @@
       }
       ?>
       <?php echo Session::get('message'); ?>
+      <a href="#" id="loadjson">Pobierz JSON</a>
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <nav>
@@ -118,6 +138,7 @@
     </aside>
     <div id="whole">
       <?php echo $game->renderBoard(); ?>
+      <div id="jsontarget"></div>
     </div>
   </body>
 </html>
