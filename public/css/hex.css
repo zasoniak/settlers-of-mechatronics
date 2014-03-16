@@ -50,6 +50,10 @@ div#board, div#jsontarget {
   visibility: hidden;
 }
 
+.hex span:empty {
+  visibility: hidden;
+}
+
 .hex:hover{
   box-shadow: inset 0 0 100px rgba(0,0,0,0.6);
   -webkit-transition: 0.4s;
@@ -209,18 +213,4 @@ div#board, div#jsontarget {
 .dir5 {
   margin-top: 42px;
   margin-left: 6px;
-}
-
-/****************COLORS*******************/
-
-.green {
-  background-color: yellowgreen;
-}
-
-.blue {
-  background-color: steelblue;
-}
-
-.red {
-  background-color: orangered;
 }
