@@ -84,6 +84,13 @@
                             .attr(item.attr)
                             .appendTo("#jsontarget");
                   });
+                  $.each(data.board.roads, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .attr(item.attr)
+                            .appendTo("#jsontarget");
+                  });
                   $.each(data.opponents, function(index,item){
                     $("[player="+index+"]").find("td").last().html(item);
                   });
@@ -152,6 +159,7 @@
       }
       ?>
       <?php echo Session::get('message'); ?>
+      <?php if($game->isBoard()) : ?>
       <a href="#" id="loadjson">Pobierz JSON</a>
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
