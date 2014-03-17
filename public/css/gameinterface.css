@@ -34,7 +34,7 @@ aside {
 
 @media all and (max-device-width: 1200px) {
   aside {
-    left: 350px;    
+    /*left: 350px;*/    
     -webkit-transition: 0.4s;
   }
   aside:hover {
@@ -47,6 +47,7 @@ div.usercard {
   float: left;
   width: 150px;
   padding: 5px 0;
+  clear: both;
 }
 
 div.usercard figure img {
@@ -82,28 +83,28 @@ div.usercard td {
   font-weight: bold;
 }
 
-nav {
+.panel {
   overflow: auto;
   width: 100%;
 }
 
-.slide1, .slide2 {
+#slide1, #slide2 {
   display: none;
 }
 
-.slide2 img {
+#slide2 img {
     width: 150px;
     height:150px;
 }
 
-nav div {
+.button {
   display: block;
   width: 110px;
   height: 110px;
   float: left;
 }
 
-nav div a {
+.button a {
   display: block;
   position: relative;
   top: 20px;
@@ -114,7 +115,7 @@ nav div a {
   -webkit-transition: 0.2s;
 }
 
-nav div a:hover {
+.button a:hover {
   top: 10px;
   left: 10px;
   background-color: silver;
@@ -123,14 +124,26 @@ nav div a:hover {
   -webkit-transition: 0.25s;
 }
 
-nav div a img {
+.button a img {
   width: 70px;
   height: 70px;
   border-radius: 35px;
 }
 
+/***********Resource Cards*********************/
+
+.resource {
+  width: 70px;
+  float: left;
+  margin: 0 10px;
+}
+
+.trade {
+  display: none;
+}
+
 .res_card {
-    width: 70px;
+    width: 100%;
     height: 110px;
     background-position: center;
     background-size: cover;
@@ -138,7 +151,6 @@ nav div a img {
 
 .res_card span {
     display: block;
-    margin-top: 36px;
     text-align: center;
     z-index: 1;
     color: rgba(255,255,255,0.8);
@@ -150,33 +162,26 @@ nav div a img {
     line-height: 1em;
 }
 
-#trade {
-    width: 100%;
-    height: auto;
-    display: none;
-}
-
-nav table {
+.trade_up {
     margin: 0 auto;
-}
-.trade_up td {
     width: 0;
     height: 20px;
-    border-bottom: 15px solid green;
-    border-right: 35px solid transparent;
-    border-left: 35px solid transparent;
+    border-bottom: 25px solid green;
+    border-right: 25px solid transparent;
+    border-left: 25px solid transparent;
 }
 
-.trade_quantity td {
+.trade_quantity {
     text-align: center;
 }
 
-.trade_down td {
+.trade_down {
+  margin: 0 auto;
     width: 0;
     height: 20px;
-    border-top: 15px solid red;
-    border-right: 35px solid transparent;
-    border-left: 35px solid transparent;
+    border-top: 25px solid red;
+    border-right: 25px solid transparent;
+    border-left: 25px solid transparent;
 }
 
 .sony div{

@@ -1,7 +1,7 @@
 div#whole{
   display: block;
 }
-div#board, div#jsontarget {
+div#board {
   display: block;
   height: 650px;
   width: 840px;
@@ -74,7 +74,7 @@ div#board, div#jsontarget {
   height: 30px;
   margin: -15px;  /*half of settlement radius*/
   border-radius: 15px;
-  /*visibility: hidden;*/
+  z-index: 2;
 }
 
 .town {
@@ -113,6 +113,7 @@ div#board, div#jsontarget {
   margin-top: -66px;
   margin-left: -6px;
   border-radius: 4px;
+  z-index: 1;
 }
 
 .x {

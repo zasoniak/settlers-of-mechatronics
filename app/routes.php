@@ -126,7 +126,7 @@ Route::post('game/{id}/build', array('before'=>'turn', function($id){
     {
       return Response::make('OK!',200);
     }
-    return Response::make('Nie bylo Cie stac','403');
+    return Response::make('Za mało hajsiwa','403');
   }
   return Response::make('Zabronione nieajaxowe wywolanie','403');
 }));
