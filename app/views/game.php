@@ -40,23 +40,28 @@
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
                 .done(function(data){
                   $(event.target).removeClass("active").addClass("red");
-                  
+                  loadJSON;
                 })
                 .error(function(data){
                   alert(data.responseText);
                 });
       });
-      $(document).on("click","road.active",function(event){
+      $(document).on("click",".road.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"road", id:$(this).attr("road") })
                 .done(function(data){
                   $(event.target).removeClass("active").addClass("red");
+                  loadJSON;
                 })
                 .error(function(data){
                   alert(data.responseText);
                 });
       });
       $("#loadjson").click(function(){
-        $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
+        loadJSON();
+      });
+        
+    function loadJSON() {
+    $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
                 .done(function(data){
                   $("#board").html("");
                   $.each(data.board.tiles, function(index,item){
@@ -90,7 +95,7 @@
                 .error(function(data){
                   alert(data.responseText);
                 });
-      });
+      };
     });
     </script>
   </head>
