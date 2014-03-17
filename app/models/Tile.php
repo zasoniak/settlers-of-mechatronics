@@ -21,16 +21,4 @@ class Tile extends Eloquent {
     {
         return self::where('board_id', $board_id)->where('probability', $prob)->get();
     }
-    
-    public function nearestSettlements()
-    {
-        $settle = array();
-        array_push($settle,$this->board()->settlements()->findByCoords(array($this->x+5, $this->y+5, $this->z-5)));
-        array_push($settle,$this->board()->settlements()->findByCoords(array($this->x+5, $this->y-5, $this->z+5)));
-        array_push($settle,$this->board()->settlements()->findByCoords(array($this->x-5, $this->y+5, $this->z+5)));
-        array_push($settle,$this->board()->settlements()->findByCoords(array($this->x+5, $this->y-5, $this->z-5)));
-        array_push($settle,$this->board()->settlements()->findByCoords(array($this->x-5, $this->y+5, $this->z-5)));
-        array_push($settle,$this->board()->settlements()->findByCoords(array($this->x-5, $this->y-5, $this->z+5)));
-        return $settle;
-    }
 }

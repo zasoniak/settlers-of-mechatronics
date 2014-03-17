@@ -2,6 +2,7 @@
 
 class Settlement extends Eloquent {
   public $timestamps = false;
+  protected $softDelete = true;
     
     public function board()
     {
