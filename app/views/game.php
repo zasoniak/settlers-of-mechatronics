@@ -10,7 +10,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
-      loadJSON();
       $("#build_button").click(function(){
         $("#slide1").slideToggle('300');
         $("#slide2").slideUp('300');
@@ -34,13 +33,15 @@
       $("#trade_button").click(function(){
         $(".trade").slideToggle();
         $("#slide1").slideUp('300');
-        $("#slide2").slideUp('300');
-        
+        $("#slide2").slideUp('300');  
+      });
+      $("#endturn").click(function(){
+        loadJSON();
       });
       $(document).on("click",".settle.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
                 .done(function(data){
-                  $(event.target).removeClass("active").addClass("red");
+                  $(event.target).removeClass("active").addClass(<?php $game->model->players()->where('turn_order',$game->model->current_player)->first()->color;?>);
                   loadJSON();
                 })
                 .error(function(data){
@@ -50,7 +51,7 @@
       $(document).on("click",".road.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"road", id:$(this).attr("road") })
                 .done(function(data){
-                  $(event.target).removeClass("active").addClass("red");
+                  $(event.target).removeClass("active").addClass(<?php $game->model->players()->where('turn_order',$game->model->current_player)->first()->color;?>);
                   loadJSON();
                 })
                 .error(function(data){
