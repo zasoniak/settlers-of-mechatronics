@@ -34,6 +34,12 @@ class Player extends Eloquent{
         return $sum;
     }
     
+    public function addResource($type, $quantity)
+    {
+        $this->{$type}+=$quantity;
+        $this->save();
+    }
+    
     public function stealHalf()
     {
         $sum=$this->countResources();

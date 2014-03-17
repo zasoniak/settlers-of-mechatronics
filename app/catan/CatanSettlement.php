@@ -105,6 +105,7 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     if(is_null($this->model->player_id))
     {
       $this->model->player_id = $player->id;
+      $this->deleteNeighbours();
     }
     else
     {
@@ -114,4 +115,25 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     $this->model->save();
     return true;
   }
+  
+   public function deleteNeighbours()
+   {
+    $neighbours=array(array());
+    $sum=$this->model->x+$this->model->y+$this->model->z;
+    if($sum==-5)
+    {
+        $neighbours=array(array(10,0,0),array(0,10,0),array(0,0,10));
+    }else {
+        $neighbours=array(array(-10,0,0),array(0,-10,0),array(0,0,-10));
+    }
+    
+    foreach($neighbours as $neighbour)
+    {
+        $settle = Settlement::findByCoords($this->model->board->id, array($this->model->x+$neighbour[0],$this->model->y+$neighbour[1],$this->model->z+$neighbour[2]));
+        if(!is_null($settle))
+        {
+            $settle->delete();
+        }
+    }
+   }
 }

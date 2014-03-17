@@ -113,7 +113,6 @@ class CatanGame
         $this->model->save();
         foreach($this->model->players()->get() as $player)
         {
-            echo $player;
             $player->stealHalf();
         }
         //send request for a player to move thief
@@ -121,14 +120,26 @@ class CatanGame
     else
     {
         foreach($tiles as $tile)
-        {
+        {          
           if($this->model->thief_location!=$tile->id)
-            array_push($settlements, $tile->nearestSettlement);
-        }
-        foreach($settlements as $settle)
-        {
-            echo $settle;
-            //find owner of $settle and ->addResource($tile->type,$settle->is_town);
+          {
+              $neighbours=array(array(5,-5,-5),array(-5,5,-5),array(-5,-5,5),array(5,5,-5),array(5,-5,5),array(-5,5,5));
+              foreach($neighbours as $neighbour)
+              {
+                  $settle=Settlement::findByCoords($tile->board->id, array($tile->x+$neighbour[0],$tile->y+$neighbour[1],$tile->z+$neighbour[2]));
+                  if(!is_null($settle))
+                  {
+                      if($settle->player_id!=NULL)
+                      {
+                        if($settle->is_town)
+                        {
+                            $settle->player()->first()->addResource($tile->type,2);
+                        }
+                        $settle->player()->first()->addResource($tile->type,1);
+                      }
+                  }
+              }
+           }
         }
     }
   }
