@@ -85,59 +85,52 @@ class CatanGame
   
   public function endMove()
   {
-      //liczy ilosc graczy w danej grze
-      if($this->turnCheck())
-      {
-            $playersQuantity=$this->model->players()->count();
-            //$playersQuantity=4;
-             //jesli doszedl do konca nowa tura
-            if($this->model->current_player==$playersQuantity)
-            {
-              $this->model->turn_number++;
-              $this->model->current_player=1;
-            }
-            else //inaczej następny gracz
-            {
-              $this->model->current_player++;
-            }
-            $this->model->is_changed=1;
-            $this->model->save();
-      }
+    $playersQuantity=$this->model->players()->count();
+    //$playersQuantity=4;
+     //jesli doszedl do konca nowa tura
+    if($this->model->current_player==$playersQuantity)
+    {
+      $this->model->turn_number++;
+      $this->model->current_player=1;
+    }
+    else //inaczej następny gracz
+    {
+      $this->model->current_player++;
+    }
+    $this->model->is_changed=1;
+    $this->model->save();
   }
   
  public function throwDice()
   {
-      if($this->turnCheck())
-      {
-            $dice=mt_rand(1,6)+mt_rand(1,6);
-            $tiles=Tile::findByProb($this->model->id, $dice);
-            $settlements=array();
+    $dice=mt_rand(1,6)+mt_rand(1,6);
+    $tiles=Tile::findByProb($this->model->id, $dice);
+    $settlements=array();
 
-            if($dice==7)
-            {
-                $this->model->active_thief=1;
-                $this->model->save();
-                foreach($this->model->players()->get() as $player)
-                {
-                    echo $player;
-                    $player->stealHalf();
-                }
-                //send request for a player to move thief
-            }
-            else
-            {
-                foreach($tiles as $tile)
-                {
-                  if($this->model->thief_location!=$tile->id)
-                    array_push($settlements, $tile->nearestSettlement);
-                }
-                foreach($settlements as $settle)
-                {
-                    echo $settle;
-                    //find owner of $settle and ->addResource($tile->type,$settle->is_town);
-                }
-            }
-      }
+    if($dice==7)
+    {
+        $this->model->active_thief=1;
+        $this->model->save();
+        foreach($this->model->players()->get() as $player)
+        {
+            echo $player;
+            $player->stealHalf();
+        }
+        //send request for a player to move thief
+    }
+    else
+    {
+        foreach($tiles as $tile)
+        {
+          if($this->model->thief_location!=$tile->id)
+            array_push($settlements, $tile->nearestSettlement);
+        }
+        foreach($settlements as $settle)
+        {
+            echo $settle;
+            //find owner of $settle and ->addResource($tile->type,$settle->is_town);
+        }
+    }
   }
   
   public function getPlayers()
@@ -188,24 +181,11 @@ class CatanGame
   }
   
   public function buyItem(PurchasableInterface $item)
-  {   
-    if($this->turnCheck())
-    {
-      $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
-      if($item->buy($buyer))
-      {
-        return true;
-      }
-      return false;
-    }
-    return false;
-  }
- 
-  private function turnCheck()
   {
-    $player = $this->model->players()->where('turn_order',$this->model->current_player)->first();
-    if($player->user_id == Auth::user()->id) {
-      return true;   
+    $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
+    if($item->buy($buyer))
+    {
+      return true;
     }
     return false;
   }
@@ -218,7 +198,7 @@ class CatanGame
       $opponents[$player->model->id] = $player->toJSON();
     }
     return array(
-        'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(),
+        'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
         'board' => $this->board->toJSON()
     );

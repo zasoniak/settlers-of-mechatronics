@@ -17,10 +17,11 @@ html {
 }
 
 .message {
-  padding: 10px;
-  background-color: rgba(0,0,0,0.2);
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  border-radius: 20px;
+  padding: 10px 0;
+  text-align: center;
+  color: white;
+  background-color: orangered;
+  border-radius: 10px;
 }
 
 .message:empty {

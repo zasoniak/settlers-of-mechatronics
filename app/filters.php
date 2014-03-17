@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	if (Auth::guest()) return Redirect::home()->with('message', 'Zaloguj się!');
 });
 
 
@@ -77,4 +77,22 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Turn Filter
+|--------------------------------------------------------------------------
+|
+| Checks if the player has right to move
+|
+*/
+
+Route::filter('turn', function(){
+  $game_id = Request::segment(2);
+  $allowed = Game::find($game_id)->currentPlayer();
+  if ($allowed->user_id != Auth::user()->id)
+  {
+    return Response::make('Nie twoja tura', 403);
+  }
 });

@@ -68,6 +68,8 @@ Route::get('board/{id}', function($id){
 
 /* game routes */
 
+Route::when('game*', 'auth');
+
 Route::get('game/create', function(){
   $game = CatanGame::generate(Auth::user());
   return Redirect::to('game/'.$game->model->id);
@@ -103,17 +105,17 @@ Route::get('game/{id}/start', function($id) {
     $game->start();
     return Redirect::to("game/$id");
   }
-  return Redirect::back()->with('message', 'Coś spierdoliłeś!!! Na pewno masz 4 graczy?');
+  return Redirect::back()->with('message', 'Na pewno masz 4 graczy?');
 });
 
-Route::get('game/{id}/next', function($id) {
+Route::get('game/{id}/next', array('before'=>'turn', function($id) {
     $game = new CatanGame(Game::find($id));
     $game->endMove();
     return Redirect::to("game/$id");
-});
+}));
 
 
-Route::post('game/{id}/build', function($id){
+Route::post('game/{id}/build', array('before'=>'turn', function($id){
   if(Request::ajax())
   {
     $itemname = Input::get('item');
@@ -127,7 +129,7 @@ Route::post('game/{id}/build', function($id){
     return Response::make('Nie bylo Cie stac','403');
   }
   return Response::make('Zabronione nieajaxowe wywolanie','403');
-});
+}));
 
 Route::get('game/{id}/update', function($id){
   if(Request::ajax())

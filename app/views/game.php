@@ -36,35 +36,22 @@
         $(".slide2").slideUp('300');
         
       });
-      $(".settle").click(function(event){
+      $(".settle.active").click(function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
                 .done(function(data){
                   $(event.target).removeClass("active").addClass("red");
+                })
+                .error(function(data){
+                  alert(data.responseText);
                 });
       });
-      $(".road").click(function(event){
+      $(".road.active").click(function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"road", id:$(this).attr("road") })
                 .done(function(data){
                   $(event.target).removeClass("active").addClass("red");
-                });
-      });
-      $("#loadjson").click(function(){
-        $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
-                .done(function(data){
-                  $.each(data.tiles, function(index,item){
-                    $("<div>")
-                            .addClass(item.classes)
-                            .css(item.styles)
-                            .append($("<span>").html(item.prob))
-                            .appendTo("#jsontarget");
-                  });
-                  $.each(data.settlements, function(index,item){
-                    $("<div>")
-                            .addClass(item.classes)
-                            .css(item.styles)
-                            .attr(item.attr)
-                            .appendTo("#jsontarget");
-                  });
+                })
+                .error(function(data){
+                  alert(data.responseText);
                 });
       });
       $("#loadjson").click(function(){
@@ -92,8 +79,14 @@
                             .appendTo("#jsontarget");
                   });
                   $.each(data.opponents, function(index,item){
-                    $("[player="+index+"]").find("td").last().html(item);
+                    $("[player="+index+"]").find("td").last().html(item.resources);
                   });
+                  $.each(data.player.resources, function(index,item){
+                    $(".res_card."+index).find("span").html(item);
+                  });
+                })
+                .error(function(data){
+                  alert(data.responseText);
                 });
       });
     });
@@ -160,7 +153,7 @@
       ?>
       <?php echo Session::get('message'); ?>
       <?php if($game->isBoard()) : ?>
-      <a href="#" id="loadjson">Pobierz JSON</a>
+      <a id="loadjson">Pobierz JSON</a>
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <?php endif; ?>
