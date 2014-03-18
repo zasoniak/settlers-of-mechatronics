@@ -87,6 +87,11 @@ Route::get('game', function(){
 
 Route::get('game/{id}/join', function($id) {
   $game = new CatanGame(Game::find($id));
+  $player = Player::findByGameByUser($id, Auth::user()->id);
+  if(!is_null($player))
+  {
+    return View::make('join')->with('players',$game->model->players);
+  }
   if($game->addPlayer(Auth::user()))
   {
     return View::make('join')->with('players',$game->model->players);
