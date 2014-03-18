@@ -96,7 +96,7 @@ Route::get('game/{id}/join', function($id) {
   {
     return View::make('join')->with('players',$game->model->players);
   }
-  return Response::make('Błąd',403);
+  return Redirect::home()->with('message','Układ planet nie pozwala Ci grać.');
 });
 
 Route::post('ajax/color', function() {
