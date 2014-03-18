@@ -72,7 +72,7 @@ Route::when('game*', 'auth');
 
 Route::get('game/create', function(){
   $game = CatanGame::generate(Auth::user());
-  return Redirect::to('game/'.$game->model->id);
+  return Redirect::to('game/'.$game->model->id.'/join');
 });
 
 Route::get('game/{id}', function($id){
@@ -86,16 +86,25 @@ Route::get('game', function(){
 });
 
 Route::get('game/{id}/join', function($id) {
-  return View::make('join');
-});
-
-Route::post('game/{id}/join', function($id) {
   $game = new CatanGame(Game::find($id));
-  if($game->addPlayer(Auth::user(),Input::get('color')))
-  {  
-    return Response::make('OK',200);
+  if($game->addPlayer(Auth::user()))
+  {
+    return View::make('join')->with('players',$game->model->players);
   }
   return Response::make('Błąd',403);
+});
+
+Route::post('ajax/color', function() {
+  $colors = Game::find(Input::get('game_id'))->players()->pluck('color');
+  $color = Input::get('color');
+  if(array_search($color, $colors))
+  {
+    return Response::make('Błąd',403);
+  }
+  $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
+  $player->color = $color;
+  $player->save();
+  return Response::make('OK', 200);
 });
 
 Route::get('game/{id}/start', function($id) {

@@ -10,7 +10,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
-      loadJSON();
       $("#build_button").click(function(){
         $("#slide1").slideToggle('300');
         $("#slide2").slideUp('300');
@@ -40,7 +39,6 @@
       $(document).on("click",".settle.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
                 .done(function(data){
-                  $(event.target).removeClass("active").addClass("red");
                   loadJSON();
                 })
                 .error(function(data){
@@ -50,7 +48,6 @@
       $(document).on("click",".road.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"road", id:$(this).attr("road") })
                 .done(function(data){
-                  $(event.target).removeClass("active").addClass("red");
                   loadJSON();
                 })
                 .error(function(data){
