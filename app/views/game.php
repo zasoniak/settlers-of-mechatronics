@@ -41,6 +41,7 @@
         $(".trade").slideUp('300');
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
+        $(".res_card p").removeClass("trading");
       });
       $("#build_settle").click(function(){
         $(".road.active").hide('800');
@@ -54,9 +55,12 @@
         $("#slide2").slideToggle('300');
         $("#slide1").slideUp('300');
         $(".trade").slideUp('300');
+        $(".res_card p").removeClass("trading");
       });
       $("#trade_button").click(function(){
-        $(".trade").slideToggle();
+        $(".res_card p").toggleClass("trading");
+        $(".res_card p").removeClass("stop");
+        $(".trade").slideToggle(300);
         $("#slide1").slideUp('300');
         $("#slide2").slideUp('300');  
       });
@@ -149,6 +153,37 @@
       </div>
       <?php endforeach; ?>
       <div class="panel">
+        <?php
+          $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
+          $resources['stone']=$game->model->players()->where('user_id',Auth::user()->id)->first()->stone;
+          $resources['sheep']=$game->model->players()->where('user_id',Auth::user()->id)->first()->sheep;
+          $resources['clay']=$game->model->players()->where('user_id',Auth::user()->id)->first()->clay;
+          $resources['wheat']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wheat;
+        ?>
+        <?php foreach($resources as $type=>$count): ?>
+        <div class="resource">
+          <div class="trade up">+</div>
+          <div class="trade down">-</div>
+          <div class="res_card greyscale <?php echo $type; ?>">
+            <p class="stop"></p>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+      <?php 
+      if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
+      {
+        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+      }
+      ?>
+      <?php echo Session::get('message'); ?>
+      <?php if($game->isBoard()) : ?>
+      <a id="loadjson">Pobierz JSON</a>
+      Graczy: <?php echo $game->model->players()->count(); ?>
+      Tura: <?php echo $game->model->turn_number; ?>
+      Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
+      <?php endif; ?>
+      <div class="panel">
         <div class="button">
           <a href="#" id="build_button"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
         </div>
@@ -177,40 +212,6 @@
         A tu się będzie kupowało karcioszki!</br>
         Stasiu, jebnij tu jakieś takie obrazki z kartami. Na razie wrzucam zdjęcie znanej japońskiej korporacji :P
         <?php echo HTML::image('img/sony.jpg');?>
-      </div>
-      <?php 
-      if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
-      {
-        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
-      }
-      ?>
-      <?php echo Session::get('message'); ?>
-      <?php if($game->isBoard()) : ?>
-      <a id="loadjson">Pobierz JSON</a>
-      Graczy: <?php echo $game->model->players()->count(); ?>
-      Tura: <?php echo $game->model->turn_number; ?>
-      Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
-      <?php endif; ?>
-      <div class="panel">
-        <?php
-          $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
-          $resources['stone']=$game->model->players()->where('user_id',Auth::user()->id)->first()->stone;
-          $resources['sheep']=$game->model->players()->where('user_id',Auth::user()->id)->first()->sheep;
-          $resources['clay']=$game->model->players()->where('user_id',Auth::user()->id)->first()->clay;
-          $resources['wheat']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wheat;
-        ?>
-        <?php foreach($resources as $type=>$count): ?>
-        <div class="resource">
-          <div class="trade">
-            <div class="trade_up"></div>
-            <div class="trade_quantity">0</div>
-            <div class="trade_down"></div>
-          </div>
-          <div class="res_card greyscale <?php echo $type; ?>">
-            <p></p>
-          </div>
-        </div>
-        <?php endforeach; ?>
       </div>
     </aside>
     <div id="whole">
