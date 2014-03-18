@@ -10,6 +10,31 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
+      $.getJSON("<?php echo URL::to('ajax/board'); ?>",{game_id:<?php echo Request::segment(2); ?>})
+              .done(function(data){
+                  $.each(data.tiles, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .append($("<span>").html(item.prob))
+                            .appendTo("#board");
+                  });
+                  $.each(data.settlements, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .attr(item.attr)
+                            .appendTo("#board");
+                  });
+                  $.each(data.roads, function(index,item){
+                    $("<div>")
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .attr(item.attr)
+                            .appendTo("#board");
+                  });
+              });
+      loadJSON();
       $("#build_button").click(function(){
         $("#slide1").slideToggle('300');
         $("#slide2").slideUp('300');
@@ -59,18 +84,11 @@
       $("#loadjson").click(function(){
         loadJSON();
       });
-    });
-    function loadJSON() {
+      function loadJSON() {
     $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
                 .done(function(data){
-                  $("#board").html("");
-                  $.each(data.board.tiles, function(index,item){
-                    $("<div>")
-                            .addClass(item.classes)
-                            .css(item.styles)
-                            .append($("<span>").html(item.prob))
-                            .appendTo("#board");
-                  });
+                  $("#board").find(".road").remove();
+                  $("#board").find(".settle").remove();
                   $.each(data.board.settlements, function(index,item){
                     $("<div>")
                             .addClass(item.classes)
@@ -89,20 +107,32 @@
                     $("[player="+index+"]").find("td").last().html(item.resources);
                   });
                   $.each(data.player.resources, function(index,item){
-                    $(".res_card."+index).find("span").html(item);
+                    var card = $(".res_card."+index);
+                    if(item == 0)
+                    {
+                      card.addClass("greyscale");
+                      card.find("p").html("");
+                    }
+                    else
+                    {
+                      card.removeClass("greyscale");
+                      card.find("p").html(item);
+                    }
                   });
                 })
                 .error(function(data){
                   alert(data.responseText);
                 });
       };
+    });
+    
     </script>
   </head>
   <body>
     <aside>
       <?php foreach($game->getOpponents() as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
-        <figure><?php echo HTML::image('img/sony.jpg', 'morda', array('class'=>$player->model->color)); ?></figure>
+        <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
         <table>
           <caption><?php echo $player->model->user->nickname; ?></caption>
           <tbody>
@@ -118,9 +148,6 @@
         </table>
       </div>
       <?php endforeach; ?>
-      <div>
-      Graczy: <?php echo $game->model->players()->count(); ?>
-      </div>
       <div class="panel">
         <div class="button">
           <a href="#" id="build_button"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
@@ -160,6 +187,7 @@
       <?php echo Session::get('message'); ?>
       <?php if($game->isBoard()) : ?>
       <a id="loadjson">Pobierz JSON</a>
+      Graczy: <?php echo $game->model->players()->count(); ?>
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <?php endif; ?>
@@ -178,10 +206,8 @@
             <div class="trade_quantity">0</div>
             <div class="trade_down"></div>
           </div>
-          <div class="res_card <?php echo $type; ?>">
-            <span>
-              <?php echo $count; ?>
-            </span>
+          <div class="res_card greyscale <?php echo $type; ?>">
+            <p></p>
           </div>
         </div>
         <?php endforeach; ?>

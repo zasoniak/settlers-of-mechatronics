@@ -90,26 +90,36 @@ Route::get('game/{id}/join', function($id) {
   $player = Player::findByGameByUser($id, Auth::user()->id);
   if(!is_null($player))
   {
-    return View::make('join')->with('players',$game->model->players);
+    return Redirect::to("game/$id/waitroom");
   }
   if($game->addPlayer(Auth::user()))
   {
-    return View::make('join')->with('players',$game->model->players);
+    return Redirect::to("game/$id/waitroom");
   }
   return Redirect::home()->with('message','Układ planet nie pozwala Ci grać.');
 });
 
+Route::get('game/{id}/waitroom', function($id) {
+  $game = new CatanGame(Game::find($id));
+  return View::make('join')->with('game', $game);
+});
+
 Route::post('ajax/color', function() {
-  $colors = Game::find(Input::get('game_id'))->players()->pluck('color');
+  $colors = Game::find(Input::get('game_id'))->players()->lists('color');
   $color = Input::get('color');
-  if(array_search($color, $colors))
+  if(array_search($color, $colors) !== false)
   {
-    return Response::make('Błąd',403);
+    return Response::make('Błąd'.json_encode($colors),403);
   }
   $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
   $player->color = $color;
   $player->save();
   return Response::make('OK', 200);
+});
+
+Route::get('ajax/board', function() {
+  $game = new CatanGame(Game::find(Input::get('game_id')));
+  return Response::json($game->board->toJSON(false));
 });
 
 Route::get('game/{id}/start', function($id) {

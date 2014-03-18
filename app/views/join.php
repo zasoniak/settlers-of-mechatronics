@@ -12,10 +12,10 @@
       $("div.colors").find("li").click(function(event){
         $.post("<?php echo URL::to("ajax/color"); ?>",{ color:$(this).attr("class"),game_id:<?php echo Request::segment(2);?> })
                 .error(function(data){
-                  alert("coś się nie udało!");
+                  alert(data.responseText);
                 })
                 .done(function(data){
-                  alert("ok");
+                  window.location.reload();
                 });
       });
     });
@@ -35,12 +35,20 @@
         <li class="violet"></li>
       </ul>
     </div>
-    <div class="centered">
-      <?php foreach ($players as $player): ?>
+    <div class="centered players">
+      <?php foreach ($game->model->players as $player): ?>
       <div class="usercard" player="<?php echo $player->id; ?>">
-        <figure><?php echo HTML::image('img/sony.jpg', 'morda', array('class'=>$player->color)); ?></figure>
+        <figure><?php echo HTML::image('img/'.$player->user->image, 'morda', array('class'=>$player->color)); ?></figure>
       </div>
       <?php endforeach; ?>
     </div>
+    <nav class="centered">
+      <?php 
+      if($game->getHost()->model->user->id == Auth::user()->id)
+      {
+        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+      }
+      ?>
+    </nav>
   </body>
 </html>
