@@ -98,19 +98,19 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
         return false;
       }
     }
-    foreach ($this->cost() as $resource => $quantity)
+    if(!$this->buildCheck($player->id))
     {
-      $player->{$resource} -= $quantity;
+        return false;
     }
-    if(is_null($this->model->player_id))
-    {
-      $this->model->player_id = $player->id;
-      $this->deleteNeighbours();
-    }
-    else
-    {
-      $this->model->is_town = 1;
-    }
+        foreach ($this->cost() as $resource => $quantity)
+        {
+          $player->{$resource} -= $quantity;
+        }
+        if(is_null($this->model->player_id))
+        {
+          $this->model->player_id = $player->id;
+          $this->deleteNeighbours();
+        }
     $player->save();
     $this->model->save();
     return true;
@@ -135,5 +135,43 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
             $settle->delete();
         }
     }
+   }
+   
+   public function buildCheck($player_id)
+   {
+       $coords=array($this->model->x,$this->model->y,$this->model->z);
+       $sum=$this->model->x+$this->model->y+$this->model->z;
+       
+       if($sum==-5)
+       {
+           $neighbours=array(array(5,0,0),array(0,5,0),array(0,0,5));
+           foreach($neighbours as $neighbour)
+           {
+               $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
+               if(!is_null($road))
+               {
+                if(!is_null($road->player_id)&&($road->player_id==$player_id))
+                {
+                     return true;
+                } 
+               }
+           }
+       }
+       if($sum==5)
+       {
+           $neighbours=array(array(-5,0,0),array(0,-5,0),array(0,0,-5));
+           foreach($neighbours as $neighbour)
+           {
+               $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
+               if(!is_null($road))
+               {
+                if(!is_null($road->player_id)&&($road->player_id==$player_id))
+                {
+                     return true;
+                } 
+               }
+           }
+       }
+       return false;
    }
 }

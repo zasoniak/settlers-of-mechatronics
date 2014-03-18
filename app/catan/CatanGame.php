@@ -84,6 +84,7 @@ class CatanGame
   
   public function endMove()
   {
+    $this->isWinner();
     $playersQuantity=$this->model->players()->count();
     //$playersQuantity=4;
      //jesli doszedl do konca nowa tura
@@ -102,7 +103,10 @@ class CatanGame
   
  public function throwDice()
   {
-    $dice=mt_rand(1,6)+mt_rand(1,6);
+    $this->model->dice1=mt_rand(1,6);
+    $this->model->dice2=mt_rand(1,6);
+    $this->model->save();
+    $dice=$this->model->dice1+$this->model->dice2;
     $tiles=Tile::findByProb($this->model->id, $dice);
     $settlements=array();
 
@@ -212,5 +216,28 @@ class CatanGame
         'opponents' => $opponents,
         'board' => $this->board->toJSON()
     );
+  }
+  public function isWinner()
+  {
+      $players=$this->model->players()->get();
+      foreach($players as $player)
+      {
+          if($player->score>=10)
+          {
+              $winner=$player->user()->first();
+              $winner->games_won+=1;
+              $winner->save();
+              $this->endGame();
+          }
+      }
+  }
+  public function endGame()
+  {
+      $players=$this->model->players()->get();
+      foreach($players as $player)
+      {
+          $player->games_completed+=1;
+          $player->save();
+      }
   }
 }
