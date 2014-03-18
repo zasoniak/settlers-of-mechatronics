@@ -13,7 +13,7 @@ html {
 .centered {
   width: 300px;
   display: block;
-  margin: 30px auto;
+  margin: 50px auto;
 }
 
 .message {
@@ -137,5 +137,34 @@ nav p {
 nav a:hover {
   color: white;
   background-color: steelblue;
+  -webkit-transition: 0.3s;
+}
+
+div.players {
+  width: 450px;
+  overflow: auto;
+}
+
+div.usercard {
+  float: left;
+  width: 150px;
+  padding: 5px 0;
+}
+
+div.usercard figure img {
+  margin: 5px auto;
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-width: 8px;
+  border-style: solid;
+  border-radius: 58px;
+  opacity: 0.7;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+  -webkit-transition: 0.3s;
+}
+
+div.usercard figure:hover img {
+  opacity: 1;
   -webkit-transition: 0.3s;
 }

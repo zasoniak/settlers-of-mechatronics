@@ -34,7 +34,7 @@ class CatanGame
     }
   }
   
-  public function addPlayer(User $user, $color = 'red', $host = false)
+  public function addPlayer(User $user, $host = false)
   {
     foreach($this->playerList as $player)
     {
@@ -49,7 +49,6 @@ class CatanGame
     }
     $player = new Player();
     $player->user_id = $user->id;
-    $player->color = $color;
     if($host)
     {
       $player->is_host = 1;
@@ -64,7 +63,7 @@ class CatanGame
     $instance = new self($game);
     $instance->model = $game;
     //dodanie hosta gry
-    $instance->addPlayer($user,'red',true);
+    $instance->addPlayer($user,true);
     return $instance;
   }
 

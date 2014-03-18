@@ -10,24 +10,18 @@
     <script>
     $(document).ready(function(){
       $("div.colors").find("li").click(function(event){
-        $.post("<?php echo URL::to("game/".Request::segment(2)."/join"); ?>",{ color:$(this).attr("class") })
+        $.post("<?php echo URL::to("ajax/color"); ?>",{ color:$(this).attr("class"),game_id:<?php echo Request::segment(2);?> })
                 .error(function(data){
-                  alert("coś się nie udało!");
+                  alert(data.responseText);
                 })
                 .done(function(data){
-                  window.location.replace("<?php echo URL::to("game/".Request::segment(2)); ?>");
+                  window.location.reload();
                 });
       });
     });
     </script>
   </head>
   <body>
-    <div id="logo" class="centered">
-      <div class="flattop">pioneers</div>
-      <div class="flattop">of</div>
-      <div class="flattop">mechatronics</div>
-      <div class="flattop"><?php echo HTML::image('img/WM3.png', 'mchtr'); ?></div>
-    </div>
     <p class="centered">
       Za chwilę dołączysz do gry. Wybierz kolor, jakim będziesz się w tej grze posługiwać:
     </p>
@@ -41,5 +35,20 @@
         <li class="violet"></li>
       </ul>
     </div>
+    <div class="centered players">
+      <?php foreach ($game->model->players as $player): ?>
+      <div class="usercard" player="<?php echo $player->id; ?>">
+        <figure><?php echo HTML::image('img/'.$player->user->image, 'morda', array('class'=>$player->color)); ?></figure>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <nav class="centered">
+      <?php 
+      if($game->getHost()->model->user->id == Auth::user()->id)
+      {
+        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+      }
+      ?>
+    </nav>
   </body>
 </html>

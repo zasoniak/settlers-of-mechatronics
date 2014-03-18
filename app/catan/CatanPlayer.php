@@ -48,8 +48,17 @@ class CatanPlayer
       }   
   }
   
-  public function toJSON($hidden = true)
+  public function toJSON($hidden = true, $profile = false)
   {
+    if($profile)
+    {
+      return array(
+          'photo' => 'img/sony.jpg',
+          'nick' => $this->model->nickname,
+          'color' => $this->model->color,
+          'id' => $this->model->id
+      );
+    }
     if($hidden)
     {
       return array(
