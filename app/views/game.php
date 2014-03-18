@@ -33,8 +33,10 @@
       $("#trade_button").click(function(){
         $(".trade").slideToggle();
         $("#slide1").slideUp('300');
-        $("#slide2").slideUp('300');
-        
+        $("#slide2").slideUp('300');  
+      });
+      $("#endturn").click(function(){
+        loadJSON();
       });
       $(document).on("click",".settle.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
