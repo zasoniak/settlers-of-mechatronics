@@ -29,16 +29,16 @@ html {
 }
 
 .colors {
-  width: 740px;
+  width: 788px;
 }
 
 .colors li {
   cursor: pointer;
-  width: 100px;
-  height: 100px;
+  width: 108px;
+  height: 108px;
   margin: 10px;
   display: inline-block;
-  border-radius: 50px;
+  border-radius: 54px;
   box-shadow: 0 0 10px rgba(0,0,0,0.8);
   opacity: 0.7;
   -webkit-transition: 0.5s;
