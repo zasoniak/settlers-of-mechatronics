@@ -54,6 +54,7 @@ html {
   width: 416px;
   margin: 70px auto;
   overflow-y: auto;
+  outline: 1px solid transparent;
 }
 
 #logo:hover .flattop {

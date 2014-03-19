@@ -101,6 +101,11 @@ Route::get('game/{id}/join', function($id) {
 
 Route::get('game/{id}/waitroom', function($id) {
   $game = new CatanGame(Game::find($id));
+  $playersByColor = array();
+  foreach ($game->model->players as $player)
+  {
+    $playersByColor[$player->color] = $player;
+  }
   return View::make('join')->with('game', $game);
 });
 
