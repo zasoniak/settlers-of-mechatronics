@@ -103,47 +103,41 @@ class CatanGame
   
  public function throwDice()
   {
-    $this->model->dice1=mt_rand(1,6);
-    $this->model->dice2=mt_rand(1,6);
+    $this->model->dice1 = mt_rand(1, 6);
+    $this->model->dice2 = mt_rand(1, 6);
     $this->model->save();
     $dice=$this->model->dice1+$this->model->dice2;
-    $tiles=Tile::findByProb($this->model->id, $dice);
-    $settlements=array();
-
+    
     if($dice==7)
     {
-        $this->model->active_thief=1;
-        $this->model->save();
-        foreach($this->model->players()->get() as $player)
-        {
-            $player->stealHalf();
-        }
-        //send request for a player to move thief
+      $this->model->active_thief=1;
+      $this->model->save();
+      foreach($this->model->players as $player)
+      {
+          $player->stealHalf();
+      }
+      //send request for a player to move thief
     }
+    
     else
     {
-        foreach($tiles as $tile)
-        {          
-          if($this->model->thief_location!=$tile->id)
+      foreach($this->board->model->findDicedTiles($dice) as $tile)
+      {          
+        if($this->model->thief_location != $tile->id)
+        {
+          foreach($tile->nearestSettles() as $settle)
           {
-              $neighbours=array(array(5,-5,-5),array(-5,5,-5),array(-5,-5,5),array(5,5,-5),array(5,-5,5),array(-5,5,5));
-              foreach($neighbours as $neighbour)
+            if ($settle->player_id != NULL)
+            {
+              if ($settle->is_town)
               {
-                  $settle=Settlement::findByCoords($tile->board->id, array($tile->x+$neighbour[0],$tile->y+$neighbour[1],$tile->z+$neighbour[2]));
-                  if(!is_null($settle))
-                  {
-                      if($settle->player_id!=NULL)
-                      {
-                        if($settle->is_town)
-                        {
-                            $settle->player()->first()->addResource($tile->type,2);
-                        }
-                        $settle->player()->first()->addResource($tile->type,1);
-                      }
-                  }
+                $settle->player->addResource($tile->type, 2);
               }
-           }
+              $settle->player->addResource($tile->type, 1);
+            }
+          }
         }
+      }
     }
   }
   
@@ -214,6 +208,7 @@ class CatanGame
     return array(
         'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
+        'dice' => array($this->model->dice1,$this->model->dice2),
         'board' => $this->board->toJSON()
     );
   }

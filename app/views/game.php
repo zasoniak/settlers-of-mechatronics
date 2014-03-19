@@ -119,6 +119,8 @@
                       card.find("p").html(item);
                     }
                   });
+                  $("#die1").html(data.dice[0]);
+                  $("#die2").html(data.dice[1]);
                 })
                 .error(function(data){
                   alert(data.responseText);
@@ -187,9 +189,10 @@
       <?php echo Session::get('message'); ?>
       <?php if($game->isBoard()) : ?>
       <a id="loadjson">Pobierz JSON</a>
+      Kostki: <span id="die1"></span> i <span id="die2"></span>
       Graczy: <?php echo $game->model->players()->count(); ?>
       Tura: <?php echo $game->model->turn_number; ?>
-      Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
+      Ruch: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <?php endif; ?>
       <div class="panel">
         <?php

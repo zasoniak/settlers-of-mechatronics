@@ -106,12 +106,12 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     {
       if($player->{$resource} < $quantity)
       {
-        return false;
+        throw new Exception('Nie stać Cię na to!');
       }
     }
     if(!$this->buildCheck($player->id))
     {
-        return false;
+      throw new Exception('Nie możesz tu budować!');
     }
     foreach ($this->cost() as $resource => $quantity)
     {
@@ -125,51 +125,13 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
   
   public function buildCheck($player_id)
   {
-      $coords=array($this->model->x, $this->model->y, $this->model->z);
-               
-      if(($coords[0]%10)==0)
+    foreach($this->model->nearestRoads() as $road)
+    {
+      if(!is_null($road) && $road->player_id === $player_id)
       {
-          $neighbours = array(array (-5,5,0),array(-5,0,5), array(5,-5,0), array(5,0,-5));
-          foreach($neighbours as $neighbour)
-          {
-              $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
-              if(!is_null($road))
-              if(!is_null($road->player_id)&&$road->player_id==$player_id)
-              {
-                  return true;
-              }
-          }
+        return true;
       }
-      
-      if(($coords[1]%10)==0)
-      {
-          $neighbours = array(array (-5,5,0),array(0,5,-5), array(5,-5,0), array(0,-5,5));
-          foreach($neighbours as $neighbour)
-          {
-              $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
-              if(!is_null($road))
-              if(!is_null($road->player_id)&&$road->player_id==$player_id)
-              {
-                  return true;
-              }
-          }
-      }
-      
-      
-      if(($coords[2]%10)==0)
-      {
-          $neighbours = array(array (-5,0,5),array(-0,-5,5), array(5,0,-5), array(0,5,-5));
-          foreach($neighbours as $neighbour)
-          {
-              $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
-              if(!is_null($road->player_id)&&$road->player_id==$player_id)
-              {
-                  return true;
-              }
-          }
-      }
-        
-      return false;
+    }
+    return false;
   }
-  
 }

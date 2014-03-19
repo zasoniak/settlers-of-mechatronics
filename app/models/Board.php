@@ -37,6 +37,31 @@ class Board extends Eloquent {
     {
         return self::where('game_id', $game_id)->first();
     }
+    
+    public function findSettlement(array $coords)
+    {
+      return $this->settlements()
+              ->whereX($coords[0])
+              ->whereY($coords[1])
+              ->whereZ($coords[2])
+              ->first();
+    }
+    
+    public function findRoad(array $coords)
+    {
+      return $this->roads()
+              ->whereX($coords[0])
+              ->whereY($coords[1])
+              ->whereZ($coords[2])
+              ->first();
+    }
+    
+    public function findDicedTiles($dice)
+    {
+      return $this->tiles()
+              ->where('probability', $dice)
+              ->get();
+    }
 }
 
 ?>

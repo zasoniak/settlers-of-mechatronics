@@ -147,11 +147,15 @@ Route::post('game/{id}/build', array('before'=>'turn', function($id){
     $game = new CatanGame(Game::find($id));
     $itemlist = $itemname.'List';
     $item = $game->board->{$itemlist}[(int)Input::get('id')];
-    if($game->buyItem($item))
+    try
     {
-      return Response::make('OK!',200);
+      $game->buyItem($item);
+    } 
+    catch (Exception $exc)
+    {
+      return Response::make($exc->getMessage(),'403');
     }
-    return Response::make('Za mało hajsiwa','403');
+    return Response::make('OK!',200);
   }
   return Response::make('Zabronione nieajaxowe wywolanie','403');
 }));
