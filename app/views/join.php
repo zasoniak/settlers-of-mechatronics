@@ -43,10 +43,20 @@
       <?php endforeach; ?>
     </div>
     <nav class="centered">
-      <?php 
-      if($game->getHost()->model->user->id == Auth::user()->id)
+      <?php
+      if(Player::findByGameByUser(Request::segment(2),Auth::user()->id)->color)
       {
-        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+        if($game->getHost()->model->user->id == Auth::user()->id)
+        {
+          echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
+        }
+        else
+        {
+          if($game->isBoard())
+          {
+            echo HTML::link("game/".$game->model->id, 'dołącz do gry');
+          }
+        }
       }
       ?>
     </nav>

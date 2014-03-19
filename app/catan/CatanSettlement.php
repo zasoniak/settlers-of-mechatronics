@@ -95,83 +95,47 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     {
       if($player->{$resource} < $quantity)
       {
-        return false;
+        throw new Exception('Nie stać Cię na to!');
       }
     }
     if(!$this->buildCheck($player->id))
     {
-        return false;
+      throw new Exception('Nie możesz tu budować!');
     }
-        foreach ($this->cost() as $resource => $quantity)
-        {
-          $player->{$resource} -= $quantity;
-        }
-        if(is_null($this->model->player_id))
-        {
-          $this->model->player_id = $player->id;
-          $this->deleteNeighbours();
-        }
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      $player->{$resource} -= $quantity;
+    }
+    if(is_null($this->model->player_id))
+    {
+      $this->model->player_id = $player->id;
+      $this->deleteNeighbours();
+    }
     $player->save();
     $this->model->save();
     return true;
   }
   
-   public function deleteNeighbours()
-   {
-    $neighbours=array(array());
-    $sum=$this->model->x+$this->model->y+$this->model->z;
-    if($sum==-5)
+  public function deleteNeighbours()
+  {
+    foreach ($this->model->nearestSettles() as $settle)
     {
-        $neighbours=array(array(10,0,0),array(0,10,0),array(0,0,10));
-    }else {
-        $neighbours=array(array(-10,0,0),array(0,-10,0),array(0,0,-10));
+      if(!is_null($settle))
+      {
+          $settle->delete();
+      }
     }
-    
-    foreach($neighbours as $neighbour)
-    {
-        $settle = Settlement::findByCoords($this->model->board->id, array($this->model->x+$neighbour[0],$this->model->y+$neighbour[1],$this->model->z+$neighbour[2]));
-        if(!is_null($settle))
-        {
-            $settle->delete();
-        }
-    }
-   }
+  }
    
-   public function buildCheck($player_id)
-   {
-       $coords=array($this->model->x,$this->model->y,$this->model->z);
-       $sum=$this->model->x+$this->model->y+$this->model->z;
-       
-       if($sum==-5)
-       {
-           $neighbours=array(array(5,0,0),array(0,5,0),array(0,0,5));
-           foreach($neighbours as $neighbour)
-           {
-               $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
-               if(!is_null($road))
-               {
-                if(!is_null($road->player_id)&&($road->player_id==$player_id))
-                {
-                     return true;
-                } 
-               }
-           }
-       }
-       if($sum==5)
-       {
-           $neighbours=array(array(-5,0,0),array(0,-5,0),array(0,0,-5));
-           foreach($neighbours as $neighbour)
-           {
-               $road=Road::findByCoords($this->model->board->id,array($coords[0]+$neighbour[0],$coords[1]+$neighbour[1],$coords[2]+$neighbour[2]));
-               if(!is_null($road))
-               {
-                if(!is_null($road->player_id)&&($road->player_id==$player_id))
-                {
-                     return true;
-                } 
-               }
-           }
-       }
-       return false;
-   }
+  public function buildCheck($player_id)
+  {    
+    foreach ($this->model->nearestRoads() as $road)
+    {
+      if(!is_null($road) && $road->player_id === $player_id)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
 }
