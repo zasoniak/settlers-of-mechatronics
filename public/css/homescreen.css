@@ -29,19 +29,29 @@ html {
 }
 
 .colors {
-  width: 788px;
+  width: 860px;
 }
 
 .colors li {
   cursor: pointer;
-  width: 108px;
-  height: 108px;
+  width: 120px;
+  height: 120px;
   margin: 10px;
   display: inline-block;
-  border-radius: 54px;
+  border-radius: 58px;
   box-shadow: 0 0 10px rgba(0,0,0,0.8);
   opacity: 0.7;
   -webkit-transition: 0.5s;
+}
+
+.colors li img {
+  margin: 12px auto;
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 48px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+  -webkit-transition: 0.3s;
 }
 
 .colors li:hover {
@@ -54,6 +64,7 @@ html {
   width: 416px;
   margin: 70px auto;
   overflow-y: auto;
+  outline: 1px solid transparent;
 }
 
 #logo:hover .flattop {
@@ -137,34 +148,5 @@ nav p {
 nav a:hover {
   color: white;
   background-color: steelblue;
-  -webkit-transition: 0.3s;
-}
-
-div.players {
-  width: 450px;
-  overflow: auto;
-}
-
-div.usercard {
-  float: left;
-  width: 150px;
-  padding: 5px 0;
-}
-
-div.usercard figure img {
-  margin: 5px auto;
-  display: block;
-  width: 100px;
-  height: 100px;
-  border-width: 8px;
-  border-style: solid;
-  border-radius: 58px;
-  opacity: 0.7;
-  box-shadow: 0 0 10px rgba(0,0,0,0.8);
-  -webkit-transition: 0.3s;
-}
-
-div.usercard figure:hover img {
-  opacity: 1;
   -webkit-transition: 0.3s;
 }

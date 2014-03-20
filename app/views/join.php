@@ -10,7 +10,8 @@
     <script>
     $(document).ready(function(){
       $("div.colors").find("li").click(function(event){
-        $.post("<?php echo URL::to("ajax/color"); ?>",{ color:$(this).attr("class"),game_id:<?php echo Request::segment(2);?> })
+        var color = $(this).attr("class")
+        $.post("<?php echo URL::to("ajax/color"); ?>",{ color:color,game_id:<?php echo Request::segment(2);?> })
                 .error(function(data){
                   alert(data.responseText);
                 })
@@ -22,31 +23,34 @@
     </script>
   </head>
   <body>
+     <div id="logo" class="centered">
+      <div class="flattop">pioneers</div>
+      <div class="flattop">of</div>
+      <div class="flattop">mechatronics</div>
+      <div class="flattop"><?php echo HTML::image('img/WM3.png', 'mchtr'); ?></div>
+    </div>
+    <div class="centered message"><?php echo Session::get('message'); ?></div>
     <p class="centered">
       Za chwilę dołączysz do gry. Wybierz kolor, jakim będziesz się w tej grze posługiwać:
     </p>
     <div class="centered colors">
-      <ul>
-        <li class="red"></li>
-        <li class="orange"></li>
-        <li class="yellow"></li>
-        <li class="green"></li>
-        <li class="blue"></li>
-        <li class="violet"></li>
-      </ul>
-    </div>
-    <div class="centered players">
-      <?php foreach ($game->model->players as $player): ?>
-      <div class="usercard" player="<?php echo $player->id; ?>">
-        <figure><?php echo HTML::image('img/'.$player->user->image, 'morda', array('class'=>$player->color)); ?></figure>
-      </div>
-      <?php endforeach; ?>
+      <?php
+        $colors=array("red","orange","yellow","green","blue","violet");
+        foreach ($colors as $color):?>
+        <li class="<?php echo $color;?>">
+          <?php if(array_key_exists($color, $players))
+          {
+            echo HTML::image('img/'.$players[$color]->user->image, 'morda');
+          }
+          ?>
+        </li>
+        <?php endforeach; ?>
     </div>
     <nav class="centered">
       <?php
       if(Player::findByGameByUser(Request::segment(2),Auth::user()->id)->color)
       {
-        if($game->getHost()->model->user->id == Auth::user()->id)
+        if(($game->getHost()->model->user->id == Auth::user()->id)&&($game->model->players()->count() > 1))
         {
           echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
         }
