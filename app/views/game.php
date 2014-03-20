@@ -61,8 +61,12 @@
         $(".res_card p").toggleClass("trading");
         $(".res_card p").removeClass("stop");
         $(".trade").slideToggle(300);
+        $(".stats").slideToggle('300');
+        $("#offers").slideToggle('300');
         $("#slide1").slideUp('300');
-        $("#slide2").slideUp('300');  
+        $("#slide2").slideUp('300');
+        $(".road.active").hide('800');
+        $(".settle.active").hide('800');
       });
       $("#endturn").click(function(){
         loadJSON();
@@ -139,19 +143,39 @@
       <?php foreach($game->getOpponents() as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
         <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
+        <figcaption><?php echo $player->model->user->nickname; ?></figcaption>
+        <div class="stats">
         <table>
-          <caption><?php echo $player->model->user->nickname; ?></caption>
-          <tbody>
-            <tr>
-              <th>S</th>
-              <td></td>
-            </tr>
-            <tr>
-              <th>R</th>
-              <td><?php echo $player->model->countResources(); ?></td>
-            </tr>
-          </tbody>
+          <tr>
+            <th>S</th>
+            <td></td>
+          </tr>
+          <tr>
+            <th>R</th>
+            <td><?php echo $player->model->countResources(); ?></td>
+          </tr>
         </table>
+        </div>
+      </div>
+      <div class="panel" id="offers">
+        <div class="offer" id="player1">
+          <table>
+          <tr>
+            <th><div class="wood"></div></th>
+            <td>-2</td>
+          </tr>
+          <tr>
+            <th><div class="stone"></div></th>
+            <td>+1</td>
+          </tr>
+        </table>
+        </div>
+        <div class="offer" id="player2">
+          
+        </div>
+        <div class="offer" id="player3">
+          
+        </div>
       </div>
       <?php endforeach; ?>
       <div class="panel">

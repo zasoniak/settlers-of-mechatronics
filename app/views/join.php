@@ -23,6 +23,13 @@
     </script>
   </head>
   <body>
+     <div id="logo" class="centered">
+      <div class="flattop">pioneers</div>
+      <div class="flattop">of</div>
+      <div class="flattop">mechatronics</div>
+      <div class="flattop"><?php echo HTML::image('img/WM3.png', 'mchtr'); ?></div>
+    </div>
+    <div class="centered message"><?php echo Session::get('message'); ?></div>
     <p class="centered">
       Za chwilę dołączysz do gry. Wybierz kolor, jakim będziesz się w tej grze posługiwać:
     </p>
@@ -31,20 +38,13 @@
         $colors=array("red","orange","yellow","green","blue","violet");
         foreach ($colors as $color):?>
         <li class="<?php echo $color;?>">
-          <?php if(Player::findByGameByUser(Request::segment(2),Auth::user()->id)->color==$color)
+          <?php if(array_key_exists($color, $players))
           {
-            echo HTML::image('img/'.$player->user->image, 'morda', array('class'=>$player->color));
+            echo HTML::image('img/'.$players[$color]->user->image, 'morda');
           }
           ?>
         </li>
         <?php endforeach; ?>
-    </div>
-    <div class="centered players">
-      <?php foreach ($game->model->players as $player): ?>
-      <div class="usercard" player="<?php echo $player->id; ?>">
-        <figure><?php echo HTML::image('img/'.$player->user->image, 'morda', array('class'=>$player->color)); ?></figure>
-      </div>
-      <?php endforeach; ?>
     </div>
     <nav class="centered">
       <?php

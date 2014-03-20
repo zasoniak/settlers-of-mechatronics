@@ -106,7 +106,7 @@ Route::get('game/{id}/waitroom', function($id) {
   {
     $playersByColor[$player->color] = $player;
   }
-  return View::make('join')->with('game', $game);
+  return View::make('join')->with('game', $game)->with('players', $playersByColor);
 });
 
 Route::post('ajax/color', function() {
