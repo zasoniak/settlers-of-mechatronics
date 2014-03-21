@@ -48,6 +48,11 @@ class CatanPlayer
       }   
   }
   
+  public function getScore()
+  {
+    return 0;
+  }
+  
   public function toJSON($hidden = true, $profile = false)
   {
     if($profile)

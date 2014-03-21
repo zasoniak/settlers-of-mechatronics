@@ -59,9 +59,8 @@ class CatanGame
   
   public static function generate(User $user)
   {
-    $game = Game::create(array()); // new game instance
+    $game = Game::create(array()); // new database game record
     $instance = new self($game);
-    $instance->model = $game;
     //dodanie hosta gry
     $instance->addPlayer($user,true);
     return $instance;
@@ -69,17 +68,15 @@ class CatanGame
 
   public function start() 
   {
-      //generacja planszy
-      $board = CatanBoard::generate($this->model);
-      $order=1;
-      foreach($this->model->players()->get() as $player)
-      {
-          $player->turn_order=$order;
-          $order++;
-          $player->save();
-      }
-      
-            
+    //generacja planszy
+    $board = CatanBoard::generate($this->model);
+    $order=1;
+    foreach($this->model->players as $player)
+    {
+      $player->turn_order=$order;
+      $order++;
+      $player->save();
+    } 
   }
   
   public function endMove()
@@ -214,25 +211,25 @@ class CatanGame
   }
   public function isWinner()
   {
-      $players=$this->model->players()->get();
-      foreach($players as $player)
+    foreach($this->playerList as $player)
+    {
+      if($player->getScore() >= 10)
       {
-          if($player->score>=10)
-          {
-              $winner=$player->user()->first();
-              $winner->games_won+=1;
-              $winner->save();
-              $this->endGame();
-          }
+        $winner=$player->user;
+        $winner->games_won+=1;
+        $winner->save();
+        $this->endGame();
       }
+    }
   }
+  
   public function endGame()
   {
-      $players=$this->model->players()->get();
-      foreach($players as $player)
-      {
-          $player->games_completed+=1;
-          $player->save();
-      }
+    foreach($this->model->players as $player)
+    {
+      $user = $player->user;
+      $user->games_completed += 1;
+      $user->save();
+    }
   }
 }
