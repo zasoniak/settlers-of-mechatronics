@@ -12,6 +12,10 @@ class Player extends Eloquent{
         return $this->belongsTo('Game');
     }
     
+    public function trade() {
+        return $this->hasMany('Trade');
+    }
+    
     public function getResources()
     {
       return array(
@@ -70,5 +74,6 @@ class Player extends Eloquent{
     {
       return self::where('game_id', $game_id)->where('user_id', $user_id)->first();
     }
+    
     
 }
