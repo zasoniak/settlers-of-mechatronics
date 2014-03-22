@@ -26,6 +26,7 @@ div#board {
   cursor: pointer;
   position: absolute;
   background-position: center;
+  background-size: cover;
   -webkit-clip-path: polygon(54px 0, 108px 31px, 108px 93px, 54px 124px, 0 93px, 0 31px);
   width: 108px; height: 124px;
   margin: 6px -6px -6px 6px;
@@ -157,27 +158,27 @@ div#board {
 
 
 .wood {
-  background-image: url('../img/tile2_forest.png');
+  background-image: url('../img/tiles/wood.svg');
 }
 
 .desert {
-  background-image: url('../img/tile2_desert.png');
+  background-image: url('../img/tiles/desert.svg');
 }
 
 .sheep {
-  background-image: url('../img/tile2_plain.png');
+  background-image: url('../img/tiles/sheep2.svg');
 }
 
 .stone {
-  background-image: url('../img/tile2_stone.png');
+  background-image: url('../img/tiles/stone.svg');
 }
 
 .clay {
-  background-image: url('../img/tile2_clay.png');
+  background-image: url('../img/tiles/clay.svg');
 }
 
 .wheat {
-  background-image: url('../img/tile2_wheat.png');
+  background-image: url('../img/tiles/wheat.svg');
 }
 
 .ocean {
