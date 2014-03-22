@@ -238,13 +238,13 @@ class CatanGame
   
   
     
-  public function tradeRequest($user, $offer)
+  public function tradeRequest($offer, $clients)
   {
-      $player = Player::findByGameByUser($this->model->id, $user->id)->first();
-      $this->model->tradeActive->true;
-      $trade=new Trade();
-      $trade->sendRequest($player,$offer);
-      $trade->save();
+      $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
+      foreach($clients as $client)
+      {
+        $trade = Trade::makeOffer();
+      }
   }
   
   public function tradeBank($user, $offer)
