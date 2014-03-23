@@ -235,4 +235,28 @@ class CatanGame
           $player->save();
       }
   }
+  
+  
+    
+  public function tradeRequest($offer, $clients)
+  {
+      $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
+      foreach($clients as $client)
+      {
+        $trade = Trade::makeOffer();
+      }
+  }
+  
+  public function tradeBank($user, $offer)
+  {
+      $player = Player::findByGameByUser($this->model->id, $user->id)->first();
+      $player->tradeBank($offer);
+  }
+  
+  public function tradeAccept()
+  {
+      
+  }
+  
+  
 }
