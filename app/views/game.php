@@ -14,10 +14,13 @@
               .done(function(data){
                   $.each(data.tiles, function(index,item){
                     $("<div>")
+                            .hide()
                             .addClass(item.classes)
                             .css(item.styles)
                             .append($("<span>").html(item.prob))
-                            .appendTo("#board");
+                            .appendTo("#board")
+                            .delay(30*index)
+                            .show(30);
                   });
                   $.each(data.settlements, function(index,item){
                     $("<div>")
@@ -60,13 +63,21 @@
       $("#trade_button").click(function(){
         $(".res_card p").toggleClass("trading");
         $(".res_card p").removeClass("stop");
-        $(".trade").slideToggle(300);
-        $(".stats").slideToggle('300');
-        $("#offers").slideToggle('300');
+        $(".trade").slideToggle('300');
+        $(".stats").slideDown('300');
+        $("#offers").slideUp('300');
         $("#slide1").slideUp('300');
         $("#slide2").slideUp('300');
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
+         $(".usercard img").css({
+    width: function( index, value ) {
+      return parseFloat( value ) * .4;
+    },
+    height: function( index, value ) {
+      return parseFloat( value ) * .4;
+    }
+  });
       });
       $("#endturn").click(function(){
         loadJSON();
@@ -97,12 +108,12 @@
                 .done(function(data){
                   $("#board").find(".road").remove();
                   $("#board").find(".settle").remove();
-                  $.each(data.board.settlements, function(index,item){
+                  $.each(data.board.settlements, function(index,item,i){
                     $("<div>")
                             .addClass(item.classes)
                             .css(item.styles)
                             .attr(item.attr)
-                            .appendTo("#board");
+                            .appendTo("#board")
                   });
                   $.each(data.board.roads, function(index,item){
                     $("<div>")
@@ -135,11 +146,11 @@
                 });
       };
     });
-    
     </script>
   </head>
   <body>
     <aside>
+      <div class="panel">
       <?php foreach($game->getOpponents() as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
         <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
@@ -157,6 +168,7 @@
         </table>
         </div>
       </div>
+      <?php endforeach; ?>
       <div class="panel" id="offers">
         <div class="offer" id="player1">
           <table>
@@ -177,7 +189,6 @@
           
         </div>
       </div>
-      <?php endforeach; ?>
       <div class="panel">
         <?php
           $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
