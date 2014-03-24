@@ -36,6 +36,15 @@
                             .attr(item.attr)
                             .appendTo("#board");
                   });
+                  $.each(data.ports, function(index,item){
+                    $("<div>")
+                            .hide()
+                            .addClass(item.classes)
+                            .css(item.styles)
+                            .appendTo("#board")
+                            .delay(1480) 
+                            .slideDown(200);
+                  });
               });
       loadJSON();
       $("#build_button").click(function(){

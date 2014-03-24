@@ -79,4 +79,59 @@ class CatanPort implements DrawableInterface
       $return .= '></div>';
       return $return;
     }
+    
+    public function toJSON()
+    {
+      $classes =  'port '.$this->model->type;
+      if($this->model->x==-10)
+      {
+        $classes .= ' dir4';
+        $styles = array('left' =>'420px', 'top' => '618px');
+      }
+      elseif($this->model->x==0)
+      {
+        $classes .= ' dir1';
+        $styles = array('left' =>'180px', 'top' => '0px');
+      }
+      elseif($this->model->x==10)
+      {
+        $classes .= ' dir4';
+        $styles = array('left' =>'600px', 'top' => '512px');
+      }
+      elseif($this->model->y==-10)
+      {
+        $classes .= ' dir0';
+        $styles = array('left' =>'600px', 'top' => '103px');
+      }
+      elseif($this->model->y==0)
+      {
+        $classes .= ' dir3';
+        $styles = array('left' =>'180px', 'top' => '618px');
+      }
+      elseif($this->model->y==10)
+      {
+        $classes .= ' dir0';
+        $styles = array('left' =>'420px', 'top' => '0px');
+      }
+      elseif($this->model->z==-10)
+      {
+        $classes .= ' dir2';
+        $styles = array('left' =>'60px', 'top' => '206px');
+      }
+      elseif($this->model->z==0)
+      {
+        $classes .= ' dir5';
+        $styles = array('left' =>'720px', 'top' => '309px');
+      }
+      else
+      {
+        $classes .= ' dir2';
+        $styles = array('left' =>'60px', 'top' => '412px');
+      }
+      return array(
+        'classes' => $classes,
+        'styles' => $styles
+    );
+    }
 }
+
