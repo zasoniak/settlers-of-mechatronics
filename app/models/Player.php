@@ -12,8 +12,12 @@ class Player extends Eloquent{
         return $this->belongsTo('Game');
     }
     
-    public function trade() {
-        return $this->hasMany('Trade');
+    public function tradeReceived() {
+        return $this->hasOne('Trade','client_id');
+    }
+    
+    public function tradesHosted() {
+      return $this->hasMany('Trade','host_id');
     }
     
     public function getResources()

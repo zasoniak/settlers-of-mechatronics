@@ -192,12 +192,6 @@ p.trading {
     -webkit-transition: 0.3s;
 }
 
-.resource.on p.trading{
-    left: 30px;
-    -webkit-transition: 0.3s;
-}
-
-
 .res_card.greyscale {
   -webkit-filter: grayscale(100%);
 }
@@ -238,6 +232,10 @@ p.trading {
 }
 .trade_quantity {
     text-align: center;
+}
+
+#trade_submit {
+  display: none;
 }
 
 #offers {

@@ -71,6 +71,7 @@
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
         $(".usercard").toggleClass("trading");
+        $("#trade_submit").slideToggle('300');
       });
       $(".trade.up").click(function(){
         $(this).parent().addClass("on")
@@ -170,26 +171,27 @@
   <body>
     <aside>
       <div class="panel">
-      <?php foreach($game->getOpponents() as $player): ?>
-      <div class="usercard" player="<?php echo $player->model->id; ?>">
-        <label for="player_<?php echo $player->model->id; ?>">
-          <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
-        </label>
-        <figcaption><?php echo $player->model->user->nickname; ?></figcaption>
-        <div class="stats">
-        <table>
-          <tr>
-            <th>S</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>R</th>
-            <td><?php echo $player->model->countResources(); ?></td>
-          </tr>
-        </table>
+        <?php foreach($game->getOpponents() as $player): ?>
+        <div class="usercard" player="<?php echo $player->model->id; ?>">
+          <label for="player_<?php echo $player->model->id; ?>">
+            <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
+          </label>
+          <figcaption><?php echo $player->model->user->nickname; ?></figcaption>
+          <div class="stats">
+          <table>
+            <tr>
+              <th>S</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>R</th>
+              <td><?php echo $player->model->countResources(); ?></td>
+            </tr>
+          </table>
+          </div>
         </div>
+        <?php endforeach; ?>
       </div>
-      <?php endforeach; ?>
       <form id="trade_form">
         <input type="hidden" name="game" value="<?php echo Request::segment(2); ?>" />
         <?php foreach($game->getOpponents() as $player): ?>
@@ -214,16 +216,12 @@
         </table>
         </div>
         <div class="offer" id="player2">
-          
         </div>
         <div class="offer" id="player3">
-          
         </div>
       </div>
-        <div class="panel">
-          <button id="trade_submit">Handuj z tym</button>
-        </div>
       <div class="panel">
+          <button id="trade_submit">Handuj z tym</button>
         <?php foreach($resources as $type): ?>
         <div class="resource">
           <div class="trade up">+</div>

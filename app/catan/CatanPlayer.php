@@ -71,7 +71,9 @@ class CatanPlayer
       );
     }
     return array(
-        'resources' => $this->model->getResources()
+        'resources' => $this->model->getResources(),
+        'trades_hosted' => $this->model->tradesHosted->toArray(),
+        'trade_received' => $this->model->tradeReceived->toArray()
     );
   }
 }
