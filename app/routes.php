@@ -127,6 +127,29 @@ Route::get('ajax/board', function() {
   return Response::json($game->board->toJSON(false));
 });
 
+Route::post('ajax/trade', function() {
+  $game = new CatanGame(Game::find(Input::get('game')));
+  $players = $game->getOpponents();
+  $clients = array();
+  foreach ($players as $player)
+  {
+    if (Input::get("player_".$player->model->id))
+    {
+      array_push($clients,$player->model->id);
+    }
+  }
+  $resources = array('wood','stone','sheep','clay','wheat');
+  foreach($resources as $resource)
+  {
+    $offer[$resource] = Input::get("trade_$resource");
+  }
+  if($game->tradeRequest($offer, $clients))
+  {
+    return Response::make('OK',200);
+  }
+  return Response::make('Błąd', 403);
+});
+
 Route::get('game/{id}/start', function($id) {
   $game = new CatanGame(Game::find($id));
   if($game->model->players()->count() > 1)

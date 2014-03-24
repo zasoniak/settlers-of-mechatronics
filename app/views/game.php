@@ -19,8 +19,8 @@
                             .css(item.styles)
                             .append($("<span>").html(item.prob))
                             .appendTo("#board")
-                            .delay(30*index)
-                            .show(30);
+                            .delay(40*index)
+                            .slideDown(200);
                   });
                   $.each(data.settlements, function(index,item){
                     $("<div>")
@@ -70,17 +70,29 @@
         $("#slide2").slideUp('300');
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
-         $(".usercard img").css({
-    width: function( index, value ) {
-      return parseFloat( value ) * .4;
-    },
-    height: function( index, value ) {
-      return parseFloat( value ) * .4;
-    }
-  });
       });
-      $("#endturn").click(function(){
-        loadJSON();
+      $(".trade.up").click(function(){
+        var span = $(this).parent().find("p span").last();
+        var res = $(this).parent().find(".res_card").attr("res");
+        var q = (+span.html())+1;
+        span.html(q);
+        $("#trade_form").find("[res="+res+"]").val(q);
+      });
+      $(".trade.down").click(function(){
+        var span = $(this).parent().find("p span").last();
+        var res = $(this).parent().find(".res_card").attr("res");
+        var q = (+span.html())-1;
+        span.html(q);
+        $("#trade_form").find("[res="+res+"]").val(q);
+      });
+      $("#trade_submit").click(function(){
+        $.post("<?php echo URL::to('ajax/trade') ?>", $("#trade_form").serialize())
+                .done(function(){
+                  alert("jupi!");
+                })
+                .error(function(){
+                  alert("zjebało się");
+                });
       });
       $(document).on("click",".settle.active",function(event){
         $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
@@ -130,12 +142,12 @@
                     if(item == 0)
                     {
                       card.addClass("greyscale");
-                      card.find("p").html("");
+                      card.find("p span").first().html("");
                     }
                     else
                     {
                       card.removeClass("greyscale");
-                      card.find("p").html(item);
+                      card.find("p span").first().html(item);
                     }
                   });
                   $("#die1").html(data.dice[0]);
@@ -153,7 +165,9 @@
       <div class="panel">
       <?php foreach($game->getOpponents() as $player): ?>
       <div class="usercard" player="<?php echo $player->model->id; ?>">
-        <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
+        <label for="player_<?php echo $player->model->id; ?>">
+          <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
+        </label>
         <figcaption><?php echo $player->model->user->nickname; ?></figcaption>
         <div class="stats">
         <table>
@@ -169,6 +183,16 @@
         </div>
       </div>
       <?php endforeach; ?>
+      <form id="trade_form">
+        <input type="hidden" name="game" value="<?php echo Request::segment(2); ?>" />
+        <?php foreach($game->getOpponents() as $player): ?>
+        <input type="checkbox" id="player_<?php echo $player->model->id; ?>" name="player_<?php echo $player->model->id; ?>" />
+        <?php endforeach; ?>
+        <?php $resources = array('wood','stone','sheep','clay','wheat'); ?>
+        <?php foreach($resources as $type): ?>
+        <input type="text" name="trade_<?php echo $type ?>" res="<?php echo $type; ?>" />
+        <?php endforeach; ?>
+      </form>
       <div class="panel" id="offers">
         <div class="offer" id="player1">
           <table>
@@ -189,20 +213,16 @@
           
         </div>
       </div>
+        <div class="panel">
+          <button id="trade_submit">Handuj z tym</button>
+        </div>
       <div class="panel">
-        <?php
-          $resources['wood']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wood;
-          $resources['stone']=$game->model->players()->where('user_id',Auth::user()->id)->first()->stone;
-          $resources['sheep']=$game->model->players()->where('user_id',Auth::user()->id)->first()->sheep;
-          $resources['clay']=$game->model->players()->where('user_id',Auth::user()->id)->first()->clay;
-          $resources['wheat']=$game->model->players()->where('user_id',Auth::user()->id)->first()->wheat;
-        ?>
-        <?php foreach($resources as $type=>$count): ?>
+        <?php foreach($resources as $type): ?>
         <div class="resource">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card greyscale <?php echo $type; ?>">
-            <p class="stop"></p>
+          <div class="res_card greyscale <?php echo $type; ?>" res="<?php echo $type; ?>">
+            <p class="stop"><span></span><span>0</span></p>
           </div>
         </div>
         <?php endforeach; ?>
@@ -216,7 +236,6 @@
       <?php echo Session::get('message'); ?>
       <?php if($game->isBoard()) : ?>
       <a id="loadjson">Pobierz JSON</a>
-      Graczy: <?php echo $game->model->players()->count(); ?>
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <?php endif; ?>

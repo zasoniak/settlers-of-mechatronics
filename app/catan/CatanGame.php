@@ -232,28 +232,25 @@ class CatanGame
       $user->save();
     }
   }
-  
-  
     
-  public function tradeRequest($offer, $clients)
+  public function tradeRequest($offer, $clients = NULL)
   {
-      $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
-      foreach($clients as $client)
+    // TODO należy sprawdzić, czy host ma tyle hajsiwa
+    $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
+    if (is_null($clients))
+    {
+      return $player->tradeBank($offer);
+    }
+    else
+    {
+      foreach ($clients as $client)
       {
-        $trade = Trade::makeOffer();
+        $trade = Trade::makeOffer($offer);
+        $trade->host_id = $player->id;
+        $trade->client_id = $client;
+        $trade->save();
       }
+    }
+    return true;
   }
-  
-  public function tradeBank($user, $offer)
-  {
-      $player = Player::findByGameByUser($this->model->id, $user->id)->first();
-      $player->tradeBank($offer);
-  }
-  
-  public function tradeAccept()
-  {
-      
-  }
-  
-  
 }

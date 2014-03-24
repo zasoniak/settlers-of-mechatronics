@@ -47,12 +47,9 @@ class Player extends Eloquent{
     public function stealHalf()
     {
         $sum=$this->countResources();
-        echo "tyle ma razem surowki: ";
-        echo $sum;
-        echo "<br>";
         if($sum>=8)
         {
-            $sum=floor($sum/=2);
+            $sum=floor($sum/2);
             $resourceList=array('stone','clay','sheep','wood','wheat');
             $resource;
             while($sum>0)
@@ -68,6 +65,11 @@ class Player extends Eloquent{
             return true;
         }
         return false;   
+    }
+    
+    public function tradeBank($offer)
+    {
+      return false;
     }
     
     public static function findByGameByUser($game_id, $user_id)

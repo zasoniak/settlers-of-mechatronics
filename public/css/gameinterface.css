@@ -132,6 +132,10 @@ div.usercard td {
 
 /***********Resource Cards*********************/
 
+#trade_form {
+  display: none;
+}
+
 .resource {
   position: relative;
   float: left;
@@ -203,6 +207,11 @@ p.stop {
 
 .res_card.greyscale p {
   display: none;
+}
+
+.res_card p span:last-of-type {
+  font-size: 12px;
+  font-weight: normal;
 }
 
 .trade {
