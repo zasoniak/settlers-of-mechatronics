@@ -230,7 +230,9 @@
         </div>
       </div>
       <div class="panel">
-          <button id="trade_submit">Handuj z tym</button>
+        <button id="trade_submit">Handuj z tym</button>
+      </div>
+      <div class="panel">
         <?php foreach($resources as $type): ?>
         <div class="resource">
           <div class="trade up">+</div>
