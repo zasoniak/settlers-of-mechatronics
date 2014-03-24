@@ -62,22 +62,21 @@
       });
       $("#trade_button").click(function(){
         $(".res_card p").toggleClass("trading");
-        $(".res_card p").removeClass("stop");
+        $(".resource").removeClass("on");
         $(".trade").slideToggle('300');
-        $(".stats").slideDown('300');
+        $(".stats").slideToggle('300');
         $("#offers").slideUp('300');
         $("#slide1").slideUp('300');
         $("#slide2").slideUp('300');
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
-         $(".usercard img").css({
-    width: function( index, value ) {
-      return parseFloat( value ) * .4;
-    },
-    height: function( index, value ) {
-      return parseFloat( value ) * .4;
-    }
-  });
+        $(".usercard").toggleClass("trading");
+      });
+      $(".trade.up").click(function(){
+        $(this).parent().addClass("on")
+      });
+      $(".trade.down").click(function(){
+        $(this).parent().addClass("on")
       });
       $("#endturn").click(function(){
         loadJSON();
@@ -202,7 +201,7 @@
           <div class="trade up">+</div>
           <div class="trade down">-</div>
           <div class="res_card greyscale <?php echo $type; ?>">
-            <p class="stop"></p>
+            <p></p>
           </div>
         </div>
         <?php endforeach; ?>
