@@ -62,14 +62,21 @@
       });
       $("#trade_button").click(function(){
         $(".res_card p").toggleClass("trading");
-        $(".res_card p").removeClass("stop");
+        $(".resource").removeClass("on");
         $(".trade").slideToggle('300');
-        $(".stats").slideDown('300');
+        $(".stats").slideToggle('300');
         $("#offers").slideUp('300');
         $("#slide1").slideUp('300');
         $("#slide2").slideUp('300');
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
+        $(".usercard").toggleClass("trading");
+      });
+      $(".trade.up").click(function(){
+        $(this).parent().addClass("on")
+      });
+      $(".trade.down").click(function(){
+        $(this).parent().addClass("on")
       });
       $(".trade.up").click(function(){
         var span = $(this).parent().find("p span").last();
