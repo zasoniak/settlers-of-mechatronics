@@ -18,6 +18,8 @@
                             .addClass(item.classes)
                             .css(item.styles)
                             .append($("<span>").html(item.prob))
+                            .append($("<div class=\"face1\"></div>"))
+                            .append($("<div class=\"face2\"></div>"))
                             .appendTo("#board")
                             .delay(40*index)
                             .slideDown(200);
@@ -176,8 +178,8 @@
                     $("<div>").addClass("clay").html(item.clay).appendTo(div);
                     $("<div>").addClass("wheat").html(item.wheat).appendTo(div);
                   });
-                  $("#die1").html(data.dice[0]);
-                  $("#die2").html(data.dice[1]);
+                  $("#die1").addClass("dice"+data.dice[0]);
+                  $("#die2").addClass("dice"+data.dice[1]);
                 })
                 .error(function(data){
                   alert(data.responseText);
@@ -223,9 +225,6 @@
         <?php endforeach; ?>
       </form>
       <div class="panel">
-        <button id="trade_submit">Handuj z tym</button>
-      </div>
-      <div class="panel">
         <?php foreach($resources as $type): ?>
         <div class="resource">
           <div class="trade up">+</div>
@@ -248,6 +247,7 @@
       Tura: <?php echo $game->model->turn_number; ?>
       Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?>  
       <?php endif; ?>
+      <button id="trade_submit">Handuj z tym</button>
       <div class="panel">
         <div class="button">
           <a href="#" id="build_button"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
@@ -277,6 +277,10 @@
         A tu się będzie kupowało karcioszki!</br>
         Stasiu, jebnij tu jakieś takie obrazki z kartami. Na razie wrzucam zdjęcie znanej japońskiej korporacji :P
         <?php echo HTML::image('img/sony.jpg');?>
+      </div>
+      <div class="panel">
+        <div class="dice" id="die1"></div>
+        <div class="dice" id="die2"></div>
       </div>
     </aside>
     <div id="whole">
