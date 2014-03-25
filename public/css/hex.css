@@ -145,7 +145,7 @@ div#board {
 
 /******************************PORT***********************/
 
-.port {
+/*.port {
   display: block;
   position: absolute;
   width: 48px;
@@ -154,8 +154,17 @@ div#board {
   border: 2px solid black;
   background-size: cover;
   background-position: center center;
-}
+}*/
 
+.port {
+  display: block;
+  position: absolute;
+  width: 46px;
+  height: 58px;
+  border: 2px solid black;
+  background-size: cover;
+  background-position: center center;
+}
 
 .wood {
   background-image: url('../img/tiles/wood.svg');
@@ -193,26 +202,31 @@ div#board {
 }
 
 .dir0 {
-  margin-top: 66px;
-  margin-left: 22px;
+  margin-top: 62px;
+  margin-left: 18px;
+  -webkit-transform: rotate(-60deg);
 }
 .dir1 {
   margin-top: 66px;
   margin-left: 46px;
+  -webkit-transform: rotate(60deg);
 }
 .dir2 {
-  margin-top: 42px;
-  margin-left: 63px;
+  margin-top: 38px;
+  margin-left: 64px;
 }
 .dir3 {
-  margin-top: 18px;
-  margin-left: 46px;
+  margin-top: 14px;
+  margin-left: 50px;
+  -webkit-transform: rotate(-60deg);
+
 }
 .dir4 {
   margin-top: 18px;
   margin-left: 22px;
+  -webkit-transform: rotate(60deg);
 }
 .dir5 {
-  margin-top: 42px;
+  margin-top: 38px;
   margin-left: 6px;
 }
