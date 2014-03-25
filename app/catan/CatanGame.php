@@ -239,7 +239,7 @@ class CatanGame
     $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
     if (is_null($clients))
     {
-      return $player->tradeBank($offer);
+      return $this->tradeBank($player, $offer);
     }
     else
     {
@@ -251,6 +251,11 @@ class CatanGame
         $trade->save();
       }
     }
+    return true;
+  }
+  
+  private function tradeBank($player, $offer)
+  {
     return true;
   }
 }
