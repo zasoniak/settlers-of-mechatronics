@@ -70,10 +70,15 @@ class CatanPlayer
           'resources' => $this->model->countResources()
       );
     }
+    $tradereceived = $this->model->tradeReceived;
+    if(!is_null($tradereceived))
+    {
+      $tradereceived = $tradereceived->toArray();
+    }
     return array(
         'resources' => $this->model->getResources(),
         'trades_hosted' => $this->model->tradesHosted->toArray(),
-//        'trade_received' => $this->model->tradeReceived->toArray()
+        'trade_received' => $tradereceived
     );
   }
 }

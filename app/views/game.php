@@ -74,7 +74,7 @@
         $(".resource").removeClass("on");
         $(".trade").slideToggle('300');
         $(".stats").slideToggle('300');
-        $("#offers").slideUp('300');
+        $(".offer").slideToggle('300');
         $("#slide1").slideUp('300');
         $("#slide2").slideUp('300');
         $(".road.active").hide('800');
@@ -167,6 +167,15 @@
                       card.find("p span").first().html(item);
                     }
                   });
+                  $.each(data.player.trades_hosted, function(index,item){
+                    var div = $("[player="+item.client_id+"]").find(".offer");
+                    div.slideDown(300);
+                    $("<div>").addClass("wood").html(item.wood).appendTo(div);
+                    $("<div>").addClass("stone").html(item.stone).appendTo(div);
+                    $("<div>").addClass("sheep").html(item.sheep).appendTo(div);
+                    $("<div>").addClass("clay").html(item.clay).appendTo(div);
+                    $("<div>").addClass("wheat").html(item.wheat).appendTo(div);
+                  });
                   $("#die1").html(data.dice[0]);
                   $("#die2").html(data.dice[1]);
                 })
@@ -198,6 +207,8 @@
             </tr>
           </table>
           </div>
+          <div class="offer">
+          </div>
         </div>
         <?php endforeach; ?>
       </div>
@@ -211,24 +222,6 @@
         <input type="text" name="trade_<?php echo $type ?>" res="<?php echo $type; ?>" />
         <?php endforeach; ?>
       </form>
-      <div class="panel" id="offers">
-        <div class="offer" id="player1">
-          <table>
-          <tr>
-            <th><div class="wood"></div></th>
-            <td>-2</td>
-          </tr>
-          <tr>
-            <th><div class="stone"></div></th>
-            <td>+1</td>
-          </tr>
-        </table>
-        </div>
-        <div class="offer" id="player2">
-        </div>
-        <div class="offer" id="player3">
-        </div>
-      </div>
       <div class="panel">
           <button id="trade_submit">Handuj z tym</button>
         <?php foreach($resources as $type): ?>
