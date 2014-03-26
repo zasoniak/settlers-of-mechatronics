@@ -53,6 +53,26 @@ class Settlement extends Eloquent {
       }
     }
     
+    public function nearestPorts()
+    {
+      if($this->sum() == -5)
+      {
+        return array(
+          $this->board->findPort($this->coords(array(5,0,0))),
+          $this->board->findPort($this->coords(array(0,5,0))),
+          $this->board->findPort($this->coords(array(0,0,5)))
+        );
+      }
+      else
+      {
+        return array(
+          $this->board->findPort($this->coords(array(-5,0,0))),
+          $this->board->findPort($this->coords(array(0,-5,0))),
+          $this->board->findPort($this->coords(array(0,0,-5)))
+        );
+      }
+    }
+    
     public function nearestSettles()
     {
       if($this->sum() == -5)

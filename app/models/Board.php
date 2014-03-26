@@ -65,6 +65,15 @@ class Board extends Eloquent {
               ->whereZ($coords[2])
               ->first();
     }
+        
+    public function findPort(array $coords)
+    {
+      return $this->ports()
+              ->whereX($coords[0])
+              ->whereY($coords[1])
+              ->whereZ($coords[2])
+              ->first();
+    }
     
     public function findDicedTiles($dice)
     {
