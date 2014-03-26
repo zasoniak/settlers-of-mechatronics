@@ -18,6 +18,8 @@
                             .addClass(item.classes)
                             .css(item.styles)
                             .append($("<span>").html(item.prob))
+                            .append($("<div class=\"face1\"></div>"))
+                            .append($("<div class=\"face2\"></div>"))
                             .appendTo("#board")
                             .delay(40*index)
                             .slideDown(200);

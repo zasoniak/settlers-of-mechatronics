@@ -275,3 +275,35 @@ p.trading {
     font-family: 'ubuntu', 'arial';
     font-size: 20px;
 }
+
+.dice {
+    width: 70px;
+    height: 70px;
+    border: 2px solid black;
+    border-radius: 15px;
+    background-size: contain;
+    float: left;
+}
+
+.dice1 {background-image: url('../img/dice1.jpg');}
+.dice2 {background-image: url('../img/dice2.jpg');}
+.dice3 {background-image: url('../img/dice3.jpg');}
+.dice4 {background-image: url('../img/dice4.jpg');}
+.dice5 {background-image: url('../img/dice5.jpg');}
+.dice6 {background-image: url('../img/dice6.jpg');}
+
+/*
+.offer table {
+    width: 150px;
+}
+
+.offer th, .offer td {
+    width: 50%;
+    vertical-align: middle;
+    outline: 1px dotted lightgrey;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 40px;
+}
+*/

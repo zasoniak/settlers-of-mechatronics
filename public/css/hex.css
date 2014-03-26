@@ -26,16 +26,57 @@ div#board {
   cursor: pointer;
   position: absolute;
   background-position: center;
-  background-size: cover;
-  -webkit-clip-path: polygon(54px 0, 108px 31px, 108px 93px, 54px 124px, 0 93px, 0 31px);
-  width: 108px; height: 124px;
-  margin: 6px -6px -6px 6px;
+  background-size: 124px;
+  width: 108px; height: 62px;
+  margin: 40px -6px -40px 6px;
   display: inline-block;
+  border-radius: 4px;
+}
+
+.hex .face1, .hex .face2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: inherit;
+  z-index: -1;
+  border-radius: 4px;
+  /* Keeps borders smooth in webkit */
+  -webkit-backface-visibility: hidden;
+}
+
+.hex .face1:before, .hex .face2:before {
+  content: '';
+  position: absolute;
+  width: 108px;
+  height: 124px;
+  background: inherit;
+}
+
+.hex .face1 {
+  -webkit-transform: rotate(60deg);
+}
+
+.hex .face1:before {
+  -webkit-transform-origin: 0 0;
+  -webkit-transform: rotate(-60deg) translate(-54px, 0);
+}
+
+.hex .face2 {
+ -webkit-transform: rotate(-60deg);
+}
+
+.hex .face2:before {
+  right: 0;
+  -webkit-transform-origin: right top;
+  -webkit-transform: rotate(60deg) translate(54px, 0);
 }
 
 .hex span{
   display: block;
-  margin-top: 36px;
+  margin-top: 5px;
   text-align: center;
   z-index: 1;
   color: rgba(255,255,255,0.8);
@@ -51,17 +92,8 @@ div#board {
   visibility: hidden;
 }
 
-.hex span:empty {
-  visibility: hidden;
-}
-
-.hex:not(.ocean):hover {
-  box-shadow: inset 0 0 70px rgba(0,0,0,0.6);
-  -webkit-transition: 0.4s;
-}
-
 .hex:hover span {
-  text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  text-shadow: 0 0 50px black;
   color: white;
   -webkit-transition: 0.4s;
 }
