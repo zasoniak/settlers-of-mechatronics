@@ -263,8 +263,66 @@ class CatanGame
     return true;
   }
   
-  private function tradeBank($player, $offer)
+  public function tradeBank($player, $offers)
   {
-    return true;
+      //odczytujemy settlementy przy portach i sprawdzamy ktore naleza do gracza
+      $bonuses=array();
+      foreach($this->model->ports() as $port)
+      {
+          $settle=$port->nearestSettlements();
+          if($settle->player()->id==$player->id)
+          {
+              array_push($bonuses,$port->type);
+          }
+      }
+      
+      //sprawdzamy oferte, jesli mamy ten bonus liczymy korzystniej
+      $givenResources=0;
+      $gainedResources=0;
+      if(array_search('default',$bonuses))
+      {
+          foreach($offers as $resource => $quantity)
+          {
+              if($quantity<0)
+              {
+                if(array_search($resource, $bonuses))
+                {
+                    $givenResources+= $quantity/2;
+                } else {
+                    $givenResources+= $quantity/3;
+                }
+              } else {
+                  $gainedResources+=$quantity;
+              } 
+          }
+      }
+      else
+      {
+          foreach($offers as $resource => $quantity)
+          {
+              if($quantity<0)
+              {
+                if(array_search($resource, $bonuses))
+                {
+                    $givenResources+= $quantity/2;
+                } else {
+                    $givenResources+= $quantity/4;
+                }
+              } else {
+                  $gainedResources+=$quantity;
+              }
+            
+          }
+      }
+      if($gainedResources+$givenResources!=0)
+      {
+        throw new Exception('zła ilość surowców');
+      }
+      foreach($offers as $resource => $quantity)
+      {
+             $player->model->addResource($resource,$quantity);
+      }
+      $player->model->save();
+      return true;
   }
 }
