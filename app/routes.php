@@ -69,6 +69,7 @@ Route::get('board/{id}', function($id){
 /* game routes */
 
 Route::when('game*', 'auth');
+Route::when('*ajax*', 'ajax');
 
 Route::get('game/create', function(){
   $game = CatanGame::generate(Auth::user());
@@ -114,7 +115,7 @@ Route::post('ajax/color', function() {
   $color = Input::get('color');
   if(array_search($color, $colors) !== false)
   {
-    return Response::make('Błąd'.json_encode($colors),403);
+    return Response::make('Błąd '.json_encode($colors),403);
   }
   $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
   $player->color = $color;
@@ -167,34 +168,22 @@ Route::get('game/{id}/next', array('before'=>'turn', function($id) {
     return Redirect::to("game/$id");
 }));
 
-
-Route::post('game/{id}/build', array('before'=>'turn', function($id){
-  if(Request::ajax())
+Route::post('game/ajax/build', function(){
+  $game = new CatanGame(Game::find(Input::get('game_id')));
+  try
   {
-    $itemname = Input::get('item');
-    $game = new CatanGame(Game::find($id));
-    $itemlist = $itemname.'List';
-    $item = $game->board->{$itemlist}[(int)Input::get('id')];
-    try
-    {
-      $game->buyItem($item);
-    } 
-    catch (Exception $exc)
-    {
-      return Response::make($exc->getMessage(),'403');
-    }
-    return Response::make('OK!',200);
-  }
-  return Response::make('Zabronione nieajaxowe wywolanie','403');
-}));
-
-Route::get('game/{id}/update', function($id){
-  if(Request::ajax())
+    $game->buyItem(Input::get('item'), Input::get('id'));
+  } 
+  catch (Exception $exc)
   {
-    $game = new CatanGame(Game::find($id));
-    return Response::json($game->toJSON());
+    return Response::make($exc->getMessage(),403);
   }
-  return Response::make('Zabronione nieajaxowe wywolanie','403');
+  return Response::make('OK!',200);
+});
+
+Route::get('game/ajax/update', function(){
+  $game = new CatanGame(Game::find(Input::get('game_id')));
+  return Response::json($game->toJSON());
 });
 
 /* pierdolnik */

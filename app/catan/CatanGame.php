@@ -185,8 +185,17 @@ class CatanGame
     return (string)$this->board;
   }
   
-  public function buyItem(PurchasableInterface $item)
+  public function buyItem($itemname,$id)
   {
+    if($itemname == 'card')
+    {
+      $item = new CatanCard($this->board->model->availableCard());
+    }
+    else
+    {
+      $itemlist = $itemname.'List';
+      $item = $this->board->{$itemlist}[(int)$id];
+    }
     $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
     if($item->buy($buyer))
     {

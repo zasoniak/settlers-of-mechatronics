@@ -89,10 +89,17 @@ Route::filter('csrf', function()
 */
 
 Route::filter('turn', function(){
-  $game_id = Request::segment(2);
-  $allowed = Game::find($game_id)->currentPlayer();
+  $game_id = Input::get('game_id', Request::segment(2));
+  $allowed = Game::allowedPlayer($game_id);
   if ($allowed->user_id != Auth::user()->id)
   {
     return Response::make('Nie twoja tura', 403);
+  }
+});
+
+Route::filter('ajax', function(){
+  if(!Request::ajax())
+  {
+    return Response::make('Zabronione nieajaxowe wywolanie', 403);
   }
 });
