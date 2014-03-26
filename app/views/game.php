@@ -21,7 +21,7 @@
                             .append($("<div class=\"face1\"></div>"))
                             .append($("<div class=\"face2\"></div>"))
                             .appendTo("#board")
-                            .delay(40*index)
+                            .delay(20*index)
                             .slideDown(200);
                   });
                   $.each(data.settlements, function(index,item){
@@ -44,7 +44,7 @@
                             .addClass(item.classes)
                             .css(item.styles)
                             .appendTo("#board")
-                            .delay(1480) 
+                            .delay(720) 
                             .slideDown(200);
                   });
               });
