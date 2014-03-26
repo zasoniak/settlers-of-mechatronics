@@ -239,7 +239,7 @@ class CatanGame
     $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
     if (is_null($clients))
     {
-      return $player->tradeBank($offer);
+      return $this->tradeBank($player,$offer);
     }
     else
     {
@@ -252,5 +252,67 @@ class CatanGame
       }
     }
     return true;
+  }
+  
+  public function tradeBank($player, $offers)
+  {
+      //odczytujemy settlementy przy portach i sprawdzamy ktore naleza do gracza
+      $bonuses=array();
+      foreach($this->model->ports() as $port)
+      {
+          $settle=$port->nearestSettlements();
+          if($settle->player()->id==$player->id)
+          {
+              array_push($bonuses,$port->type);
+          }
+      }
+      
+      //sprawdzamy oferte, jesli mamy ten bonus liczymy korzystniej
+      $givenResources=0;
+      $gainedResources=0;
+      if(array_search('default',$bonuses))
+      {
+          foreach($offers as $resource => $quantity)
+          {
+              if($quantity<0)
+              {
+                if(array_search($resource, $bonuses))
+                {
+                    $givenResources+= $quantity/2;
+                } else {
+                    $givenResources+= $quantity/3;
+                }
+              } else {
+                  $gainedResources+=$quantity;
+              } 
+          }
+      }
+      else
+      {
+          foreach($offers as $resource => $quantity)
+          {
+              if($quantity<0)
+              {
+                if(array_search($resource, $bonuses))
+                {
+                    $givenResources+= $quantity/2;
+                } else {
+                    $givenResources+= $quantity/4;
+                }
+              } else {
+                  $gainedResources+=$quantity;
+              }
+            
+          }
+      }
+      if($gainedResources+$givenResources!=0)
+          throw new Exception('zła ilość surowców');
+      
+        foreach($offers as $resource => $quantity)
+        {
+               $player->model->addResource($resource,$quantity);
+        }
+        return true;
+      
   }
 }
