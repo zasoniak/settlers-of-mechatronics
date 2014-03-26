@@ -191,9 +191,8 @@ div#board {
 .port {
   display: block;
   position: absolute;
-  width: 46px;
-  height: 58px;
-  border: 2px solid black;
+  width: 50px;
+  height: 62px;
   background-size: cover;
   background-position: center center;
 }

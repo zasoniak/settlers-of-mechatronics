@@ -98,6 +98,10 @@ div.usercard.trading.chosen figure img {
     box-shadow: 0 0 50px greenyellow;
 }
 
+#opponents {
+  height: 220px;
+}
+
 .panel {
   overflow: hidden;
   width: 450px;
