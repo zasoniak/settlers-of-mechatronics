@@ -50,8 +50,8 @@
                   });
               });
       loadJSON(game);
-      $("#build_button").click(function(){
-        $("#slide1").slideToggle('300');
+     $("#build_button").click(function(){
+        $(this).parent().toggleClass("clicked");
         $("#slide2").slideUp('300');
         $(".trade").slideUp('300');
         $(".road.active").hide('800');
@@ -270,7 +270,11 @@
       <?php echo Session::get('message'); ?>
       <div class="panel">
         <div class="button">
-          <a href="#" id="build_button"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
+          <a id="build_button" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
+          <a id="build_settle" class="inside"><?php echo HTML::image('img/icon_house.png', 'hammer'); ?></a>
+          <a id="build_city" class="inside"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
+          <a id="build_road" class="inside"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
+          <a id="buy_card_button" class="inside"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div class="button">
           <a href="#" id="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
