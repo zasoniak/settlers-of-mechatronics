@@ -101,7 +101,7 @@ class CatanBoard implements DrawableInterface
         array(25,-25,0),
         array(-25,15,10)
     );
-    $portTypes = array('wood', 'stone', 'clay','sheep','wheat','default','default','default','default');
+    $portTypes = array('wood','stone','clay','sheep','wheat','default','default','default','default');
     shuffle($portTypes);
     foreach ($portLocations as $location)
     {
@@ -182,16 +182,24 @@ class CatanBoard implements DrawableInterface
         }
       }
     }
-    /*
-      //generacja zestawu kart do gry  
-      $CardTypeList = array('knight', 'yearOfPleanty', 'roadBuilding', 'victoryPoint', 'monopoly');
-      for($i=0;$i<14;$i++) {
-          $card = new Card();
-          $card->type=$CardTypeList[rand(0,4)];
-          $card = $board->cards()->save($card);
-          }
-    
-    */
+    // generowanie kart rozwoju
+    $cardTypes = array('roadbuilding','roadbuilding','yearofplenty','yearofplenty','monopoly','monopoly');
+    for ($i = 0; $i < 5; $i++)
+    {
+      array_push($cardTypes, 'victorypoint');
+    }
+    for ($i = 0; $i < 14; $i++)
+    {
+      array_push($cardTypes, 'knight');
+    }
+    shuffle($cardTypes);
+    foreach ($cardTypes as $type)
+    {
+      $card = new Card();
+      $card->type = $type;
+      $board->cards()->save($card);
+    }
+    // zwrócenie modelu
     return new self($board);
   }
   

@@ -33,6 +33,16 @@ class Board extends Eloquent {
         return $this->hasMany('Card');
     }
     
+    public function availableCards()
+    {
+      return $this->cards()->whereNull('player_id')->get();
+    }
+    
+    public function availableCard()
+    {
+      return $this->cards()->whereNull('player_id')->take(1)->first();
+    }
+    
     public static function findByGame($game_id)
     {
         return self::where('game_id', $game_id)->first();

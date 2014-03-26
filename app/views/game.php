@@ -10,6 +10,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
+      var game = $("#game_id").val();
       $.getJSON("<?php echo URL::to('ajax/board'); ?>",{game_id:<?php echo Request::segment(2); ?>})
               .done(function(data){
                   $.each(data.tiles, function(index,item){
@@ -48,7 +49,7 @@
                             .slideDown(200);
                   });
               });
-      loadJSON();
+      loadJSON(game);
       $("#build_button").click(function(){
         $("#slide1").slideToggle('300');
         $("#slide2").slideUp('300');
@@ -70,6 +71,15 @@
         $("#slide1").slideUp('300');
         $(".trade").slideUp('300');
         $(".res_card p").removeClass("trading");
+      });
+      $("#buy_card_button").click(function(){
+        $.post("ajax/build",{ game_id:game, item:"card", id:null })
+                .done(function(data){
+                  loadJSON(game);
+                })
+                .error(function(data){
+                  alert(data.responseText);
+                });
       });
       $("#trade_button").click(function(){
         $(".road.active").hide();
@@ -112,28 +122,28 @@
                 });
       });
       $(document).on("click",".settle.active",function(event){
-        $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"settlement", id:$(this).attr("settle") })
+        $.post("ajax/build",{ game_id:game, item:"settlement", id:$(this).attr("settle") })
                 .done(function(data){
-                  loadJSON();
+                  loadJSON(game);
                 })
                 .error(function(data){
                   alert(data.responseText);
                 });
       });
       $(document).on("click",".road.active",function(event){
-        $.post("<?php echo URL::to("game/".$game->model->id."/build"); ?>",{ item:"road", id:$(this).attr("road") })
+        $.post("ajax/build",{ game_id:game,item:"road", id:$(this).attr("road") })
                 .done(function(data){
-                  loadJSON();
+                  loadJSON(game);
                 })
                 .error(function(data){
                   alert(data.responseText);
                 });
       });
       $("#loadjson").click(function(){
-        loadJSON();
+        loadJSON(game);
       });
-      function loadJSON() {
-    $.getJSON("<?php echo URL::to("game/".$game->model->id."/update"); ?>")
+      function loadJSON(game) {
+    $.getJSON("ajax/update",{game_id:game})
                 .done(function(data){
                   $("#board").find(".road").remove();
                   $("#board").find(".settle").remove();
@@ -302,5 +312,6 @@
     <div id="whole">
       <div id="board"></div>
     </div>
+    <input type="hidden" value="<?php echo Request::segment(2); ?>" id="game_id" />
   </body>
 </html>
