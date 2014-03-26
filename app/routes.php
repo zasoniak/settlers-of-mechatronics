@@ -162,8 +162,7 @@ Route::get('game/{id}/start', function($id) {
 
 Route::get('game/{id}/next', array('before'=>'turn', function($id) {
     $game = new CatanGame(Game::find($id));
-    $game->endMove();
-    $game->throwDice();
+    $game->endMove();   
     return Redirect::to("game/$id");
 }));
 

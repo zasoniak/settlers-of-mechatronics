@@ -134,4 +134,28 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     }
     return false;
   }
+  
+  public function buyZero(Player $player)
+  {
+    if(!$this->buildCheckZero($player->id))
+    {
+      throw new Exception('Nie możesz tu budować!');
+    }
+    $this->model->player_id = $player->id;
+    $this->model->save();
+    return true;
+  }
+  
+  public function buildCheckZero($player_id)
+  {
+    foreach($this->model->nearestSettlements() as $settle)
+    {
+      if(!is_null($settle) && $settle->player_id == $player_id)
+      {
+        return true;
+      }
+    }
+    
+    return false;
+  }
 }

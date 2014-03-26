@@ -81,18 +81,65 @@ class CatanGame
   
   public function endMove()
   {
-    $this->isWinner();
+      if($this->model->turn_number==0||$this->model->turn_number==1)
+      {
+          $this->endMoveZero($this->model->turn_number);
+      }
+      else
+      {
+            $this->isWinner();
+            $playersQuantity=$this->model->players()->count();
+            //$playersQuantity=4;
+             //jesli doszedl do konca nowa tura
+            if($this->model->current_player==$playersQuantity)
+            {
+              $this->model->turn_number++;
+              $this->model->current_player=1;
+            }
+            else //inaczej następny gracz
+            {
+              $this->model->current_player++;
+            }
+            $this->model->is_changed=1;
+            $this->model->save();
+            $this->throwDice();
+      }
+  }
+  
+    public function endMoveZero($turn)
+  {
     $playersQuantity=$this->model->players()->count();
     //$playersQuantity=4;
      //jesli doszedl do konca nowa tura
     if($this->model->current_player==$playersQuantity)
     {
-      $this->model->turn_number++;
-      $this->model->current_player=1;
+    	if($turn==1)
+    	{
+            $this->model->current_player--;
+    	}
+        else
+        {
+            $this->model->turn_number++;
+        }
     }
     else //inaczej następny gracz
     {
+    	//tura 0 -> 1...2..3...4
       $this->model->current_player++;
+      //tura 1 -> 4...3...2...1
+      if($this->model->turn_number==1)
+      {
+      	//o ile nie doszło z powrotem do pierwszego gracza
+      	if($this->model->current_player!=1)
+      	{
+      		$this->model->current_player--;
+      	}
+      	else
+      	{
+      		$this->model->turn_number++;
+      	}
+      }
+      	
     }
     $this->model->is_changed=1;
     $this->model->save();
@@ -188,11 +235,24 @@ class CatanGame
   public function buyItem(PurchasableInterface $item)
   {
     $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
-    if($item->buy($buyer))
+    
+    if($this->model->turn_number==0||$this->model->turn_number==1)
     {
-      return true;
+        if($item->buyZero($buyer))
+        {
+          return true;
+        }
+        return false;
     }
-    return false;
+    else
+    {
+        if($item->buy($buyer))
+        {
+          return true;
+        }
+        return false;
+    }
+    
   }
   
   public function toJSON()
@@ -312,6 +372,7 @@ class CatanGame
         {
                $player->model->addResource($resource,$quantity);
         }
+        $player->model->save();
         return true;
       
   }

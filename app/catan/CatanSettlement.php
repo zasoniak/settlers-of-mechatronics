@@ -138,4 +138,17 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     }
     return false;
   }
+  
+  
+  public function buyZero(Player $player)
+  {
+      
+    if(is_null($this->model->player_id))
+    {
+      $this->model->player_id = $player->id;
+      $this->deleteNeighbours();
+    }
+    $this->model->save();
+    return true;
+  }
 }
