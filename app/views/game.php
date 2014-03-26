@@ -189,8 +189,8 @@
                     div.find(".clay").html(trade.clay);
                     div.find(".wheat").html(trade.wheat);
                   }
-                  $("#die1").html(data.dice[0]);
-                  $("#die2").html(data.dice[1]);
+                  $("#die1").addClass("dice"+data.dice[0]);
+                  $("#die2").addClass("dice"+data.dice[1]);
                 })
                 .error(function(data){
                   alert(data.responseText);
@@ -293,6 +293,10 @@
         Tura: <?php echo $game->model->turn_number; ?>
         Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?> 
         <button id="trade_submit">Handuj z tym</button> 
+      </div>
+      <div class="panel">
+        <div class="dice" id="die1"></div>
+        <div class="dice" id="die2"></div>
       </div>
     </aside>
     <div id="whole">
