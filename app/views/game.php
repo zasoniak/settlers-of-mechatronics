@@ -21,7 +21,7 @@
                             .append($("<div class=\"face1\"></div>"))
                             .append($("<div class=\"face2\"></div>"))
                             .appendTo("#board")
-                            .delay(40*index)
+                            .delay(20*index)
                             .slideDown(200);
                   });
                   $.each(data.settlements, function(index,item){
@@ -44,7 +44,7 @@
                             .addClass(item.classes)
                             .css(item.styles)
                             .appendTo("#board")
-                            .delay(1480) 
+                            .delay(720) 
                             .slideDown(200);
                   });
               });
@@ -82,7 +82,11 @@
         $(".road.active").hide('800');
         $(".settle.active").hide('800');
         $(".usercard").toggleClass("trading");
+        $(".usercard").removeClass("chosen");
         $("#trade_submit").slideToggle('300');
+      });
+      $(".usercard").click(function(){
+        $(this).addClass("chosen")
       });
       $(".trade.up").click(function(){
         $(this).parent().addClass("on")
@@ -177,6 +181,9 @@
                     $("<div>").addClass("sheep").html(item.sheep).appendTo(div);
                     $("<div>").addClass("clay").html(item.clay).appendTo(div);
                     $("<div>").addClass("wheat").html(item.wheat).appendTo(div);
+                    $("<div>").addClass("reject").appendTo(div);
+                    $("<div>").addClass("empty").appendTo(div);
+                    $("<div>").addClass("accept").appendTo(div);
                   });
                   $("#die1").addClass("dice"+data.dice[0]);
                   $("#die2").addClass("dice"+data.dice[1]);
