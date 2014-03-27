@@ -232,27 +232,22 @@ class CatanGame
     return (string)$this->board;
   }
   
-  public function buyItem(PurchasableInterface $item)
+  public function buyItem($itemname,$id)
   {
-    $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
-    
-    if($this->model->turn_number==0||$this->model->turn_number==1)
+    if($itemname == 'card')
     {
-        if($item->buyZero($buyer))
-        {
-          return true;
-        }
-        return false;
+      $item = new CatanCard($this->board->model->availableCard());
     }
     else
     {
-        if($item->buy($buyer))
-        {
-          return true;
-        }
-        return false;
+      $item = $this->board->{$itemname.'List'}[(int)$id];
     }
-    
+    $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
+    if($item->buy($buyer))
+    {
+      return true;
+    }
+    return false;
   }
   
   public function toJSON()

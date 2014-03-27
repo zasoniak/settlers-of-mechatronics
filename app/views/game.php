@@ -22,8 +22,8 @@
                             .append($("<div class=\"face1\"></div>"))
                             .append($("<div class=\"face2\"></div>"))
                             .appendTo("#board")
-                            .delay(20*index)
-                            .slideDown(200);
+                            .delay(50*index)
+                            .fadeIn(120);
                   });
                   $.each(data.settlements, function(index,item){
                     $("<div>")
@@ -51,12 +51,12 @@
               });
       loadJSON(game);
      $("#build_button").click(function(){
-        $(this).parent().toggleClass("clicked");
-        $("#slide2").slideUp('300');
+        $(".road.active").hide();
+        $(".settle.active").hide();
         $(".trade").slideUp('300');
-        $(".road.active").hide('800');
-        $(".settle.active").hide('800');
+        $("#slide2").slideUp('300');
         $(".res_card p").removeClass("trading");
+        $(this).parent().toggleClass("clicked");
       });
       $("#build_settle").click(function(){
         $(".road.active").hide();
@@ -65,12 +65,6 @@
       $("#build_road").click(function(){
         $(".settle.active").hide();
         $(".road.active").toggle('300');
-      });
-      $("#buy_card_button").click(function(){
-        $("#slide2").slideToggle('300');
-        $("#slide1").slideUp('300');
-        $(".trade").slideUp('300');
-        $(".res_card p").removeClass("trading");
       });
       $("#buy_card_button").click(function(){
         $.post("ajax/build",{ game_id:game, item:"card", id:null })
