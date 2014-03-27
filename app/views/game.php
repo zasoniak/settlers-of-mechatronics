@@ -35,6 +35,9 @@
             <div class="sheep">0</div>
             <div class="clay">0</div>
             <div class="wheat">0</div>
+            <div class="reject"></div>
+            <div class="empty"></div>
+            <div class="accept"></div>
           </div>
         </div>
         <?php endforeach; ?>
@@ -55,7 +58,18 @@
           <div class="trade up">+</div>
           <div class="trade down">-</div>
           <div class="res_card greyscale <?php echo $type; ?>" res="<?php echo $type; ?>">
-            <p class="stop"><span></span><span>0</span></p>
+            <p class="stop"><span></span></p>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+      <div class="panel">
+        <?php
+        $cards = array('victorypoint','knight','monopoly','roadbuilding','yearofplenty');
+        foreach($cards as $card): ?>
+        <div class="development_card">
+          <div class="dev_card greyscale <?php echo $card; ?>" card="<?php echo $card; ?>">
+            <p><span></span></p>
           </div>
         </div>
         <?php endforeach; ?>
@@ -74,6 +88,7 @@
           <a id="build_city" class="inside"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
           <a id="build_road" class="inside"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
           <a id="buy_card_button" class="inside"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
+          hope is lost...
         </div>
         <div class="button">
           <a href="#" id="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
