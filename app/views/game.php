@@ -258,6 +258,17 @@
         </div>
         <?php endforeach; ?>
       </div>
+      <div class="panel">
+        <?php
+        $cards = array('victorypoint','knight','monopoly','roadbuilding','yearofplenty');
+        foreach($cards as $card): ?>
+        <div class="development_card">
+          <div class="dev_card greyscale <?php echo $card; ?>" card="<?php echo $card; ?>">
+            <p><span></span></p>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
       <?php 
       if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
       {

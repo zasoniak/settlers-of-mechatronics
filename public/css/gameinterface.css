@@ -256,11 +256,6 @@ p.trading {
   display: none;
 }
 
-.res_card p span:last-of-type {
-  font-size: 12px;
-  font-weight: normal;
-}
-
 .trade {
     display: none;
     position: absolute;
@@ -334,11 +329,13 @@ p.trading {
 .offer .accept {
     background-image: url('../img/accept.png');
     opacity: 0.8;
+    cursor: pointer;
 }
 
 .offer .reject {
     background-image: url('../img/reject.png');
     opacity: 0.8;
+    cursor: pointer;
 }
 
 .accept:hover, .reject:hover {
@@ -377,3 +374,57 @@ p.trading {
     line-height: 40px;
 }
 */
+
+
+/*******************DEVELOPMENT CARDS**********************/
+
+.development_card {
+  position: relative;
+  float: left;
+  margin: 0 5px;
+}
+
+.dev_card {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border: 5px solid darkslategrey;
+    margin: 20px auto;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+    border-radius: 40px;
+    background-origin: border-box;
+    background-position: center;
+    background-size: cover;
+}
+
+.dev_card p {
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 45px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: darkslategrey;
+    text-align: center;
+    z-index: 1;
+    color: white;
+    font-family: 'ubuntu', 'arial';
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 40px;
+    -webkit-transition: 0.3s;
+}
+
+.dev_card.greyscale {
+  -webkit-filter: grayscale(100%);
+}
+
+.dev_card.greyscale p {
+  display: none;
+}
+.victorypoint {background-image: url('../img/card_victorypoint.png');}
+.knight {background-image: url('../img/card_knight.png');}
+.yearofplenty {background-image: url('../img/card_yearofplenty.jpg');}
+.roadbuilding {background-image: url('../img/card_roadbuilding.jpg');}
+.monopoly {background-image: url('../img/card_monopoly.jpg');}
