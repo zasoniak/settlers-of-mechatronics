@@ -89,29 +89,32 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     return array('stone'=>3,'wheat'=>2);
   }
   
-  public function buy(Player $player)
+  public function buy(Player $player, $zero = false)
   {
-    foreach ($this->cost() as $resource => $quantity)
+    if(!$zero)
     {
-      if($player->{$resource} < $quantity)
+      foreach ($this->cost() as $resource => $quantity)
       {
-        throw new Exception('Nie stać Cię na to!');
+        if($player->{$resource} < $quantity)
+        {
+          throw new Exception('Nie stać Cię na to!');
+        }
       }
-    }
-    if(!$this->buildCheck($player->id))
-    {
-      throw new Exception('Nie możesz tu budować!');
-    }
-    foreach ($this->cost() as $resource => $quantity)
-    {
-      $player->{$resource} -= $quantity;
+      if(!$this->buildCheck($player->id))
+      {
+        throw new Exception('Nie możesz tu budować!');
+      }
+      foreach ($this->cost() as $resource => $quantity)
+      {
+        $player->{$resource} -= $quantity;
+      }
+      $player->save();
     }
     if(is_null($this->model->player_id))
     {
       $this->model->player_id = $player->id;
       $this->deleteNeighbours();
     }
-    $player->save();
     $this->model->save();
     return true;
   }

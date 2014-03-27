@@ -48,4 +48,9 @@ class CatanCard implements PurchasableInterface
     $this->model->save();
     return true;
   }
+  
+  public function toJSON()
+  {
+    return true;
+  }
 }

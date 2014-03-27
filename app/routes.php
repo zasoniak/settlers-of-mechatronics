@@ -185,6 +185,19 @@ Route::get('game/ajax/update', function(){
   return Response::json($game->toJSON());
 });
 
+Route::post('game/ajax/settle', function(){
+  $game = new CatanGame(Game::find(Input::get('game_id')));
+  try
+  {
+    $game->settleItem(Input::get('item'), Input::get('id'));
+  } 
+  catch (Exception $exc)
+  {
+    return Response::make($exc->getMessage(),403);
+  }
+  return Response::make('OK!',200);
+});
+
 /* pierdolnik */
 
 Route::get('interface', function()
