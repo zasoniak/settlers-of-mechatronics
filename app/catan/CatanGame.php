@@ -135,6 +135,7 @@ class CatanGame
       	else
       	{
       		$this->model->turn_number++;
+                $this->throwDice();
       	}
       }
       else   //tura 0 -> 1...2..3...4
@@ -245,11 +246,24 @@ class CatanGame
       $item = $this->board->{$itemname.'List'}[(int)$id];
     }
     $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
-    if($item->buy($buyer))
+    
+    
+    if($this->model->turn_number==0||$this->model->turn_number==1)
     {
-      return true;
+        if($item->buyZero($buyer))
+        {
+          return true;
+        }
+        return false;
     }
-    return false;
+    else
+    {
+        if($item->buy($buyer))
+        {
+          return true;
+        }
+        return false;
+    }
   }
   
   public function toJSON()
