@@ -163,7 +163,7 @@
                     if(item == 0)
                     {
                       card.addClass("greyscale");
-                      card.find("p span").first().html("");
+                      card.find("p span").html("");
                     }
                     else
                     {
@@ -230,6 +230,9 @@
             <div class="sheep">0</div>
             <div class="clay">0</div>
             <div class="wheat">0</div>
+            <div class="reject"></div>
+            <div class="empty"></div>
+            <div class="accept"></div>
           </div>
         </div>
         <?php endforeach; ?>
@@ -250,7 +253,7 @@
           <div class="trade up">+</div>
           <div class="trade down">-</div>
           <div class="res_card greyscale <?php echo $type; ?>" res="<?php echo $type; ?>">
-            <p class="stop"><span></span><span>0</span></p>
+            <p class="stop"><span></span></p>
           </div>
         </div>
         <?php endforeach; ?>
