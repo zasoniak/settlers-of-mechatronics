@@ -51,6 +51,9 @@ class CatanCard implements PurchasableInterface
   
   public function toJSON()
   {
-    return true;
+    return array(
+        'classes' => 'dev_card '.$this->model->type,
+        'attr' => array('card'=>$this->model->id)
+    );
   }
 }

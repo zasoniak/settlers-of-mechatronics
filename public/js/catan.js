@@ -160,6 +160,15 @@ $(document).ready(function() {
                   card.find("p span").first().html(item);
                 }
               });
+              $.each(data.player.cards, function(index, item) {
+                $("<div>")
+                        .addClass("development_card")
+                        .appendTo("#dev_cards")
+                        .append($("<div>"))
+                        .children().first()
+                        .addClass(item.classes)
+                        .attr(item.attr);
+              });
               $.each(data.player.trades_hosted, function(index, item) {
                 var div = $("[player=" + item.client_id + "]").find(".offer");
                 div.find(".wood").html(item.wood);

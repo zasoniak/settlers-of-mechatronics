@@ -63,8 +63,9 @@
         </div>
         <?php endforeach; ?>
       </div>
-      <div class="panel">
+      <div id="dev_cards" class="panel">
         <?php
+        /*
         $cards = array('victorypoint','knight','monopoly','roadbuilding','yearofplenty');
         foreach($cards as $card): ?>
         <div class="development_card">
@@ -72,7 +73,7 @@
             <p><span></span></p>
           </div>
         </div>
-        <?php endforeach; ?>
+        <?php endforeach; */?>
       </div>
       <?php 
       if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
@@ -88,7 +89,6 @@
           <a id="build_city" class="inside"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
           <a id="build_road" class="inside"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
           <a id="buy_card_button" class="inside"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
-          hope is lost...
         </div>
         <div class="button">
           <a href="#" id="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>

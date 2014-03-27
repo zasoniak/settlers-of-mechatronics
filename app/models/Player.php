@@ -8,8 +8,14 @@ class Player extends Eloquent{
         return $this->belongsTo('User');
     }
     
-    public function board(){
+    public function game()
+    {
         return $this->belongsTo('Game');
+    }
+    
+    public function cards()
+    {
+      return $this->hasMany('Card');
     }
     
     public function tradeReceived() {
