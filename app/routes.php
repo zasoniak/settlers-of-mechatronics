@@ -123,13 +123,13 @@ Route::post('ajax/color', function() {
   return Response::make('OK', 200);
 });
 
-Route::get('ajax/board', function() {
+Route::get('game/ajax/board', function() {
   $game = new CatanGame(Game::find(Input::get('game_id')));
   return Response::json($game->board->toJSON(false));
 });
 
-Route::post('ajax/trade', function() {
-  $game = new CatanGame(Game::find(Input::get('game')));
+Route::post('game/ajax/trade', function() {
+  $game = new CatanGame(Game::find(Input::get('game_id')));
   $players = $game->getOpponents();
   $clients = array();
   foreach ($players as $player)
