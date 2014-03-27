@@ -5,6 +5,5 @@
  */
 interface PurchasableInterface {
   public function buy(Player $player);
-  public function buyZero(Player $player);
   public function cost();
 }
