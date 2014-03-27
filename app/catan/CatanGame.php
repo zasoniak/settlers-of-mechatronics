@@ -123,9 +123,7 @@ class CatanGame
         }
     }
     else //inaczej następny gracz
-    {
-    	//tura 0 -> 1...2..3...4
-      $this->model->current_player++;
+    { 
       //tura 1 -> 4...3...2...1
       if($this->model->turn_number==1)
       {
@@ -138,6 +136,10 @@ class CatanGame
       	{
       		$this->model->turn_number++;
       	}
+      }
+      else   //tura 0 -> 1...2..3...4
+      {
+          $this->model->current_player++;
       }
       	
     }
