@@ -160,6 +160,7 @@ $(document).ready(function() {
                   card.find("p span").first().html(item);
                 }
               });
+              $("#dev_cards").html("");
               $.each(data.player.cards, function(index, item) {
                 $("<div>")
                         .addClass("development_card")
