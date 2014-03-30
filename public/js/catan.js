@@ -100,8 +100,8 @@ $(document).ready(function() {
             .done(function() {
               alert("jupi!");
             })
-            .error(function() {
-              alert("zjebało się");
+            .error(function(data) {
+              alert(data.responseText);
             });
   });
   $(document).on("click", ".settle.active", function(event) {

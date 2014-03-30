@@ -308,7 +308,7 @@ class CatanGame
   {
     // TODO należy sprawdzić, czy host ma tyle hajsiwa
     $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
-    if (is_null($clients))
+    if (count($clients) == 0)
     {
       return $this->tradeBank($player,$offer);
     }
@@ -329,19 +329,21 @@ class CatanGame
   {
       //odczytujemy settlementy przy portach i sprawdzamy ktore naleza do gracza
       $bonuses=array();
-      foreach($this->model->ports() as $port)
+      foreach($this->board->model->ports as $port)
       {
-          $settle=$port->nearestSettlements();
-          if($settle->player()->id==$player->id)
+          $settles=$port->nearestSettlements();
+          foreach($settles as $settle)
           {
-              array_push($bonuses,$port->type);
+              if(!is_null($settle) && !is_null($settle->player_id) && $settle->player_id == $player->id)
+              {
+                array_push($bonuses, $port->type);
+              }
           }
       }
-      
       //sprawdzamy oferte, jesli mamy ten bonus liczymy korzystniej
       $givenResources=0;
       $gainedResources=0;
-      if(array_search('default',$bonuses))
+      if(array_search('default',$bonuses)!==false)
       {
           foreach($offers as $resource => $quantity)
           {
@@ -377,14 +379,16 @@ class CatanGame
           }
       }
       if($gainedResources+$givenResources!=0)
+      {
           throw new Exception('zła ilość surowców');
+      }
+      //throw new Exception(var_dump($offers));
       
-        foreach($offers as $resource => $quantity)
-        {
-               $player->model->addResource($resource,$quantity);
-        }
-        $player->model->save();
-        return true;
-      
+    foreach($offers as $resource => $quantity)
+    {
+          
+           $player->addResource($resource,(int)$quantity);
+    }
+    return true;
   }
 }

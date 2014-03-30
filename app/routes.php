@@ -144,6 +144,14 @@ Route::post('game/ajax/trade', function() {
   {
     $offer[$resource] = Input::get("trade_$resource");
   }
+  try
+  {
+      $game->tradeRequest($offer, $clients);
+  } catch (Exception $exc)
+  {
+      return Response::make($exc->getMessage(),403);
+  }
+
   if($game->tradeRequest($offer, $clients))
   {
     return Response::make('OK',200);

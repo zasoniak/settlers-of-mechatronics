@@ -76,12 +76,7 @@ class Player extends Eloquent{
         }
         return false;   
     }
-    
-    public function tradeBank($offer)
-    {
-      return false;
-    }
-    
+       
     public static function findByGameByUser($game_id, $user_id)
     {
       return self::where('game_id', $game_id)->where('user_id', $user_id)->first();

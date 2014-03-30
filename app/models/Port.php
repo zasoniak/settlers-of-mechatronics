@@ -17,22 +17,22 @@ class Port extends Eloquent {
       if(!($this->x%10))
       {
         return array (
-        $this->board()->findSettlement($this->coords(5,0,0)), 
-        $this->board()->findSettlement($this->coords(-5,0,0))
+        $this->board->findSettlement($this->coords(array(5,0,0))), 
+        $this->board->findSettlement($this->coords(array(-5,0,0)))
                 );
       }
       if(!($this->y%10))
       {
         return array (
-        $this->board()->findSettlement($this->coords(0,5,0)), 
-        $this->board()->findSettlement($this->coords(0,-5,0))
+        $this->board->findSettlement($this->coords(array(0,5,0))), 
+        $this->board->findSettlement($this->coords(array(0,-5,0)))
                 );
       }
       if(!($this->z%10))
       {
         return array (
-        $this->board()->findSettlement($this->coords(0,0,5)),
-        $this->board()->findSettlement($this->coords(0,0,-5))
+        $this->board->findSettlement($this->coords(array(0,0,5))),
+        $this->board->findSettlement($this->coords(array(0,0,-5)))
                 );
       }
 
