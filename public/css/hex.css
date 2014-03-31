@@ -134,6 +134,14 @@ div#board {
   display: none;
 }
 
+.settle.town {
+  margin: -25px;  /*half of settlement radius*/
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  outline: 2px dotted;
+}
+
 /******************************ROAD***********************/
 
 .road {

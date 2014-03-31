@@ -73,6 +73,10 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     {
       $classes = 'settle '.$this->model->player->color;
     }
+    if($this->model->is_town)
+    {
+      $classes .= ' town';
+    }
     return array(
         'classes' => $classes,
         'attr' => array('settle'=>$this->model->id),
@@ -102,7 +106,7 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
         throw new Exception('Nie stać Cię na to!');
       }
     }
-    if($player->countSettles() > 3)
+    if($player->countTowns() > 3)
     {
       throw new Exception('Nie możesz mieć więcej niż 4 miasta!');
     }
