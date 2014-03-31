@@ -108,6 +108,15 @@ $(document).ready(function() {
               alert(data.responseText);
             });
   });
+  $(document).on("click", ".settle:not(.active)", function(event) {
+    $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
+            .done(function(data) {
+              loadJSON(game);
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+  });
   $(document).on("click", ".road.active", function(event) {
     $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
             .done(function(data) {

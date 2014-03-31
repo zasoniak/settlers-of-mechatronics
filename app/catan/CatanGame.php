@@ -195,7 +195,10 @@ class CatanGame
               {
                 $player->addResource($tile->type, 2);
               }
-              $player->addResource($tile->type, 1);
+              else
+              {
+                $player->addResource($tile->type, 1);
+              }
               $player->save();
             }
           }
@@ -298,7 +301,7 @@ class CatanGame
           array_push($return, $this->board->roadList[$road->id]->toJSON());
         }
       }
-      return $return;
+      return true;
     }
     if ($itemname == 'road')
     {
@@ -343,6 +346,8 @@ class CatanGame
   
   public function endGame()
   {
+    $this->model->is_finished=1;
+    $this->model->save();
     foreach($this->model->players as $player)
     {
       $user = $player->user;
