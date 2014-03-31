@@ -14,20 +14,6 @@ $(document).ready(function() {
                       .delay(50 * index)
                       .fadeIn(120);
             });
-            $.each(data.settlements, function(index, item) {
-              $("<div>")
-                      .addClass(item.classes)
-                      .css(item.styles)
-                      .attr(item.attr)
-                      .appendTo("#board");
-            });
-            $.each(data.roads, function(index, item) {
-              $("<div>")
-                      .addClass(item.classes)
-                      .css(item.styles)
-                      .attr(item.attr)
-                      .appendTo("#board");
-            });
             $.each(data.ports, function(index, item) {
               $("<div>")
                       .hide()
@@ -35,7 +21,7 @@ $(document).ready(function() {
                       .css(item.styles)
                       .appendTo("#board")
                       .delay(720)
-                      .slideDown(200);
+                      .fadeIn(120);
             });
           });
   loadJSON(game);
@@ -74,6 +60,15 @@ $(document).ready(function() {
     $("#slide1").slideUp('300');
     $("#slide2").slideUp('300');
     $("#trade_submit").toggle('300');
+  });
+  $("#endturn_button").click(function() {
+    $.post("ajax/next", {game_id: game})
+            .done(function(data) {
+              loadJSON(game);
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
   });
   $(document).on("click", "figure.clickable", function(event) {
     var usercard = $(this).parent().parent();

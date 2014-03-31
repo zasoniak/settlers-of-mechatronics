@@ -18,6 +18,16 @@ class Player extends Eloquent{
       return $this->hasMany('Card');
     }
     
+    public function settles()
+    {
+      return $this->hasMany('Settlement');
+    }
+    
+    public function roads()
+    {
+      return $this->hasMany('Road');
+    }
+    
     public function tradeReceived() {
         return $this->hasOne('Trade','client_id');
     }
@@ -75,6 +85,21 @@ class Player extends Eloquent{
             return true;
         }
         return false;   
+    }
+    
+    public function countSettles()
+    {
+      return $this->settles()->where('is_town',0)->count();
+    }
+    
+    public function countTowns()
+    {
+      return $this->settles()->where('is_town',1)->count();
+    }
+    
+    public function countRoads()
+    {
+      return $this->roads()->count();
     }
        
     public static function findByGameByUser($game_id, $user_id)

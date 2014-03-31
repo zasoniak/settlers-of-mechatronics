@@ -100,22 +100,25 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     return array('wood'=>1,'clay'=>1);
   }
   
-  public function buy(Player $player)
+  public function buy(Player $player, $zero = false)
   {
-    foreach ($this->cost() as $resource => $quantity)
+    if(!$zero)
     {
-      if($player->{$resource} < $quantity)
+      foreach ($this->cost() as $resource => $quantity)
       {
-        throw new Exception('Nie stać Cię na to!');
+        if ($player->{$resource} < $quantity)
+        {
+          throw new Exception('Nie stać Cię na to!');
+        }
       }
-    }
-    if(!$this->buildCheck($player->id))
-    {
-      throw new Exception('Nie możesz tu budować!');
-    }
-    foreach ($this->cost() as $resource => $quantity)
-    {
-      $player->{$resource} -= $quantity;
+      if (!$this->buildCheck($player->id))
+      {
+        throw new Exception('Nie możesz tu budować!');
+      }
+      foreach ($this->cost() as $resource => $quantity)
+      {
+        $player->{$resource} -= $quantity;
+      }
     }
     $this->model->player_id = $player->id;
     $player->save();

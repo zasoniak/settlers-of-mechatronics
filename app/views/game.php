@@ -75,12 +75,6 @@
         </div>
         <?php endforeach; */?>
       </div>
-      <?php 
-      if(!$game->isBoard() && $game->getHost()->model->user->id == Auth::user()->id)
-      {
-        echo HTML::link("game/".$game->model->id."/start", 'rozpocznij grę');
-      }
-      ?>
       <?php echo Session::get('message'); ?>
       <div class="panel">
         <div class="button">
@@ -91,13 +85,13 @@
           <a id="buy_card_button" class="inside"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div class="button">
-          <a href="#" id="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
+          <a id="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
         </div>
         <div class="button">
-          <a href="#" id="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
+          <a id="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div class="button">
-          <a href="<?php echo $game->model->id ?>/next" class="endturn"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
+          <a id="endturn_button"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
       </div>
       <div class="panel" id="slide1">
@@ -118,7 +112,6 @@
       </div>
       <div class="panel">
         <a id="loadjson">Pobierz JSON</a>
-        Tura: <?php echo $game->model->turn_number; ?>
         Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?> 
         <button id="trade_submit">Handuj z tym</button> 
       </div>

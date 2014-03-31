@@ -6,7 +6,6 @@ div#board {
   height: 650px;
   width: 840px;
   position: relative;
-  z-index: 0;
 }
   
 @media all and (min-device-height: 800px) {

@@ -20,6 +20,14 @@ class CatanCard implements PurchasableInterface
   {
     $this->model->is_used = 1;
     $this->model->save();
+    switch ($this->model->type)
+    {
+      case 'monopoly':
+        break;
+
+      default:
+        break;
+    }
   }
 
   public function cost()

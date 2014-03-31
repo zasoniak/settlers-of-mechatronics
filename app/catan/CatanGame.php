@@ -81,34 +81,46 @@ class CatanGame
   
   public function endMove()
   {
-      if($this->model->turn_number==0||$this->model->turn_number==1)
+    $this->isWinner();
+    $playersQuantity=$this->model->players()->count();
+    //$playersQuantity=4;
+     //jesli doszedl do konca nowa tura
+    if($this->model->current_player==$playersQuantity)
+    {
+      $this->model->turn_number++;
+      $this->model->current_player=1;
+    }
+    else //inaczej następny gracz
+    {
+      $this->model->current_player++;
+    }
+    $this->model->is_changed=1;
+    $this->model->save();
+    $this->throwDice();
+  }
+  
+  public function endMoveZero()
+  {
+    $playersQuantity = $this->model->players()->count();
+    $player = $this->model->currentPlayer();
+    if($player->countSettles() == 1 && $this->model->current_player < $playersQuantity)
+    {
+      $this->model->current_player++;
+    }
+    if ($player->countSettles() == 2)
+    {
+      if($this->model->current_player == 1)
       {
-          $this->endMoveZero($this->model->turn_number);
+        $this->model->turn_number = 1;
+        $this->throwDice();
       }
       else
       {
-            $this->isWinner();
-            $playersQuantity=$this->model->players()->count();
-            //$playersQuantity=4;
-             //jesli doszedl do konca nowa tura
-            if($this->model->current_player==$playersQuantity)
-            {
-              $this->model->turn_number++;
-              $this->model->current_player=1;
-            }
-            else //inaczej następny gracz
-            {
-              $this->model->current_player++;
-            }
-            $this->model->is_changed=1;
-            $this->model->save();
-            $this->throwDice();
+        $this->model->current_player--;
       }
-  }
-  
-    public function endMoveZero($turn)
-  {
-    $playersQuantity=$this->model->players()->count();
+    }
+    $this->model->save();
+    /*
     //$playersQuantity=4;
      //jesli doszedl do konca nowa tura
     if($this->model->current_player==$playersQuantity)
@@ -146,6 +158,8 @@ class CatanGame
     }
     $this->model->is_changed=1;
     $this->model->save();
+     * 
+     */
   }
   
  public function throwDice()
@@ -247,7 +261,7 @@ class CatanGame
     }
     $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
     
-    
+    /*
     if($this->model->turn_number==0||$this->model->turn_number==1)
     {
         if($item->buyZero($buyer))
@@ -264,6 +278,49 @@ class CatanGame
         }
         return false;
     }
+     * 
+     */
+    if($item->buy($buyer))
+        {
+          return true;
+        }
+        return false;
+  }
+  
+  public function settleItem($itemname,$id)
+  {
+    $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
+    if($itemname == 'settlement')
+    {
+      if($buyer->countSettles() > $buyer->countRoads())
+      {
+        throw new Exception('Nie ma aż tyle za darmo...');
+      }
+      $item = $this->board->settlementList[(int)$id];
+      $item->buy($buyer,true);
+      $roads = $item->model->nearestRoads();
+      $return = array();
+      foreach ($roads as $road)
+      {
+        if(!is_null($road))
+        { 
+          array_push($return, $this->board->roadList[$road->id]->toJSON());
+        }
+      }
+      return $return;
+    }
+    if ($itemname == 'road')
+    {
+      if($buyer->countSettles() <= $buyer->countRoads())
+      {
+        throw new Exception('Coś kombinujesz...');
+      }
+      $item = $this->board->roadList[(int)$id];
+      $item->buy($buyer,true);
+      $this->endMoveZero();
+      return null;
+    }
+    throw new Exception('Coś musiałeś przeskrobać.');
   }
   
   public function toJSON()
@@ -386,8 +443,7 @@ class CatanGame
       
     foreach($offers as $resource => $quantity)
     {
-          
-           $player->addResource($resource,(int)$quantity);
+         $player->addResource($resource,(int)$quantity);
     }
     return true;
   }

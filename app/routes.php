@@ -128,7 +128,7 @@ Route::get('game/ajax/board', function() {
   return Response::json($game->board->toJSON(false));
 });
 
-Route::post('game/ajax/trade', function() {
+Route::post('game/ajax/trade', array('before'=>'turn',function() {
   $game = new CatanGame(Game::find(Input::get('game_id')));
   $players = $game->getOpponents();
   $clients = array();
@@ -157,7 +157,7 @@ Route::post('game/ajax/trade', function() {
     return Response::make('OK',200);
   }
   return Response::make('Błąd', 403);
-});
+}));
 
 Route::get('game/{id}/start', function($id) {
   $game = new CatanGame(Game::find($id));
@@ -169,41 +169,42 @@ Route::get('game/{id}/start', function($id) {
   return Redirect::back()->with('message', 'Na pewno masz 4 graczy?');
 });
 
-Route::get('game/{id}/next', array('before'=>'turn', function($id) {
-    $game = new CatanGame(Game::find($id));
-    $game->endMove();   
-    return Redirect::to("game/$id");
+Route::post('game/ajax/next', array('before'=>'turn', function() {
+    $game = new CatanGame(Game::find(Input::get('game_id')));
+    $game->endMove();
+    return Response::make('OK!', 200);
 }));
 
-Route::post('game/ajax/build', function(){
+Route::post('game/ajax/build', array('before'=>'turn',function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
-  try
+  if($game->model->turn_number == 0)
   {
-    $game->buyItem(Input::get('item'), Input::get('id'));
-  } 
-  catch (Exception $exc)
+    try
+    {
+      $game->settleItem(Input::get('item'), Input::get('id'));
+    } 
+    catch (Exception $exc)
+    {
+      return Response::make($exc->getMessage(),403);
+    }
+  }
+  else
   {
-    return Response::make($exc->getMessage(),403);
+    try
+    {
+      $game->buyItem(Input::get('item'), Input::get('id'));
+    } 
+    catch (Exception $exc)
+    {
+      return Response::make($exc->getMessage(),403);
+    }
   }
   return Response::make('OK!',200);
-});
+}));
 
 Route::get('game/ajax/update', function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
   return Response::json($game->toJSON());
-});
-
-Route::post('game/ajax/settle', function(){
-  $game = new CatanGame(Game::find(Input::get('game_id')));
-  try
-  {
-    $game->settleItem(Input::get('item'), Input::get('id'));
-  } 
-  catch (Exception $exc)
-  {
-    return Response::make($exc->getMessage(),403);
-  }
-  return Response::make('OK!',200);
 });
 
 /* pierdolnik */
