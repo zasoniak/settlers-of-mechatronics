@@ -151,12 +151,7 @@ Route::post('game/ajax/trade', array('before'=>'turn',function() {
   {
       return Response::make($exc->getMessage(),403);
   }
-
-  if($game->tradeRequest($offer, $clients))
-  {
-    return Response::make('OK',200);
-  }
-  return Response::make('Błąd', 403);
+  return Response::make('OK',200);
 }));
 
 Route::get('game/{id}/start', function($id) {

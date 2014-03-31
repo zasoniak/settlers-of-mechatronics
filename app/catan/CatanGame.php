@@ -190,11 +190,13 @@ class CatanGame
           {
             if ($settle->player_id != NULL)
             {
+              $player = $settle->player;
               if ($settle->is_town)
               {
-                $settle->player->addResource($tile->type, 2);
+                $player->addResource($tile->type, 2);
               }
-              $settle->player->addResource($tile->type, 1);
+              $player->addResource($tile->type, 1);
+              $player->save();
             }
           }
         }
@@ -423,7 +425,7 @@ class CatanGame
           {
               if($quantity<0)
               {
-                if(array_search($resource, $bonuses))
+                if(array_search($resource, $bonuses) !== false)
                 {
                     $givenResources+= $quantity/2;
                 } else {
@@ -439,12 +441,12 @@ class CatanGame
       {
           throw new Exception('zła ilość surowców');
       }
-      //throw new Exception(var_dump($offers));
       
     foreach($offers as $resource => $quantity)
     {
          $player->addResource($resource,(int)$quantity);
     }
+    $player->save();
     return true;
   }
 }
