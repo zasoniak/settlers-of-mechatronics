@@ -120,46 +120,6 @@ class CatanGame
       }
     }
     $this->model->save();
-    /*
-    //$playersQuantity=4;
-     //jesli doszedl do konca nowa tura
-    if($this->model->current_player==$playersQuantity)
-    {
-    	if($turn==1)
-    	{
-            $this->model->current_player--;
-    	}
-        else
-        {
-            $this->model->turn_number++;
-        }
-    }
-    else //inaczej następny gracz
-    { 
-      //tura 1 -> 4...3...2...1
-      if($this->model->turn_number==1)
-      {
-      	//o ile nie doszło z powrotem do pierwszego gracza
-      	if($this->model->current_player!=1)
-      	{
-      		$this->model->current_player--;
-      	}
-      	else
-      	{
-      		$this->model->turn_number++;
-                $this->throwDice();
-      	}
-      }
-      else   //tura 0 -> 1...2..3...4
-      {
-          $this->model->current_player++;
-      }
-      	
-    }
-    $this->model->is_changed=1;
-    $this->model->save();
-     * 
-     */
   }
   
  public function throwDice()
@@ -358,8 +318,15 @@ class CatanGame
     
   public function tradeRequest($offer, $clients = NULL)
   {
-    // TODO należy sprawdzić, czy host ma tyle hajsiwa
     $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
+    // czy ma tyle hajsiwa
+    foreach ($offer as $resource => $quantity)
+    {
+      if ($player->{$resource} < -$quantity)
+      {
+        throw new Exception('Nie stać Cię na to!');
+      }
+    }
     if (count($clients) == 0)
     {
       return $this->tradeBank($player,$offer);
@@ -414,21 +381,20 @@ class CatanGame
       }
       else
       {
-          foreach($offers as $resource => $quantity)
+        foreach($offers as $resource => $quantity)
+        {
+          if($quantity<0)
           {
-              if($quantity<0)
-              {
-                if(array_search($resource, $bonuses) !== false)
-                {
-                    $givenResources+= $quantity/2;
-                } else {
-                    $givenResources+= $quantity/4;
-                }
-              } else {
-                  $gainedResources+=$quantity;
-              }
-            
+            if(array_search($resource, $bonuses) !== false)
+            {
+                $givenResources+= $quantity/2;
+            } else {
+                $givenResources+= $quantity/4;
+            }
+          } else {
+              $gainedResources+=$quantity;
           }
+        }
       }
       if($gainedResources+$givenResources!=0)
       {

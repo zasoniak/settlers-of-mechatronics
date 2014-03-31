@@ -93,7 +93,7 @@ $(document).ready(function() {
   $("#trade_submit").click(function() {
     $.post("ajax/trade", $("#trade_form").serialize())
             .done(function() {
-              alert("jupi!");
+              loadJSON(game);
             })
             .error(function(data) {
               alert(data.responseText);

@@ -24,4 +24,23 @@ class Trade extends Eloquent {
     }
     return $trade;
   }
+  
+  public function accept($offer)
+  {
+    $changed = false;
+    foreach($offer as $resource => $quantity)
+    {
+      if($this->{$resource} != $quantity)
+      {
+        $this->{$resource} = $quantity;
+        $changed = true;
+      }
+    }
+    if($changed)
+    {
+      $this->updated = 1;
+    }
+    $this->accepted = 1;
+    $this->save();
+  }
 }

@@ -154,6 +154,18 @@ Route::post('game/ajax/trade', array('before'=>'turn',function() {
   return Response::make('OK',200);
 }));
 
+Route::post('game/ajax/tradeaccept', function(){
+  $resources = array('wood','stone','sheep','clay','wheat');
+  foreach($resources as $resource)
+  {
+    $offer[$resource] = Input::get("trade_$resource");
+  }
+  $client = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
+  $trade = Trade::findByHostByClient(Input::get('host_id'), $client->id);
+  $trade->accept($offer);
+  return Response::make('OK', 204);
+});
+
 Route::get('game/{id}/start', function($id) {
   $game = new CatanGame(Game::find($id));
   if($game->model->players()->count() > 1)
