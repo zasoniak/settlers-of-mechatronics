@@ -170,7 +170,7 @@ Route::post('game/ajax/next', array('before'=>'turn', function() {
     return Response::make('OK!', 200);
 }));
 
-Route::post('game/ajax/build', array('before'=>'turn',function(){
+Route::post('game/ajax/build', array('before'=>'turn', function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
   if($game->model->turn_number == 0)
   {

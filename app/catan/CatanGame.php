@@ -253,15 +253,24 @@ class CatanGame
   
   public function buyItem($itemname,$id)
   {
+    $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
     if($itemname == 'card')
     {
       $item = new CatanCard($this->board->model->availableCard());
+    }
+    elseif ($itemname == 'town')
+    {
+      $item = $this->board->settlementList[(int)$id];
+      if($item->upgrade($buyer))
+      {
+        return true;
+      }
+      return false;
     }
     else
     {
       $item = $this->board->{$itemname.'List'}[(int)$id];
     }
-    $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
     if($item->buy($buyer))
     {
       return true;

@@ -89,6 +89,33 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
     return array('stone'=>3,'wheat'=>2);
   }
   
+  public function upgrade(Player $player)
+  {
+    if($this->model->player_id != $player->id)
+    {
+      throw new Exception('Nie ta osada...');
+    }
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      if($player->{$resource} < $quantity)
+      {
+        throw new Exception('Nie stać Cię na to!');
+      }
+    }
+    if($player->countSettles() > 3)
+    {
+      throw new Exception('Nie możesz mieć więcej niż 4 miasta!');
+    }
+    foreach ($this->cost() as $resource => $quantity)
+    {
+      $player->{$resource} -= $quantity;
+    }
+    $player->save();
+    $this->model->is_town = 1;
+    $this->model->save();
+    return true;
+  }
+  
   public function buy(Player $player, $zero = false)
   {
     if(!$zero)
