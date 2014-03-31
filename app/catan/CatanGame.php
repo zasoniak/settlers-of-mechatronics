@@ -262,31 +262,11 @@ class CatanGame
       $item = $this->board->{$itemname.'List'}[(int)$id];
     }
     $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
-    
-    /*
-    if($this->model->turn_number==0||$this->model->turn_number==1)
-    {
-        if($item->buyZero($buyer))
-        {
-          return true;
-        }
-        return false;
-    }
-    else
-    {
-        if($item->buy($buyer))
-        {
-          return true;
-        }
-        return false;
-    }
-     * 
-     */
     if($item->buy($buyer))
-        {
-          return true;
-        }
-        return false;
+    {
+      return true;
+    }
+    return false;
   }
   
   public function settleItem($itemname,$id)
@@ -333,6 +313,7 @@ class CatanGame
       $opponents[$player->model->id] = $player->toJSON();
     }
     return array(
+        'turn' => $this->model->turn_number,
         'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
         'dice' => array($this->model->dice1,$this->model->dice2),
@@ -341,15 +322,13 @@ class CatanGame
   }
   public function isWinner()
   {
-    foreach($this->playerList as $player)
+    $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
+    if($player->getScore() >= 10)
     {
-      if($player->getScore() >= 10)
-      {
-        $winner=$player->user;
-        $winner->games_won+=1;
-        $winner->save();
-        $this->endGame();
-      }
+      $winner=$player->user;
+      $winner->games_won+=1;
+      $winner->save();
+      $this->endGame();
     }
   }
   

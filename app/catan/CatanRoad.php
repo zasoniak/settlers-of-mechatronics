@@ -138,6 +138,11 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     return false;
   }
   
+  public function findTradeRoad()
+  {
+    return 3;
+  }
+  
   public function buyZero(Player $player)
   {
     if(!$this->buildCheckZero($player->id))

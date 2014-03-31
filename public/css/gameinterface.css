@@ -30,7 +30,7 @@ aside {
 
 @media all and (max-device-height: 800px) {
   aside {
-    margin-top: 70px;
+    /*margin-top: 70px;*/
   }
 }
 
@@ -343,13 +343,29 @@ p.trading {
     -webkit-transition: 0.3s;
 }
 
-.dice {
-    width: 70px;
-    height: 70px;
-    border: 2px solid black;
-    border-radius: 15px;
-    background-size: contain;
-    float: left;
+#dice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px 10px;
+  width: 120px;
+  height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'ubuntu', 'arial';
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1em;
+  color: silver;
+}
+
+#dice span, #turn span {
+  color: grey;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  font-family: 'ubuntu', 'arial';
+  font-size: 52px;
+  font-weight: bold;
+  line-height: 1em;
 }
 
 .dice1 {background-image: url('../img/dice1.jpg');}
@@ -359,22 +375,22 @@ p.trading {
 .dice5 {background-image: url('../img/dice5.jpg');}
 .dice6 {background-image: url('../img/dice6.jpg');}
 
-/*
-.offer table {
-    width: 150px;
-}
 
-.offer th, .offer td {
-    width: 50%;
-    vertical-align: middle;
-    outline: 1px dotted lightgrey;
-    text-align: center;
-    font-size: 22px;
+#turn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  margin: 20px 10px;
+  width: 120px;
+  height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+    font-family: 'ubuntu', 'arial';
+    font-size: 16px;
     font-weight: bold;
-    line-height: 40px;
+    line-height: 1em;
+  color: silver;
 }
-*/
-
 
 /*******************DEVELOPMENT CARDS**********************/
 

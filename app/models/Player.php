@@ -106,5 +106,11 @@ class Player extends Eloquent{
       return self::where('game_id', $game_id)->where('user_id', $user_id)->first();
     }
     
-    
+    public function getScore()
+    {
+      $points = 0;
+      $points += $this->countSettles();
+      $points += 2*$this->countTowns();
+      return $points;
+    }
 }

@@ -115,13 +115,20 @@
         Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?> 
         <button id="trade_submit">Handuj z tym</button> 
       </div>
-      <div class="panel">
-        <div class="dice" id="die1"></div>
-        <div class="dice" id="die2"></div>
-      </div>
     </aside>
     <div id="whole">
-      <div id="board"></div>
+      <div id="board">
+        <div id="dice">
+          Kostki<br>
+          <span id="die1"></span>
+          <span>+</span>
+          <span id="die2"></span>
+        </div>
+        <div id="turn">
+          Tura<br>
+          <span><?php echo $game->model->turn_number; ?></span>
+        </div>
+      </div>
     </div>
   </body>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

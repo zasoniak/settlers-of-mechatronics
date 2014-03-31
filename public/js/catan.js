@@ -187,8 +187,9 @@ $(document).ready(function() {
                 div.find(".clay").html(trade.clay);
                 div.find(".wheat").html(trade.wheat);
               }
-              $("#die1").addClass("dice" + data.dice[0]);
-              $("#die2").addClass("dice" + data.dice[1]);
+              $("#die1").html(data.dice[0]);
+              $("#die2").html(data.dice[1]);
+              $("#turn span").html(data.turn);
             })
             .error(function(data) {
               alert(data.responseText);

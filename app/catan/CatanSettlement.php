@@ -104,6 +104,10 @@ class CatanSettlement implements DrawableInterface, PurchasableInterface
       {
         throw new Exception('Nie możesz tu budować!');
       }
+      if($player->countSettles() > 4)
+      {
+        throw new Exception('Nie możesz mieć więcej niż 5 osad!');
+      }
       foreach ($this->cost() as $resource => $quantity)
       {
         $player->{$resource} -= $quantity;
