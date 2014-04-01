@@ -213,7 +213,7 @@ $(document).ready(function() {
               player = data.player.id;
             })
             .error(function(data) {
-              alert(data.responseText);
+              alert("Musiało się zrąbać połączenie.");
             });
   }
   ;
