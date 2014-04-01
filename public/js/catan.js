@@ -199,6 +199,8 @@ $(document).ready(function() {
               $("#die1").html(data.dice[0]);
               $("#die2").html(data.dice[1]);
               $("#turn span").html(data.turn);
+              $("[player]").removeClass("current");
+              $("[player='"+data.current+"']").addClass("current");
             })
             .error(function(data) {
               alert(data.responseText);

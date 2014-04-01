@@ -76,7 +76,7 @@
         <?php endforeach; */?>
       </div>
       <?php echo Session::get('message'); ?>
-      <div class="panel">
+      <div class="panel" player="<?php echo Player::findByGameByUser($game->model->id, Auth::user()->id)->id; ?>">
         <div class="button">
           <a id="build_button" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
           <a id="build_settle" class="inside"><?php echo HTML::image('img/icon_house.png', 'hammer'); ?></a>
@@ -112,7 +112,6 @@
       </div>
       <div class="panel">
         <a id="loadjson">Pobierz JSON</a>
-        Obecny gracz: <?php echo $game->model->players()->where('turn_order',$game->model->current_player)->first()->user->nickname;?> 
         <button id="trade_submit">Handuj z tym</button> 
       </div>
     </aside>

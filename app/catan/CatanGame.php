@@ -286,6 +286,7 @@ class CatanGame
     }
     return array(
         'turn' => $this->model->turn_number,
+        'current' => $this->model->currentPlayer()->id,
         'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
         'dice' => array($this->model->dice1,$this->model->dice2),
