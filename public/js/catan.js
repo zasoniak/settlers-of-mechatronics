@@ -208,3 +208,15 @@ $(document).ready(function() {
   }
   ;
 });
+function disableText(e){
+  return false;
+}
+function reEnable(){
+  return true;
+}
+document.onselectstart = new Function ("return false");
+
+if (window.sidebar){
+  document.onmousedown = disableText;
+  document.onclick = reEnable;
+}
