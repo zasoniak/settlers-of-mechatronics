@@ -155,15 +155,19 @@ Route::post('game/ajax/trade', array('before'=>'turn',function() {
 }));
 
 Route::post('game/ajax/tradeaccept', function(){
+  $input  = Input::all();
+  $key = array_search('on', $input);
+  $hostarray = explode('_', $key);
+  $host = $hostarray[1];
   $resources = array('wood','stone','sheep','clay','wheat');
   foreach($resources as $resource)
   {
-    $offer[$resource] = Input::get("trade_$resource");
+    $offer[$resource] = $input["trade_$resource"];
   }
-  $client = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
-  $trade = Trade::findByHostByClient(Input::get('host_id'), $client->id);
+  $client = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $trade = Trade::findByHostByClient($host, $client->id);
   $trade->accept($offer);
-  return Response::make('OK', 204);
+  return Response::make('OK', 200);
 });
 
 Route::get('game/{id}/start', function($id) {

@@ -43,4 +43,9 @@ class Trade extends Eloquent {
     $this->accepted = 1;
     $this->save();
   }
+  
+  public static function findByHostByClient($host_id, $client_id)
+  {
+    return self::where('host_id', $host_id)->where('client_id', $client_id)->first();
+  }
 }

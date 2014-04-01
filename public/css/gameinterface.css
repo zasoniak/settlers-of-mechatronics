@@ -202,7 +202,7 @@ div.usercard.trading.chosen figure img {
 /***********Resource Cards*********************/
 
 #trade_form {
-  /*display: none;*/
+  display: none;
 }
 
 .resource {

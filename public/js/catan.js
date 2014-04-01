@@ -134,7 +134,7 @@ $(document).ready(function() {
             });
   });
   $(document).on("click", ".offer .accept", function(event) {
-    $.post("ajax/trade", $("#trade_form").serialize())
+    $.post("ajax/tradeaccept", $("#trade_form").serialize())
             .done(function(data) {
               loadJSON(game);
             })
@@ -142,6 +142,8 @@ $(document).ready(function() {
               alert(data.responseText);
             });
   });
+  var current;
+  var player;
   $("#loadjson").click(function() {
     loadJSON(game);
   });
