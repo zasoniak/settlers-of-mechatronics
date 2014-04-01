@@ -202,7 +202,7 @@ $(document).ready(function() {
               {
                 var trade = data.player.trade_received;
                 var usercard = $("[player=" + trade.host_id + "]");
-                $("#trade_form").find(("[name=player_" + trade.host_id + "]")).prop('checked', true);;
+                $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
                 usercard.addClass("trading");
                 usercard.find(".stats").hide(150);
                 var div = usercard.find(".offer");
