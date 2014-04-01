@@ -202,7 +202,7 @@ div.usercard.trading.chosen figure img {
 /***********Resource Cards*********************/
 
 #trade_form {
-  display: none;
+  /*display: none;*/
 }
 
 .resource {
@@ -247,6 +247,12 @@ div.usercard.trading.chosen figure img {
     -webkit-transition: 0.3s;
 }
 
+.res_card p span:last-of-type {
+  font-size: 14px;
+  font-weight: normal;
+  display: none;
+}
+
 p.trading {
     top: 15px;
     -webkit-transition: 0.3s;
@@ -258,6 +264,10 @@ p.trading {
 
 .res_card.greyscale p {
   display: none;
+}
+
+.res_card.greyscale p.trading {
+  display: block;
 }
 
 .trade {

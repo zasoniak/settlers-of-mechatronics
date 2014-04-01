@@ -58,7 +58,7 @@
           <div class="trade up">+</div>
           <div class="trade down">-</div>
           <div class="res_card greyscale <?php echo $type; ?>" res="<?php echo $type; ?>">
-            <p class="stop"><span></span></p>
+            <p><span></span><span></span></p>
           </div>
         </div>
         <?php endforeach; ?>
