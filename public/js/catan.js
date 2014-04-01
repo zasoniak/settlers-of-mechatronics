@@ -126,9 +126,17 @@ $(document).ready(function() {
               alert(data.responseText);
             });
   });
+  var current;
+  var player;
   $("#loadjson").click(function() {
     loadJSON(game);
   });
+  setInterval(function(){
+    if(current != player)
+    {
+      loadJSON(game);
+    }
+  }, 3000);
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
             .done(function(data) {
@@ -201,6 +209,8 @@ $(document).ready(function() {
               $("#turn span").html(data.turn);
               $("[player]").removeClass("current");
               $("[player='"+data.current+"']").addClass("current");
+              current = data.current;
+              player = data.player.id;
             })
             .error(function(data) {
               alert(data.responseText);
