@@ -97,7 +97,7 @@ class CatanGame
     $this->model->is_changed=1;
     $this->model->save();
     $player = $this->model->players()->where('user_id',  Auth::user()->id)->first();
-    $player->has_player_card = 0;
+    $player->has_played_card = 0;
     $player->save();
     $this->throwDice();
   }
