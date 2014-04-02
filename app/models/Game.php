@@ -26,6 +26,11 @@ class Game extends Eloquent {
     return $game->players()->where('turn_order',$game->current_player)->first();
   }
   
+  public function getOpponents()
+  {
+    return $this->players()->where('user_id','<>',  Auth::user()->id);
+  }
+  
   public function users()
   {
     return $this->belongsToMany('User', 'players');

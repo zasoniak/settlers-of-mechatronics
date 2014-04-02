@@ -164,6 +164,19 @@ $(document).ready(function() {
               alert(data.responseText);
             });
   });
+  $(document).on("click", ".dev_card", function(event){
+    var r  = confirm("Czy na pewno chcesz zagrać tę kartę?");
+    if(r)
+    {
+      $.post("ajax/playcard", {game_id: game, id: $(this).attr("card")})
+            .done(function(data) {
+              alert("Zagrano :)");
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+    }
+  });
   $(document).on("click", "#trade_button_accept", function(event) {
     $.post("ajax/tradeaccept", $("#trade_form").serialize())
             .done(function(data) {

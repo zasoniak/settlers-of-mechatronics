@@ -111,6 +111,9 @@ class Player extends Eloquent{
       $points = 0;
       $points += $this->countSettles();
       $points += 2*$this->countTowns();
+      $points += 2*$this->has_biggest_army;
+      $points += 2*$this->has_longest_route;
+      $points += $this->cards()->where('type','victorypoint')->count();
       return $points;
     }
 }

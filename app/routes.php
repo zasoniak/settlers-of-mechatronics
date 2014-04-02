@@ -170,6 +170,24 @@ Route::post('game/ajax/tradeaccept', function(){
   return Response::make('OK', 200);
 });
 
+Route::post('game/ajax/playcard', function(){
+  $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
+  // trycatch by sprawdzić, czy zwróci się karta należąca dla tego playera
+  $card = new CatanCard(Card::find(Input::get('id')));
+  if($card->model->player->id != $player->id)
+  {
+    return Response::make('To nie Twoja karta!', 403);
+  }
+  try
+  {
+    $card->play();
+  } catch (Exception $exc)
+  {
+    return Response::make($exc->getMessage(), 403);
+  }
+  return Response::make('OK', 200);
+});
+
 Route::get('game/{id}/start', function($id) {
   $game = new CatanGame(Game::find($id));
   if($game->model->players()->count() > 1)

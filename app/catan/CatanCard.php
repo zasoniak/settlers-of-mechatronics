@@ -18,16 +18,52 @@ class CatanCard implements PurchasableInterface
 
   public function play()
   {
+    $player = $this->model->player;
+//    if ($player->has_played_card == 1)
+//    {
+//      throw new Exception('Zagrano już kartę w tej turze.');
+//    }
+    if ($this->model->type == 'victorypoint')
+    {
+      throw new Exception('Nie można zagrać tej karty!');
+    }
+    if ($this->model->is_used)
+    {
+      throw new Exception('Kartę już zagrano wcześniej.');
+    }
     $this->model->is_used = 1;
     $this->model->save();
+    $player->has_played_card = 1;
+    $player->save();
     switch ($this->model->type)
     {
-      case 'monopoly':
+      case 'knight':
+        // move thief
+        $knights = $player->cards()->used()->where('type','knight')->count();
+        if($knights > 2)
+        {
+          $opponents = $this->model->board->game->getOpponents()->get();
+          $flag = true;
+          foreach ($opponents as $opponent)
+          {
+            if($opponent->cards()->used()->where('type','knight')->count() >= $knights)
+            {
+              $flag = false;
+            }
+          }
+          if($flag)
+          {
+            $this->model->board->game->getOpponents()->update(array('has_biggest_army'=>0));
+            $player->has_biggest_army = 1;
+            $player->save();
+          }
+        }
         break;
 
       default:
         break;
     }
+    return true;
   }
 
   public function cost()
