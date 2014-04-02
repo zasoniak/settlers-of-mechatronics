@@ -12,7 +12,7 @@ $(document).ready(function() {
                       .append($("<div class=\"face2\"></div>"))
                       .appendTo("#board")
                       .delay(50 * index)
-                      .fadeIn(120);
+                      .fadeIn('120');
             });
             $.each(data.ports, function(index, item) {
               $("<div>")
@@ -20,35 +20,38 @@ $(document).ready(function() {
                       .addClass(item.classes)
                       .css(item.styles)
                       .appendTo("#board")
-                      .delay(720)
-                      .fadeIn(120);
+                      .delay('720')
+                      .fadeIn('120');
             });
           });
   loadJSON(game);
   $("#build_button").click(function() {
+  $(".main").click(function() {
+    $(this).parent().siblings().removeClass("clicked");
     $(".road.active").hide();
     $(".settle.active").hide();
+  });
     $(".trade").slideUp('300');
-    $("#slide2").slideUp('300');
+    $(".usercard figure").removeClass("clickable");
     $(".res_card p").removeClass("trading");
     $(this).parent().toggleClass("clicked");
   });
-  $("#build_settle").click(function() {
-    $(".road.active").hide();
-    $(".settle.active").toggle('300');
-  });
-  $("#build_road").click(function() {
-    $(".settle.active").hide();
-    $(".road.active").toggle('300');
-  });
+        $("#build_settle").click(function() {
+          $(".road.active").hide('300');
+          $(".settle.active").toggle('300');
+        });
+        $("#build_road").click(function() {
+          $(".settle.active").hide('300');
+          $(".road.active").toggle('300');
+        });
   $("#buy_card_button").click(function() {
     $.post("ajax/build", {game_id: game, item: "card", id: null})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
+        .done(function(data) {
+          loadJSON(game);
+        })
+        .error(function(data) {
+          alert(data.responseText);
+        });
   });
   $("#trade_button").click(function() {
     $(".road.active").hide();
@@ -57,80 +60,78 @@ $(document).ready(function() {
     $(".resource").removeClass("on");
     $(".trade").slideToggle('300');
     $(".usercard figure").toggleClass("clickable");
-    $("#slide1").slideUp('300');
-    $("#slide2").slideUp('300');
-    $("#trade_submit").toggle('300');
     $(".res_card p span:last-of-type").toggle();
     $(this).parent().toggleClass("clicked");
   });
+    $(document).on("click", "figure.clickable", function(event) {
+      var usercard = $(this).parent().parent();
+      usercard.toggleClass("trading");
+    });
+    $(".trade.up").click(function() {
+      var res = $(this).parent().find(".res_card").attr("res");
+      var spanoffer = $(".offer").find("." + res);
+      var spanres = $(this).parent().find(".res_card p span").first();
+      var spandiff = $(this).parent().find(".res_card p span").last();
+      var q = (+spanoffer.html()) + 1;
+      spanoffer.html(q);
+      spandiff.html(+spanres.html() + q);
+      if(q>0)
+      {
+        $(this).html("+"+q).css("font-size","25px");
+      }
+      else
+      {
+        if(q<0)
+        {
+          $(this).next().html(q).css("font-size","25px");
+        }
+        else
+        {
+          $(this).empty().html("+").css("font-size","30px");
+          $(this).next().empty().html("-").css("font-size","30px");
+        }
+      }
+      $("#trade_form").find("[res=" + res + "]").val(q);
+    });
+    $(".trade.down").click(function() {
+      var res = $(this).parent().find(".res_card").attr("res");
+      var spanoffer = $(".offer").find("." + res);
+      var spanres = $(this).parent().find(".res_card p span").first();
+      var spandiff = $(this).parent().find(".res_card p span").last();
+      var q = (+spanoffer.html()) - 1;
+      spanoffer.html(q);
+      spandiff.html(+spanres.html() + q);
+      if(q>0)
+      {
+        $(this).prev().html("+"+q).css("font-size","25px");;
+      }
+      else
+      {
+        if(q<0)
+        {
+          $(this).html(q).css("font-size","25px");;
+        }
+        else
+        {
+          $(this).prev().empty().html("+").css("font-size","30px");;
+          $(this).empty().html("-").css("font-size","30px");;
+        }
+      }
+      $("#trade_form").find("[res=" + res + "]").val(q);
+    });
+    $("#trade_button_withbank").click(function() {
+      $.post("ajax/trade", $("#trade_form").serialize())
+              .done(function() {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
   $("#endturn_button").click(function() {
+    $(".usercard figure").toggleClass("clickable");
     $.post("ajax/next", {game_id: game})
             .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", "figure.clickable", function(event) {
-    var usercard = $(this).parent().parent();
-    usercard.toggleClass("trading");
-  });
-  $(".trade.up").click(function() {
-    var res = $(this).parent().find(".res_card").attr("res");
-    var spanoffer = $(".offer").find("." + res);
-    var spanres = $(this).parent().find(".res_card p span").first();
-    var spandiff = $(this).parent().find(".res_card p span").last();
-    var q = (+spanoffer.html()) + 1;
-    spanoffer.html(q);
-    spandiff.html(+spanres.html() + q);
-    if(q>0)
-    {
-      $(this).html("+"+q).css("font-size","25px");
-    }
-    else
-    {
-      if(q<0)
-      {
-        $(this).next().html(q).css("font-size","25px");
-      }
-      else
-      {
-        $(this).empty().html("+").css("font-size","30px");
-        $(this).next().empty().html("-").css("font-size","30px");;
-      }
-    }
-    $("#trade_form").find("[res=" + res + "]").val(q);
-  });
-  $(".trade.down").click(function() {
-    var res = $(this).parent().find(".res_card").attr("res");
-    var spanoffer = $(".offer").find("." + res);
-    var spanres = $(this).parent().find(".res_card p span").first();
-    var spandiff = $(this).parent().find(".res_card p span").last();
-    var q = (+spanoffer.html()) - 1;
-    spanoffer.html(q);
-    spandiff.html(+spanres.html() + q);
-    if(q>0)
-    {
-      $(this).prev().html("+"+q).css("font-size","25px");;
-    }
-    else
-    {
-      if(q<0)
-      {
-        $(this).html(q).css("font-size","25px");;
-      }
-      else
-      {
-        $(this).prev().empty().html("+").css("font-size","30px");;
-        $(this).empty().html("-").css("font-size","30px");;
-      }
-    }
-    $("#trade_form").find("[res=" + res + "]").val(q);
-  });
-  $("#trade_button_withbank").click(function() {
-    $.post("ajax/trade", $("#trade_form").serialize())
-            .done(function() {
               loadJSON(game);
             })
             .error(function(data) {

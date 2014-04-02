@@ -95,24 +95,9 @@
           <a id="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div class="button">
-          <a id="endturn_button"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
+          <a id="endturn_button" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
         </div>
       </div>
-      <div class="panel" id="slide1">
-        <div class="button">
-          <a href="#" id="build_settle"><?php echo HTML::image('img/icon_house.png', 'hammer'); ?></a>
-        </div>
-        <div class="button">
-          <a href="#" id="build_city"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
-        </div>
-        <div class="button">
-          <a href="#" id="build_road"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
-        </div>
-      </div>
-      <div class="panel" id="slide2">
-        A tu się będzie kupowało karcioszki!</br>
-        Stasiu, jebnij tu jakieś takie obrazki z kartami. Na razie wrzucam zdjęcie znanej japońskiej korporacji :P
-        <?php echo HTML::image('img/sony.jpg');?>
       </div>
       <div class="panel">
         <a id="loadjson">Pobierz JSON</a>
