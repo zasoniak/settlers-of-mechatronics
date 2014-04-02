@@ -61,6 +61,7 @@ $(document).ready(function() {
     $("#slide2").slideUp('300');
     $("#trade_submit").toggle('300');
     $(".res_card p span:last-of-type").toggle();
+    $(this).parent().toggleClass("clicked");
   });
   $("#endturn_button").click(function() {
     $.post("ajax/next", {game_id: game})
@@ -84,7 +85,23 @@ $(document).ready(function() {
     var spandiff = $(this).parent().find(".res_card p span").last();
     var q = (+spanoffer.html()) + 1;
     spanoffer.html(q);
-    spandiff.html(+spanres.html()+q);
+    spandiff.html(+spanres.html() + q);
+    if(q>0)
+    {
+      $(this).html("+"+q).css("font-size","25px");
+    }
+    else
+    {
+      if(q<0)
+      {
+        $(this).next().html(q).css("font-size","25px");
+      }
+      else
+      {
+        $(this).empty().html("+").css("font-size","30px");
+        $(this).next().empty().html("-").css("font-size","30px");;
+      }
+    }
     $("#trade_form").find("[res=" + res + "]").val(q);
   });
   $(".trade.down").click(function() {
@@ -94,10 +111,26 @@ $(document).ready(function() {
     var spandiff = $(this).parent().find(".res_card p span").last();
     var q = (+spanoffer.html()) - 1;
     spanoffer.html(q);
-    spandiff.html(+spanres.html()+q);
+    spandiff.html(+spanres.html() + q);
+    if(q>0)
+    {
+      $(this).prev().html("+"+q).css("font-size","25px");;
+    }
+    else
+    {
+      if(q<0)
+      {
+        $(this).html(q).css("font-size","25px");;
+      }
+      else
+      {
+        $(this).prev().empty().html("+").css("font-size","30px");;
+        $(this).empty().html("-").css("font-size","30px");;
+      }
+    }
     $("#trade_form").find("[res=" + res + "]").val(q);
   });
-  $("#trade_submit").click(function() {
+  $("#trade_button_withbank").click(function() {
     $.post("ajax/trade", $("#trade_form").serialize())
             .done(function() {
               loadJSON(game);
@@ -133,7 +166,7 @@ $(document).ready(function() {
               alert(data.responseText);
             });
   });
-  $(document).on("click", ".offer .accept", function(event) {
+  $(document).on("click", "#trade_button_accept", function(event) {
     $.post("ajax/tradeaccept", $("#trade_form").serialize())
             .done(function(data) {
               loadJSON(game);
@@ -147,8 +180,8 @@ $(document).ready(function() {
   $("#loadjson").click(function() {
     loadJSON(game);
   });
-  setInterval(function(){
-    if(current != player)
+  setInterval(function() {
+    if (current != player)
     {
       loadJSON(game);
     }
@@ -230,7 +263,7 @@ $(document).ready(function() {
               $("#die2").html(data.dice[1]);
               $("#turn span").html(data.turn);
               $("[player]").removeClass("current");
-              $("[player='"+data.current+"']").addClass("current");
+              $("[player='" + data.current + "']").addClass("current");
               current = data.current;
               player = data.player.id;
             })
@@ -240,15 +273,15 @@ $(document).ready(function() {
   }
   ;
 });
-function disableText(e){
+function disableText(e) {
   return false;
 }
-function reEnable(){
+function reEnable() {
   return true;
 }
-document.onselectstart = new Function ("return false");
+document.onselectstart = new Function("return false");
 
-if (window.sidebar){
+if (window.sidebar) {
   document.onmousedown = disableText;
   document.onclick = reEnable;
 }

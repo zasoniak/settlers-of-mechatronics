@@ -85,7 +85,10 @@
           <a id="buy_card_button" class="inside"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div class="button">
-          <a id="trade_button"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
+          <a id="trade_button" class="main"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
+          <a id="trade_button_accept" class="inside"><?php echo HTML::image('img/accept.png', 'accept'); ?></a>
+          <a id="trade_button_reject" class="inside"><?php echo HTML::image('img/reject.png', 'reject'); ?></a>
+          <a id="trade_button_withbank" class="inside"><?php echo HTML::image('img/withbank.png', 'withbank'); ?></a>
         </div>
         <div class="button">
           <a id="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>

@@ -45,6 +45,8 @@ aside {
   }
 }
 
+/*********************USERCARD************************/
+
 div.usercard {
   float: left;
   width: 150px;
@@ -157,7 +159,7 @@ div.usercard.trading.chosen figure img {
   border-radius: 35px;
 }
 
-.button.clicked a.main img {
+/*.button.clicked a.main img {
   display: none;
 }
 
@@ -166,6 +168,9 @@ div.usercard.trading.chosen figure img {
   height: 30px;
   border-radius: 15px;
   margin: 20px;
+}*/
+.button.clicked a.main {
+  opacity: 0.6;
 }
 
 .button.clicked a.main:hover {
@@ -197,6 +202,7 @@ div.usercard.trading.chosen figure img {
 .button.clicked a.inside:nth-of-type(2) {top: 0; left: 0;}
 .button.clicked a.inside:nth-of-type(3) {top: 0; right: 0;}
 .button.clicked a.inside:nth-of-type(4) {bottom: 0; left: 0;}
+.button.clicked a.inside:nth-of-type(4):last-of-type {bottom: 0; left: 30px;}
 .button.clicked a.inside:nth-of-type(5) {bottom: 0; right: 0;}
 
 /***********Resource Cards*********************/
