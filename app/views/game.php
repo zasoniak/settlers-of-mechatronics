@@ -17,6 +17,7 @@
             <figure><?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?></figure>
           </label>
           <figcaption><?php echo $player->model->user->nickname; ?></figcaption>
+          <div class="icon"></div>
           <div class="stats">
           <table>
             <tr>

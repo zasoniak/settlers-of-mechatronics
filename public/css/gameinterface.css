@@ -51,6 +51,7 @@ div.usercard {
   float: left;
   width: 150px;
   padding: 5px 0;
+  position: relative;
 }
 
 div.usercard figure img {
@@ -88,15 +89,37 @@ div.usercard td {
   font-weight: bold;
 }
 
-div.usercard.trading figure img {
+div.usercard .icon {
+  display: none;
+}
+
+div.usercard.withoffer .icon {
+  display: block;
+  /*background-color: whitesmoke;*/
+  background-image: url('../img/icon_check.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-origin: content-box;
+  position: absolute;
+  top: 100px;
+  left: 90px;
+  width: 30px;
+  height: 30px;
+  border: 5px transparent solid;
+  border-radius: 20px;
+  -webkit-animation: blink 1s infinite;
+}
+  
+/*div.usercard.trading figure img {
   width: 60px;
   height: 60px;
   border-width: 6px;
   border-radius: 44px;
   -webkit-transition: 0.5s;
 }
-
-div.usercard.trading.chosen figure img {
+*/
+div.usercard.trading figure img {
     box-shadow: 0 0 50px greenyellow;
 }
 
@@ -467,3 +490,9 @@ p.trading {
 .yearofplenty {background-image: url('../img/card_yearofplenty.jpg');}
 .roadbuilding {background-image: url('../img/card_roadbuilding.jpg');}
 .monopoly {background-image: url('../img/card_monopoly.jpg');}
+
+@-webkit-keyframes blink {
+  0% {border-color: transparent;}
+  50% {border-color: black;}
+  100% {border-color: transparent;}
+}

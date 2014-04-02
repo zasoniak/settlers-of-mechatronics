@@ -75,8 +75,6 @@ $(document).ready(function() {
   $(document).on("click", "figure.clickable", function(event) {
     var usercard = $(this).parent().parent();
     usercard.toggleClass("trading");
-    usercard.find(".offer").slideToggle(150);
-    usercard.find(".stats").slideToggle(150);
   });
   $(".trade.up").click(function() {
     var res = $(this).parent().find(".res_card").attr("res");
@@ -231,23 +229,13 @@ $(document).ready(function() {
                         .addClass(item.classes)
                         .attr(item.attr);
               });
-              $.each(data.player.trades_hosted, function(index, item) {
-                var div = $("[player=" + item.client_id + "]").find(".offer");
-                div.find(".wood").html(item.wood);
-                div.find(".stone").html(item.stone);
-                div.find(".sheep").html(item.sheep);
-                div.find(".clay").html(item.clay);
-                div.find(".wheat").html(item.wheat);
-              });
+
               if (data.player.trade_received)
               {
                 var trade = data.player.trade_received;
                 var usercard = $("[player=" + trade.host_id + "]");
                 $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
-                usercard.addClass("trading");
-                usercard.find(".stats").hide(150);
-                var div = usercard.find(".offer");
-                div.show(150);
+                usercard.addClass("withoffer");
                 div.find(".wood").html(trade.wood);
                 $("#trade_form").find("[res=wood]").val(trade.wood);
                 div.find(".stone").html(trade.stone);
