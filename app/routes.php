@@ -110,12 +110,24 @@ Route::get('game/{id}/waitroom', function($id) {
   return View::make('join')->with('game', $game)->with('players', $playersByColor);
 });
 
-Route::post('ajax/color', function() {
+Route::get('game/{id}/start', function($id) {
+  $game = new CatanGame(Game::find($id));
+  try
+  {
+    $game->start();
+  } catch (Exception $exc)
+  {
+    return Response::make($exc->getMessage());
+  }
+  return Redirect::to("game/$id");
+});
+
+Route::post('game/{id}/ajax/color', function($id) {
   $colors = Game::find(Input::get('game_id'))->players()->lists('color');
   $color = Input::get('color');
   if(array_search($color, $colors) !== false)
   {
-    return Response::make('Błąd '.json_encode($colors),403);
+    return Response::make('Ktoś już zajął ten kolor :(',403);
   }
   $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
   $player->color = $color;
@@ -186,16 +198,6 @@ Route::post('game/ajax/playcard', function(){
     return Response::make($exc->getMessage(), 403);
   }
   return Response::make('OK', 200);
-});
-
-Route::get('game/{id}/start', function($id) {
-  $game = new CatanGame(Game::find($id));
-  if($game->model->players()->count() > 1)
-  {
-    $game->start();
-    return Redirect::to("game/$id");
-  }
-  return Redirect::back()->with('message', 'Na pewno masz 4 graczy?');
 });
 
 Route::post('game/ajax/next', array('before'=>'turn', function() {

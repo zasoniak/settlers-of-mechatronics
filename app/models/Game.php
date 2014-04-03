@@ -4,7 +4,7 @@ class Game extends Eloquent {
   
   public static function waiting()
   {
-    return self::has('players', '<', 4)->get();
+    return self::has('players', '<', 4)->where('is_started', 0)->get();
   }
 
   public function board() {
