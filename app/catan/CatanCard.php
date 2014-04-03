@@ -19,10 +19,10 @@ class CatanCard implements PurchasableInterface
   public function play()
   {
     $player = $this->model->player;
-//    if ($player->has_played_card == 1)
-//    {
-//      throw new Exception('Zagrano już kartę w tej turze.');
-//    }
+    if ($player->has_played_card == 1)
+    {
+      throw new Exception('Zagrano już kartę w tej turze.');
+    }
     if ($this->model->type == 'victorypoint')
     {
       throw new Exception('Nie można zagrać tej karty!');
@@ -58,6 +58,8 @@ class CatanCard implements PurchasableInterface
             $player->save();
           }
         }
+        break;
+      case 'monopoly':
         break;
 
       default:

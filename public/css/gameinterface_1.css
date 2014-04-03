@@ -1,0 +1,476 @@
+/* 
+    Created on : 2014-03-03, 14:59:23
+    Author     : Konrad Kowalewski
+*/
+
+html {
+  background-color: whitesmoke;
+  /*background-image: url('http://trickvilla.com/wp-content/uploads/Light-Wood-Background.jpg');*/
+  background-size: cover;
+  font-family: 'ubuntu','arial',sans-serif;
+  font-size: 14px;
+  padding-right: 470px;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+aside {
+  background-color: rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  overflow: hidden;
+  position: relative;
+  display: block;
+  width: 470px;
+  padding: 2% 0;
+  height: 96%;
+  float: right;
+  z-index: 1;
+  margin-right: -470px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
+}
+
+.panel {
+  overflow: hidden;
+  width: 450px;
+  margin: 10px;
+}
+
+@media all and (max-device-height: 800px) {
+  aside {
+    /*margin-top: 70px;*/
+  }
+}
+
+@media all and (max-device-width: 1200px) {
+  aside {
+    /*left: 350px;*/    
+    -webkit-transition: 0.4s;
+  }
+  aside:hover {
+    left: 0;
+    -webkit-transition: 0.4s;
+  }
+}
+
+/*********************USERCARD************************/
+
+div.usercard {
+  float: left;
+  width: 150px;
+  position: relative;
+}
+
+div.usercard figure img {
+  margin: 5px auto;
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-width: 8px;
+  border-style: solid;
+  border-radius: 58px;
+  -webkit-transition: 0.5s;
+}
+
+div.usercard figcaption {
+  font-family: 'purisa', cursive;
+  font-size: 18px;
+  color: black;
+  text-align: center;
+  margin: 5px 0;
+}
+
+div.usercard .icon {
+  display: none;
+}
+
+div.usercard.withoffer .icon {
+  display: block;
+  /*background-color: whitesmoke;*/
+  background-image: url('../img/icon_check.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-origin: content-box;
+  position: absolute;
+  top: 100px;
+  left: 90px;
+  width: 30px;
+  height: 30px;
+  border: 5px transparent solid;
+  border-radius: 20px;
+  -webkit-animation: blink 1s infinite;
+}
+  
+/*div.usercard.trading figure img {
+  width: 60px;
+  height: 60px;
+  border-width: 6px;
+  border-radius: 44px;
+  -webkit-transition: 0.5s;
+}
+*/
+div.usercard.trading figure img {
+    box-shadow: 0 0 50px greenyellow;
+}
+
+.grey {
+  background-color: silver;
+  border-color: silver;
+}
+
+.current {
+  background-color: rgba(0,0,0,0.2);
+}
+
+/******************BUTTONY*******************/
+
+.button {
+  display: block;
+  position: relative;
+  width: 150px;
+  height: 140px;
+  float: left;
+}
+
+.button a {
+  display: block;
+  position: relative;
+  top: 25px;
+  left: 30px;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+  border-width: 5px;
+  border-style: solid;
+  border-radius: 60px;
+  -webkit-transition: 0.3s;
+  text-align: center;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+}
+
+#build_button {
+  background-image: url('../img/develop.jpg');
+}
+
+#trade_button {
+  background-image: url('../img/trade.jpg');
+}
+
+#endturn_button {
+  background-image: url('../img/turn.jpg');
+}
+
+.button span {
+  opacity: 0;
+  text-shadow: 0 0 5px rgba(0,0,0,0.7);
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  line-height: 80px;
+  vertical-align: middle;
+  -webkit-transition: 0.3s;
+}
+
+.button:not(.clicked) a:hover span {
+  opacity: 1;
+}
+
+.button a.inside {
+  display: none;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  border-radius: 35px;
+  font-size: 12px;
+  line-height: 45px;
+  -webkit-transition: 0.3s;
+  left: auto;
+  top: auto;
+}
+
+.button.clicked a.main {
+  opacity: 0.4;
+  -webkit-transition: 0.3s;
+}
+.button.clicked a.main img{
+  opacity: 0;
+  -webkit-transition: 0.3s;
+}
+.button.clicked a.main:hover {
+  opacity: 0.5;
+  -webkit-transition: 0.3s;
+}
+
+.button.clicked a.inside {
+  display: block;
+  -webkit-transition: 0.3s;
+}
+
+.button.clicked a.inside:nth-of-type(2) {top: 5px; left: 5px;}
+.button.clicked a.inside:nth-of-type(3) {top: 5px; right: 5px;}
+.button.clicked a.inside:nth-of-type(4) {bottom: 5px; left: 5px;}
+.button.clicked a.inside:nth-of-type(5) {bottom: 5px; right: 5px;}
+
+.button.clicked a.inside:hover {
+  padding: 3px;
+  -webkit-transition: 0.3s;
+}
+
+/***********Resource Cards*********************/
+
+#trade_form {
+  display: none;
+}
+
+.resource {
+  position: relative;
+  float: left;
+  margin: 0 5px;
+}
+
+.trade {
+  display: none;
+}
+
+.res_card {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border: 5px solid dimgrey;
+    margin: 20px auto;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+    border-radius: 40px;
+    background-origin: border-box;
+    background-position: center;
+    background-size: cover;
+}
+
+.res_card p {
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 45px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: dimgrey;
+    text-align: center;
+    z-index: 1;
+    color: white;
+    font-family: 'ubuntu', 'arial';
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 40px;
+    -webkit-transition: 0.3s;
+}
+
+.res_card p span:last-of-type {
+  font-size: 14px;
+  font-weight: normal;
+  display: none;
+}
+
+p.trading {
+    top: 15px;
+    -webkit-transition: 0.3s;
+}
+
+.res_card.greyscale {
+  -webkit-filter: grayscale(100%);
+}
+
+.res_card.greyscale p {
+  display: none;
+}
+
+.res_card.greyscale p.trading {
+  display: block;
+}
+
+.trade {
+    display: none;
+    position: absolute;
+    left: 23px;
+    width: 35px;
+    height: 35px;
+    border-radius: 18px;
+    text-align: center;
+    z-index: 1;
+    color: white;
+    font-family: 'ubuntu', 'arial';
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 35px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.up {
+  top: 0;
+  background-color: forestgreen;
+}
+.up:hover {
+  background-color: limegreen;
+}
+.down {
+  bottom:0;
+  background-color: firebrick;
+}
+.down:hover {
+  background-color: red;
+}
+
+.trade_quantity {
+    text-align: center;
+}
+
+#trade_submit {
+  display: none;
+}
+
+#offers {
+    height: 200px;
+    outline: 1px dotted lightgrey;
+    display: none;
+}
+
+.offer {
+  display: none;
+  width: 100%;
+  height: 110px;
+}
+.offer .empty {
+    visibility: hidden;
+}
+
+.offer .accept {
+    background-image: url('../img/accept.png');
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.offer .reject {
+    background-image: url('../img/reject.png');
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.accept:hover, .reject:hover {
+    opacity: 1;
+    -webkit-transition: 0.3s;
+}
+
+/* ------------ kostki i tury ------------- */
+
+#dice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px 10px;
+  width: 120px;
+  height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'ubuntu', 'arial';
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1em;
+  color: silver;
+}
+
+#dice span, #turn span {
+  color: grey;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  font-family: 'ubuntu', 'arial';
+  font-size: 52px;
+  font-weight: bold;
+  line-height: 1em;
+}
+
+.dice1 {background-image: url('../img/dice1.jpg');}
+.dice2 {background-image: url('../img/dice2.jpg');}
+.dice3 {background-image: url('../img/dice3.jpg');}
+.dice4 {background-image: url('../img/dice4.jpg');}
+.dice5 {background-image: url('../img/dice5.jpg');}
+.dice6 {background-image: url('../img/dice6.jpg');}
+
+
+#turn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  margin: 20px 10px;
+  width: 120px;
+  height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+    font-family: 'ubuntu', 'arial';
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1em;
+  color: silver;
+}
+
+/*******************DEVELOPMENT CARDS**********************/
+
+.development_card {
+  position: relative;
+  float: left;
+  margin: 0 5px;
+}
+
+.dev_card {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border: 5px solid darkslategrey;
+    margin: 20px auto;
+    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+    border-radius: 40px;
+    background-origin: border-box;
+    background-position: center;
+    background-size: cover;
+}
+
+.dev_card p {
+    display: block;
+    position: absolute;
+    left: 15px;
+    top: 45px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: darkslategrey;
+    text-align: center;
+    z-index: 1;
+    color: white;
+    font-family: 'ubuntu', 'arial';
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 40px;
+    -webkit-transition: 0.3s;
+}
+
+.dev_card.greyscale {
+  -webkit-filter: grayscale(100%);
+}
+
+.dev_card.greyscale p {
+  display: none;
+}
+.victorypoint {background-image: url('../img/card_victorypoint.png');}
+.knight {background-image: url('../img/card_knight.png');}
+.yearofplenty {background-image: url('../img/card_yearofplenty.jpg');}
+.roadbuilding {background-image: url('../img/card_roadbuilding.jpg');}
+.monopoly {background-image: url('../img/card_monopoly.jpg');}
+
+@-webkit-keyframes blink {
+  0% {border-color: transparent;}
+  50% {border-color: black;}
+  100% {border-color: transparent;}
+}

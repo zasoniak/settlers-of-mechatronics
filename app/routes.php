@@ -65,6 +65,10 @@ Route::get('board/{id}', function($id){
   $board = new CatanBoard(Board::find($id));
   return View::make('board')->with('board', $board);
 });
+Route::get('interface', function()
+{
+  return View::make('interface');
+});
 
 /* game routes */
 
@@ -247,16 +251,4 @@ Route::post('game/ajax/build', array('before'=>'turn', function(){
 Route::get('game/ajax/update', function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
   return Response::json($game->toJSON());
-});
-
-/* pierdolnik */
-
-Route::get('interface', function()
-{
-  return View::make('interface');
-});
-
-Route::get('generator', function()
-{
-  return View::make('generator');
 });

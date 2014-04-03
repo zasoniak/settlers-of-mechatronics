@@ -310,7 +310,7 @@ class CatanGame
         'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
         'dice' => array($this->model->dice1,$this->model->dice2),
-        'thief_location' => $this->model->thief_location,
+        'thief' => $this->board->model->thief_location,
         'board' => $this->board->toJSON()
     );
   }
