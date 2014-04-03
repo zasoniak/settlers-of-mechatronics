@@ -133,19 +133,12 @@ div.usercard.trading figure img {
   margin: 10px 5px;
   background-color: rgba(0,0,0,0.3);
 }
-  
+
 .current {
   background-color: rgba(0,0,0,0.5);
 }
 
-#slide1, #slide2 {
-  display: none;
-}
-
-#slide2 img {
-    width: 150px;
-    height:150px;
-}
+/******************BUTTONY*******************/
 
 .button {
   display: block;
@@ -163,7 +156,7 @@ div.usercard.trading figure img {
   background-color: #dddddd;
   border-radius: 50px;
   width: 70px;
-  -webkit-transition: 0.2s;
+  -webkit-transition: 0.3s;
   cursor: pointer;
 }
 
@@ -173,7 +166,7 @@ div.usercard.trading figure img {
   background-color: silver;
   border-radius: 60px;
   padding: 10px;
-  -webkit-transition: 0.25s;
+  -webkit-transition: 0.3s;
 }
 
 .button a img {
@@ -182,50 +175,51 @@ div.usercard.trading figure img {
   border-radius: 35px;
 }
 
-/*.button.clicked a.main img {
-  display: none;
-}
-
-.button.clicked a.main {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  margin: 20px;
-}*/
-.button.clicked a.main {
-  opacity: 0.6;
-}
-
-.button.clicked a.main:hover {
-  background-color: silver;
-}
-
 .button a.inside {
   display: none;
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background-color: #dddddd;
+  border-radius: 25px;
+  -webkit-transition: 0.3s;
+  left: auto;
+  top: auto;
 }
 
 .button a.inside img {
-  width: 50px;
-  height: 50px;
+  width: 45px;
+  height: 45px;
   border-radius: 25px;
+}
+
+.button.clicked a.main {
+  opacity: 0.3;
+  -webkit-transition: 0.3s;
+}
+.button.clicked a.main img{
+  opacity: 0;
+  -webkit-transition: 0.3s;
+}
+.button.clicked a.main:hover {
+  opacity: 0.6;
+  -webkit-transition: 0.3s;
 }
 
 .button.clicked a.inside {
   display: block;
-  position: absolute;
-  width: 50px;
-  height: 50px;
+  -webkit-transition: 0.3s;
+}
+
+.button.clicked a.inside:hover {
   background-color: silver;
-  border-radius: 25px;
-  -webkit-transition: 0.25s;
-  left: auto;
-  top: auto;
+  -webkit-transition: 0.3s;
 }
 
 .button.clicked a.inside:nth-of-type(2) {top: 0; left: 0;}
 .button.clicked a.inside:nth-of-type(3) {top: 0; right: 0;}
 .button.clicked a.inside:nth-of-type(4) {bottom: 0; left: 0;}
-.button.clicked a.inside:nth-of-type(4):last-of-type {bottom: 0; left: 30px;}
+.button.clicked a.inside:nth-of-type(4):last-of-type {bottom: 0; left: 33px;}
 .button.clicked a.inside:nth-of-type(5) {bottom: 0; right: 0;}
 
 /***********Resource Cards*********************/
