@@ -7,6 +7,7 @@ $(document).ready(function() {
                       .hide()
                       .addClass(item.classes)
                       .css(item.styles)
+                      .attr(item.attr)
                       .append($("<span>").html(item.prob))
                       .append($("<div class=\"face1\"></div>"))
                       .append($("<div class=\"face2\"></div>"))
@@ -200,78 +201,79 @@ $(document).ready(function() {
   }, 3000);
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
-            .done(function(data) {
-              $("#board").find(".road").remove();
-              $("#board").find(".settle").remove();
-              $.each(data.board.settlements, function(index, item, i) {
-                $("<div>")
-                        .addClass(item.classes)
-                        .css(item.styles)
-                        .attr(item.attr)
-                        .appendTo("#board")
-              });
-              $.each(data.board.roads, function(index, item) {
-                $("<div>")
-                        .addClass(item.classes)
-                        .css(item.styles)
-                        .attr(item.attr)
-                        .appendTo("#board");
-              });
-              $.each(data.opponents, function(index, item) {
-                $("[player=" + index + "]").find("td").last().html(item.resources);
-              });
-              $.each(data.player.resources, function(index, item) {
-                var card = $(".res_card." + index);
-                if (item == 0)
-                {
-                  card.addClass("greyscale");
-                  card.find("p span").html(item);
-                }
-                else
-                {
-                  card.removeClass("greyscale");
-                  card.find("p span").html(item);
-                }
-              });
-              $("#dev_cards").html("");
-              $.each(data.player.cards, function(index, item) {
-                $("<div>")
-                        .addClass("development_card")
-                        .appendTo("#dev_cards")
-                        .append($("<div>"))
-                        .children().first()
-                        .addClass(item.classes)
-                        .attr(item.attr);
-              });
+      .done(function(data) {
+        $("#board").find(".road").remove();
+        $("#board").find(".settle").remove();
+        $.each(data.board.settlements, function(index, item, i) {
+          $("<div>")
+                  .addClass(item.classes)
+                  .css(item.styles)
+                  .attr(item.attr)
+                  .appendTo("#board")
+        });
+        $.each(data.board.roads, function(index, item) {
+          $("<div>")
+                  .addClass(item.classes)
+                  .css(item.styles)
+                  .attr(item.attr)
+                  .appendTo("#board");
+        });
+        $.each(data.opponents, function(index, item) {
+          $("[player=" + index + "]").find("td").last().html(item.resources);
+        });
+        $.each(data.player.resources, function(index, item) {
+          var card = $(".res_card." + index);
+          if (item == 0)
+          {
+            card.addClass("greyscale");
+            card.find("p span").html(item);
+          }
+          else
+          {
+            card.removeClass("greyscale");
+            card.find("p span").html(item);
+          }
+        });
+        $("#dev_cards").html("");
+        $.each(data.player.cards, function(index, item) {
+          $("<div>")
+                  .addClass("development_card")
+                  .appendTo("#dev_cards")
+                  .append($("<div>"))
+                  .children().first()
+                  .addClass(item.classes)
+                  .attr(item.attr);
+        });
 
-              if (data.player.trade_received)
-              {
-                var trade = data.player.trade_received;
-                var usercard = $("[player=" + trade.host_id + "]");
-                $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
-                usercard.addClass("withoffer");
-                div.find(".wood").html(trade.wood);
-                $("#trade_form").find("[res=wood]").val(trade.wood);
-                div.find(".stone").html(trade.stone);
-                $("#trade_form").find("[res=stone]").val(trade.stone);
-                div.find(".sheep").html(trade.sheep);
-                $("#trade_form").find("[res=sheep]").val(trade.sheep);
-                div.find(".clay").html(trade.clay);
-                $("#trade_form").find("[res=clay]").val(trade.clay);
-                div.find(".wheat").html(trade.wheat);
-                $("#trade_form").find("[res=wheat]").val(trade.wheat);
-              }
-              $("#die1").html(data.dice[0]);
-              $("#die2").html(data.dice[1]);
-              $("#turn span").html(data.turn);
-              $("[player]").removeClass("current");
-              $("[player='" + data.current + "']").addClass("current");
-              current = data.current;
-              player = data.player.id;
-            })
-            .error(function(data) {
-              alert("Musiało się zrąbać połączenie.");
-            });
+        if (data.player.trade_received)
+        {
+          var trade = data.player.trade_received;
+          var usercard = $("[player=" + trade.host_id + "]");
+          $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
+          usercard.addClass("withoffer");
+          div.find(".wood").html(trade.wood);
+          $("#trade_form").find("[res=wood]").val(trade.wood);
+          div.find(".stone").html(trade.stone);
+          $("#trade_form").find("[res=stone]").val(trade.stone);
+          div.find(".sheep").html(trade.sheep);
+          $("#trade_form").find("[res=sheep]").val(trade.sheep);
+          div.find(".clay").html(trade.clay);
+          $("#trade_form").find("[res=clay]").val(trade.clay);
+          div.find(".wheat").html(trade.wheat);
+          $("#trade_form").find("[res=wheat]").val(trade.wheat);
+        }
+        $("#die1").html(data.dice[0]);
+        $("#die2").html(data.dice[1]);
+        $("#turn span").html(data.turn);
+        $("[player]").removeClass("current");
+        $("[player='" + data.current + "']").addClass("current");
+        current = data.current;
+        player = data.player.id;
+        $("[tile='" + data.thief_location + "']").append($("<div id=\"thief\"></div>"));
+      })
+      .error(function(data) {
+        alert("Musiało się zrąbać połączenie.");
+      });
   }
   ;
 });
