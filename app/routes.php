@@ -182,6 +182,17 @@ Route::post('game/ajax/tradeaccept', function(){
   return Response::make('OK', 200);
 });
 
+Route::post('game/ajax/tradereject', function(){
+  $input  = Input::all();
+  $key = array_search('on', $input);
+  $hostarray = explode('_', $key);
+  $host = $hostarray[1];
+  $client = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $trade = Trade::findByHostByClient($host, $client->id);
+  $trade->reject();
+  return Response::make('OK', 200);
+});
+
 Route::post('game/ajax/playcard', function(){
   $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
   // trycatch by sprawdzić, czy zwróci się karta należąca dla tego playera
