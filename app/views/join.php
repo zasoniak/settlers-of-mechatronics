@@ -19,6 +19,7 @@
                   window.location.reload();
                 });
       });
+      $("li").find("img").parent().addClass("busy")
     });
     </script>
   </head>

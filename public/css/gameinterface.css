@@ -311,11 +311,11 @@ p.trading {
     
 }
 .up {
-    top:0;
+    bottom: 0;
     background-color: green;
 }
 .down {
-    bottom: 0;
+    top:0;
   background-color: red;
 }
 

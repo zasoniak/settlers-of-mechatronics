@@ -26,15 +26,16 @@ $(document).ready(function() {
             });
           });
   loadJSON(game);
-  $("#build_button").click(function() {
   $(".main").click(function() {
     $(this).parent().siblings().removeClass("clicked");
     $(".road.active").hide();
     $(".settle.active").hide();
   });
+  $("#build_button").click(function() {
     $(".trade").slideUp('300');
     $(".usercard figure").removeClass("clickable");
     $(".res_card p").removeClass("trading");
+    $(".res_card p span:last-of-type").hide();
     $(this).parent().toggleClass("clicked");
   });
         $("#build_settle").click(function() {
@@ -181,6 +182,15 @@ $(document).ready(function() {
   });
   $(document).on("click", "#trade_button_accept", function(event) {
     $.post("ajax/tradeaccept", $("#trade_form").serialize())
+            .done(function(data) {
+              loadJSON(game);
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+  });
+  $(document).on("click", "#trade_button_reject", function(event) {
+    $.post("ajax/tradereject", $("#trade_form").serialize())
             .done(function(data) {
               loadJSON(game);
             })
