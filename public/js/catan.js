@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var game = $("#game_id").val();
+  // LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   
   $.getJSON("ajax/board", {game_id: game})
           .done(function(data) {
             $.each(data.tiles, function(index, item) {
@@ -31,6 +32,7 @@ $(document).ready(function() {
     $(".road.active").hide();
     $(".settle.active").hide();
   });
+  // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
   $("#build_button").click(function() {
     $(".trade").slideUp('300');
     $(".usercard figure").removeClass("clickable");
@@ -38,14 +40,48 @@ $(document).ready(function() {
     $(".res_card p span:last-of-type").hide();
     $(this).parent().toggleClass("clicked");
   });
-        $("#build_settle").click(function() {
-          $(".road.active").hide('300');
-          $(".settle.active").toggle('300');
-        });
-        $("#build_road").click(function() {
-          $(".settle.active").hide('300');
-          $(".road.active").toggle('300');
-        });
+  
+      $("#build_settle").click(function() {
+        $(".road.active").hide('300');
+        $(".settle.active").toggle('300');
+      });
+      
+      $("#build_road").click(function() {
+        $(".settle.active").hide('300');
+        $(".road.active").toggle('300');
+      });
+      
+      $(document).on("click", ".settle.active", function(event) {
+        $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
+                .done(function(data) {
+                  loadJSON(game);
+                })
+                .error(function(data) {
+                  alert(data.responseText);
+                });
+      });
+      
+      $(document).on("click", ".settle:not(.active)", function(event) {
+        $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
+                .done(function(data) {
+                  loadJSON(game);
+                })
+                .error(function(data) {
+                  alert(data.responseText);
+                });
+      });
+      
+      $(document).on("click", ".road.active", function(event) {
+        $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
+                .done(function(data) {
+                  loadJSON(game);
+                })
+                .error(function(data) {
+                  alert(data.responseText);
+                });
+      });
+      
+  // CARDS    CARDS    CARDS    CARDS    CARDS    CARDS    CARDS   
   $("#buy_card_button").click(function() {
     $.post("ajax/build", {game_id: game, item: "card", id: null})
         .done(function(data) {
@@ -55,6 +91,61 @@ $(document).ready(function() {
           alert(data.responseText);
         });
   });
+  // purchasing card   purchasing card   purchasing card   
+  $(document).on("click", ".dev_card", function(event){
+    var r  = confirm("Czy na pewno chcesz zagrać tę kartę?");
+    if(r)
+    {
+      $.post("ajax/playcard", {game_id: game, id: $(this).attr("card")})
+            .done(function(data) {
+              alert("Zagrano :)");
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+    }
+  });
+  
+  // monopoly card   monopoly card   monopoly card   
+  $(document).on("click", ".monopoly", function(){
+    $(".resource").addClass("for_monopoly");
+  });
+      $(document).on("click", ".for_monopoly .res_card", function(){
+        $.post("ajax/playcard", {game_id: game, res: $(this).attr("res")})
+            .done(function(data) {
+              alert("Zagrano :) Zgrniasz wszystko!");
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+        $(".resource").removeClass("for_monopoly");
+      });
+      
+  // year of plenty card   year of plenty card   year of plenty card
+  $(document).on("click", ".yearofplenty", function(){
+    $(".resource").addClass("for_yearofplenty");
+  });
+    var res;
+    $(document).on("click", ".for_yearofplenty .res_card", function(){
+      $(this).addClass("marked");
+      if(!res)
+      {
+        res=$(this).attr("res");
+      }
+      else
+      {
+        $.post("ajax/playcard", {game_id: game, res1: res, res2: $(this).attr("res")})
+            .done(function(data) {
+              alert("Zagrano :) Dostajesz swoje wymarzone dwa surowce!");
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+        $(this).addClass("marked");
+      }
+      });
+
+  // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     
   $("#trade_button").click(function() {
     $(".road.active").hide();
     $(".settle.active").hide();
@@ -65,18 +156,23 @@ $(document).ready(function() {
     $(".res_card p span:last-of-type").toggle();
     $(this).parent().toggleClass("clicked");
   });
+  
     $(document).on("click", "figure.clickable", function(event) {
       var usercard = $(this).parent().parent();
       usercard.toggleClass("trading");
     });
+    
     $(".trade.up").click(function() {
       var res = $(this).parent().find(".res_card").attr("res");
-      var spanoffer = $(".offer").find("." + res);
+      var spanoffer = $("#trade_form").find("[res=" + res + "]").val();
       var spanres = $(this).parent().find(".res_card p span").first();
       var spandiff = $(this).parent().find(".res_card p span").last();
-      var q = (+spanoffer.html()) + 1;
-      spanoffer.html(q);
+      var q = (+spanoffer) + 1;
       spandiff.html(+spanres.html() + q);
+      if(spandiff.html()>0)
+      {
+        $(this).next().removeClass("greyscale");
+      }
       if(q>0)
       {
         $(this).html("+"+q).css("font-size","25px");
@@ -95,14 +191,18 @@ $(document).ready(function() {
       }
       $("#trade_form").find("[res=" + res + "]").val(q);
     });
-    $(".trade.down").click(function() {
+    
+    $(".trade:not(.greyscale).down").click(function() {
       var res = $(this).parent().find(".res_card").attr("res");
-      var spanoffer = $(".offer").find("." + res);
+      var spanoffer = $("#trade_form").find("[res=" + res + "]").val();
       var spanres = $(this).parent().find(".res_card p span").first();
       var spandiff = $(this).parent().find(".res_card p span").last();
-      var q = (+spanoffer.html()) - 1;
-      spanoffer.html(q);
+      var q = (+spanoffer) - 1;
       spandiff.html(+spanres.html() + q);
+      if(spandiff.html()<1)
+      {
+        $(this).addClass("greyscale");
+      }
       if(q>0)
       {
         $(this).prev().html("+"+q).css("font-size","25px");;
@@ -121,6 +221,7 @@ $(document).ready(function() {
       }
       $("#trade_form").find("[res=" + res + "]").val(q);
     });
+    
     $("#trade_button_withbank").click(function() {
       $.post("ajax/trade", $("#trade_form").serialize())
               .done(function() {
@@ -130,67 +231,30 @@ $(document).ready(function() {
                 alert(data.responseText);
               });
     });
+    
+    $(document).on("click", "#trade_button_accept", function(event) {
+      $.post("ajax/tradeaccept", $("#trade_form").serialize())
+              .done(function(data) {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+    
+    $(document).on("click", "#trade_button_reject", function(event) {
+      $.post("ajax/tradereject", $("#trade_form").serialize())
+              .done(function(data) {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+  // ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   
   $("#endturn_button").click(function() {
     $(".usercard figure").toggleClass("clickable");
     $.post("ajax/next", {game_id: game})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".settle.active", function(event) {
-    $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".settle:not(.active)", function(event) {
-    $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".road.active", function(event) {
-    $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".dev_card", function(event){
-    var r  = confirm("Czy na pewno chcesz zagrać tę kartę?");
-    if(r)
-    {
-      $.post("ajax/playcard", {game_id: game, id: $(this).attr("card")})
-            .done(function(data) {
-              alert("Zagrano :)");
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-    }
-  });
-  $(document).on("click", "#trade_button_accept", function(event) {
-    $.post("ajax/tradeaccept", $("#trade_form").serialize())
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", "#trade_button_reject", function(event) {
-    $.post("ajax/tradereject", $("#trade_form").serialize())
             .done(function(data) {
               loadJSON(game);
             })
@@ -209,11 +273,13 @@ $(document).ready(function() {
       loadJSON(game);
     }
   }, 3000);
+  // LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
       .done(function(data) {
         $("#board").find(".road").remove();
         $("#board").find(".settle").remove();
+        // settlements   settlements   settlements   
         $.each(data.board.settlements, function(index, item, i) {
           $("<div>")
                   .addClass(item.classes)
@@ -221,6 +287,7 @@ $(document).ready(function() {
                   .attr(item.attr)
                   .appendTo("#board")
         });
+        // roads   roads   roads   roads
         $.each(data.board.roads, function(index, item) {
           $("<div>")
                   .addClass(item.classes)
@@ -231,6 +298,7 @@ $(document).ready(function() {
         $.each(data.opponents, function(index, item) {
           $("[player=" + index + "]").find("td").last().html(item.resources);
         });
+        // resources   resources   resources   resources   
         $.each(data.player.resources, function(index, item) {
           var card = $(".res_card." + index);
           if (item == 0)
@@ -244,6 +312,7 @@ $(document).ready(function() {
             card.find("p span").html(item);
           }
         });
+        // dev cards   dev cards   dev cards   dev cards   
         $("#dev_cards").html("");
         $.each(data.player.cards, function(index, item) {
           $("<div>")
@@ -254,7 +323,7 @@ $(document).ready(function() {
                   .addClass(item.classes)
                   .attr(item.attr);
         });
-
+        // trade received   trade received   trade received   
         if (data.player.trade_received)
         {
           var trade = data.player.trade_received;
@@ -287,6 +356,8 @@ $(document).ready(function() {
   }
   ;
 });
+
+// TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    
 function disableText(e) {
   return false;
 }

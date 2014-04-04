@@ -30,16 +30,6 @@
             </tr>
           </table>
           </div>
-          <div class="offer">
-            <div class="wood">0</div>
-            <div class="stone">0</div>
-            <div class="sheep">0</div>
-            <div class="clay">0</div>
-            <div class="wheat">0</div>
-            <div class="reject"></div>
-            <div class="empty"></div>
-            <div class="accept"></div>
-          </div>
         </div>
         <?php endforeach; ?>
       </div>
