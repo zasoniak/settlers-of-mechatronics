@@ -198,12 +198,16 @@ Route::post('game/ajax/tradereject', function(){
 });
 
 Route::post('game/ajax/playcard', function(){
-  $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
-  // trycatch by sprawdzić, czy zwróci się karta należąca dla tego playera
-  $card = new CatanCard(Card::find(Input::get('id')));
+  $input = Input::all();
+  $player = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $card = new CatanCard(Card::find($input['id']));
   if($card->model->player->id != $player->id)
   {
     return Response::make('To nie Twoja karta!', 403);
+  }
+  if(isset($input['res']))
+  {
+    $data['resource'] = $input['res'];
   }
   try
   {

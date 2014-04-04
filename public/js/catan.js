@@ -92,7 +92,7 @@ $(document).ready(function() {
         });
   });
   // purchasing card   purchasing card   purchasing card   
-  $(document).on("click", ".dev_card", function(event){
+  $(document).on("click", ".knight", function(event){
     var r  = confirm("Czy na pewno chcesz zagrać tę kartę?");
     if(r)
     {
@@ -106,20 +106,23 @@ $(document).ready(function() {
     }
   });
   
-  // monopoly card   monopoly card   monopoly card   
+  // monopoly card   monopoly card   monopoly card 
+  var card_id;
   $(document).on("click", ".monopoly", function(){
     $(".resource").addClass("for_monopoly");
+    card_id = $(this).attr("card");
   });
-      $(document).on("click", ".for_monopoly .res_card", function(){
-        $.post("ajax/playcard", {game_id: game, res: $(this).attr("res")})
-            .done(function(data) {
-              alert("Zagrano :) Zgrniasz wszystko!");
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-        $(".resource").removeClass("for_monopoly");
-      });
+  $(document).on("click", ".for_monopoly .res_card", function(){
+    $.post("ajax/playcard", {game_id: game, res: $(this).attr("res"), id: card_id})
+        .done(function(data) {
+          alert("Zagrano :) Zgrniasz wszystko!");
+          loadJSON(game);
+        })
+        .error(function(data) {
+          alert(data.responseText);
+        });
+    $(".resource").removeClass("for_monopoly");
+  });
       
   // year of plenty card   year of plenty card   year of plenty card
   $(document).on("click", ".yearofplenty", function(){
