@@ -85,7 +85,7 @@
       <div id="opponents" class="panel">
         <div class="usercard" player="2">
           <figure>
-            <p class="red" id="res_number">3</p>
+            <p class="red" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
             <p class="red" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
             <label for="player_2"><img src="http://localhost/catan/public/img/mroova.jpg" class="red"></label>
           </figure>
@@ -94,7 +94,7 @@
         </div>
         <div class="usercard" player="3">
           <figure>
-            <p class="green" id="res_number">2</p>
+            <p class="green" id="res_number"><img src="http://localhost/catan/public/img/resource.png">2</p>
             <p class="green" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
             <label for="player_3"><img src="http://localhost/catan/public/img/sony.jpg" class="green"></label>
           </figure>
