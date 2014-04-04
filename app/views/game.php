@@ -40,7 +40,7 @@
         <?php endforeach; ?>
         <?php $resources = array('wood','stone','sheep','clay','wheat'); ?>
         <?php foreach($resources as $type): ?>
-        <input type="text" name="trade_<?php echo $type ?>" res="<?php echo $type; ?>" />
+        <input type="text" name="trade_<?php echo $type ?>" res="<?php echo $type; ?>" value="0" />
         <?php endforeach; ?>
       </form>
       <div class="panel">
@@ -80,6 +80,7 @@
           <a id="trade_button_accept" class="inside"><?php echo HTML::image('img/accept.png', 'accept'); ?></a>
           <a id="trade_button_reject" class="inside"><?php echo HTML::image('img/reject.png', 'reject'); ?></a>
           <a id="trade_button_withbank" class="inside"><?php echo HTML::image('img/withbank.png', 'withbank'); ?></a>
+          <a id="trade_button_yearofplenty" class="inside"><?php echo HTML::image('img/withbank.png', 'plenty'); ?></a>
         </div>
         <div class="button">
           <a id="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>

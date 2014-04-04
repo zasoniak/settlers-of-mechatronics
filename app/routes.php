@@ -209,6 +209,15 @@ Route::post('game/ajax/playcard', function(){
   {
     $data['resource'] = $input['res'];
   }
+  if(isset($input['trade_wood']))
+  {
+    $resources = array('wood', 'stone', 'sheep', 'clay', 'wheat');
+    foreach ($resources as $resource)
+    {
+      $offer[$resource] = $input["trade_$resource"];
+    }
+  }
+  $data['offer'] = $offer;
   try
   {
     $card->play($data);

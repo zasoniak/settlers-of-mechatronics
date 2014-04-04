@@ -123,31 +123,30 @@ $(document).ready(function() {
         });
     $(".resource").removeClass("for_monopoly");
   });
-      
   // year of plenty card   year of plenty card   year of plenty card
   $(document).on("click", ".yearofplenty", function(){
-    $(".resource").addClass("for_yearofplenty");
+    $(".res_card p").addClass("trading");
+    $(".resource").removeClass("on");
+    $(".trade").slideDown('300');
+    $(".res_card p span:last-of-type").show();
+    $("#trade_button").parent().addClass("clicked");
+    card_id = $(this).attr("card");
   });
-    var res;
-    $(document).on("click", ".for_yearofplenty .res_card", function(){
-      $(this).addClass("marked");
-      if(!res)
-      {
-        res=$(this).attr("res");
-      }
-      else
-      {
-        $.post("ajax/playcard", {game_id: game, res1: res, res2: $(this).attr("res")})
-            .done(function(data) {
-              alert("Zagrano :) Dostajesz swoje wymarzone dwa surowce!");
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-        $(this).addClass("marked");
-      }
-      });
-
+  $(document).on("click", "#trade_button_yearofplenty", function(){
+    $.post("ajax/playcard", jQuery.param(jQuery.merge($("#trade_form").serializeArray(),[{name:"id",value:card_id}])))
+        .done(function(data) {
+          alert("Zagrano :) Masz wymarzone dwa surowce!");
+          loadJSON(game);
+        })
+        .error(function(data) {
+          alert(data.responseText);
+        });
+    $(".res_card p").removeClass("trading");
+    $(".resource").addClass("on");
+    $(".trade").slideUp('300');
+    $(".res_card p span:last-of-type").hide();
+    $("#trade_button").parent().removeClass("clicked");
+  });
   // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     
   $("#trade_button").click(function() {
     $(".road.active").hide();
