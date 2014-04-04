@@ -207,7 +207,7 @@ Route::post('game/ajax/playcard', function(){
   }
   try
   {
-    $card->play();
+    $card->play($data);
   } catch (Exception $exc)
   {
     return Response::make($exc->getMessage(), 403);

@@ -10,37 +10,35 @@
   </head>
   <body>
     <aside>
-      <div id="opponents" class="panel">
+      <div id="player" class="panel">
+        <div class="usercard"></div>
         <div class="usercard" player="2">
-          <label for="player_1">
-            <figure><img src="http://localhost/catan/public/img/konrad.jpg" class="yellow"></figure>
-          </label>
+          <figure>
+            <p class="yellow" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
+            <p class="yellow" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
+            <label for="player_1"><img src="http://localhost/catan/public/img/konrad.jpg" class="yellow"></label>
+          </figure>
           <figcaption>Fellglen</figcaption>
           <div class="icon"></div>
-          <div class="offer">
-            <div class="wood">0</div>
-            <div class="stone">0</div>
-            <div class="sheep">0</div>
-            <div class="clay">0</div>
-            <div class="wheat">0</div>
-            <div class="reject"></div>
-            <div class="empty"></div>
-            <div class="accept"></div>
-          </div>
+        </div>
+        <div class="usercard">
+          <div class="dev_card knight yellow"></div>
+          <div class="dev_card yearofplenty yellow"></div>
+          <div class="dev_card knight yellow"></div>
         </div>
       </div>
       <div class="panel" player="1">
         <div class="button">
           <a id="build_button" class="main yellow"><span>rozwój</span></a>
-          <a id="build_settle" class="inside yellow">osada</a>
-          <a id="build_city" class="inside yellow">miasto</a>
-          <a id="build_road" class="inside yellow">droga</a>
+          <a id="build_settle" class="inside yellow"><span>osada</span></a>
+          <a id="build_town" class="inside yellow"><span>miasto</span></a>
+          <a id="build_road" class="inside yellow"><span>droga</span></a>
           <a id="buy_card_button" class="inside yellow">karta</a>
         </div>
         <div class="button">
           <a id="trade_button" class="main yellow"><span>handel</span></a>
-          <a id="trade_button_accept" class="inside yellow">wyślij</a>
-          <a id="trade_button_reject" class="inside yellow">anuluj</a>
+          <a id="trade_button_accept" class="inside yellow"><span>wyślij</span></a>
+          <a id="trade_button_reject" class="inside yellow"><span>anuluj</span></a>
         </div>
         <div class="button">
           <a id="endturn_button" class="main yellow"><span>koniec</span></a>
@@ -50,58 +48,63 @@
         <div class="resource">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card wood" res="wood">
-            <p><span>2</span><span>2</span></p>
+          <div class="res_card wood yellow" res="wood">
+            <p class="yellow"><span>2</span><span>2</span></p>
           </div>
         </div>
         <div class="resource">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card greyscale stone" res="stone">
-            <p><span></span><span></span></p>
+          <div class="res_card greyscale stone yellow" res="stone">
+            <p class="yellow"><span></span><span></span></p>
           </div>
         </div>
         <div class="resource">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card sheep" res="sheep">
-            <p><span>3</span><span>3</span></p>
+          <div class="res_card sheep yellow" res="sheep">
+            <p class="yellow"><span>3</span><span>3</span></p>
           </div>
         </div>
         <div class="resource">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card clay" res="clay">
-            <p><span>1</span><span>1</span></p>
+          <div class="res_card clay yellow" res="clay">
+            <p class="yellow"><span>1</span><span>1</span></p>
           </div>
         </div>
         <div class="resource">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card greyscale wheat" res="wheat">
-            <p><span></span><span></span></p>
+          <div class="res_card greyscale wheat yellow" res="wheat">
+            <p class="yellow"><span></span><span></span></p>
           </div>
         </div>
       </div>
+      <p class="panel">Sony przehandlował Twoją starą za 3 snopki zboża.</p>
       <div id="opponents" class="panel">
         <div class="usercard" player="2">
-          <label for="player_2">
-            <figure><img src="http://localhost/catan/public/img/mroova.jpg" class="blue" alt="morda"></figure>
-          </label>
+          <figure>
+            <p class="red" id="res_number">3</p>
+            <p class="red" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
+            <label for="player_2"><img src="http://localhost/catan/public/img/mroova.jpg" class="red"></label>
+          </figure>
           <figcaption>mroova</figcaption>
           <div class="icon"></div>
         </div>
         <div class="usercard" player="3">
-          <label for="player_3">
-            <figure><img src="http://localhost/catan/public/img/sony.jpg" class="green" alt="morda"></figure>
-          </label>
+          <figure>
+            <p class="green" id="res_number">2</p>
+            <p class="green" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
+            <label for="player_3"><img src="http://localhost/catan/public/img/sony.jpg" class="green"></label>
+          </figure>
           <figcaption>Sony</figcaption>
           <div class="icon"></div>
         </div>
-        <div class="usercard" player="2">
-          <label for="player_2">
-            <figure><img src="http://localhost/catan/public/img/avatar.png" class="grey" alt="morda"></figure>
-          </label>
+        <div class="usercard">
+          <figure>
+            <label><img src="http://localhost/catan/public/img/avatar.png" class="grey" alt="morda"></label>
+          </figure>
           <figcaption></figcaption>
           <div class="icon"></div>
         </div>
@@ -115,18 +118,16 @@
         <input type="text" name="trade_clay" res="clay" />
         <input type="text" name="trade_wheat" res="wheat" />
       </form>
-      <div id="dev_cards" class="panel">
-      </div>
     </aside>
     <div id="whole">
       <div id="board">
-        <div id="dice">
+        <div class="boardcorner" id="dice">
           Kostki<br>
           <span id="die1">3</span>
           <span>+</span>
           <span id="die2">4</span>
         </div>
-        <div id="turn">
+        <div class="boardcorner" id="turn">
           Tura<br>
           <span>5</span>
         </div>

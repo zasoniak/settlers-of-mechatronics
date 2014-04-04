@@ -16,9 +16,13 @@ class CatanCard implements PurchasableInterface
     $this->model = $card;
   }
 
-  public function play()
+  public function play($data = array())
   {
     $player = $this->model->player;
+    if ($this->model->type == 'yearofplenty' && array_sum($data['offer']) != 2)
+    {
+      throw new Exception('Co za dużo, to nie zdrowo...');
+    }
     if ($player->has_played_card == 1)
     {
       throw new Exception('Zagrano już kartę w tej turze.');
@@ -60,8 +64,25 @@ class CatanCard implements PurchasableInterface
         }
         break;
       case 'monopoly':
+        $resource = $data['resource'];
+        $opponents = $this->model->board->game->getOpponents()->get();
+        $profit = 0;
+        foreach ($opponents as $opponent)
+        {
+          $profit += $opponent->{$resource};
+          $opponent->{$resource} = 0;
+          $opponent->save();
+        }
+        $player->addResource($resource,$profit);
+        $player->save();
         break;
-
+      case 'yearofplenty':
+        foreach ($data['offer'] as $resource => $quantity)
+        {
+          $player->addResource($resource,$quantity);
+        }
+        $player->save();
+        break;
       default:
         break;
     }

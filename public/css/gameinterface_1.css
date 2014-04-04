@@ -33,10 +33,23 @@ aside {
 }
 
 .panel {
+  outline: 2px dotted red;
   overflow: hidden;
   width: 450px;
-  margin: 10px;
+  margin: 5px 10px;
 }
+
+.panel * {
+  outline: 1px dashed lime;
+}
+
+p.panel {
+  height: 1em;
+  padding: 0.8em 0;
+  text-align: center;
+  -webkit-animation: pulse 2s infinite;
+}
+
 
 @media all and (max-device-height: 800px) {
   aside {
@@ -60,18 +73,22 @@ aside {
 div.usercard {
   float: left;
   width: 150px;
+  height: 150px;
+  overflow: auto;
+}
+
+div.usercard figure {
   position: relative;
 }
 
-div.usercard figure img {
-  margin: 5px auto;
+div.usercard figure label img {
+  margin: 0 auto;
   display: block;
-  width: 100px;
-  height: 100px;
-  border-width: 8px;
+  width: 106px;
+  height: 106px;
+  border-width: 7px;
   border-style: solid;
-  border-radius: 58px;
-  -webkit-transition: 0.5s;
+  border-radius: 60px;
 }
 
 div.usercard figcaption {
@@ -80,6 +97,34 @@ div.usercard figcaption {
   color: black;
   text-align: center;
   margin: 5px 0;
+}
+
+div.usercard figure p {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 30px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+}
+
+div.usercard p img {
+  vertical-align: baseline;
+  width: 16px;
+  height: 16px;
+}
+
+div.usercard p#cards_number {
+  top: 0;
+  left: 20px;
+}
+div.usercard p#res_number {
+  bottom: 0;
+  right: 20px;
 }
 
 div.usercard .icon {
@@ -131,14 +176,14 @@ div.usercard.trading figure img {
   display: block;
   position: relative;
   width: 150px;
-  height: 140px;
+  height: 130px;
   float: left;
 }
 
 .button a {
   display: block;
   position: relative;
-  top: 25px;
+  top: 20px;
   left: 30px;
   cursor: pointer;
   width: 80px;
@@ -148,22 +193,19 @@ div.usercard.trading figure img {
   border-width: 5px;
   border-style: solid;
   border-radius: 60px;
-  -webkit-transition: 0.3s;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
   text-align: center;
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+  -webkit-transition: 0.3s;
 }
 
-#build_button {
-  background-image: url('../img/develop.jpg');
-}
-
-#trade_button {
-  background-image: url('../img/trade.jpg');
-}
-
-#endturn_button {
-  background-image: url('../img/turn.jpg');
-}
+#build_button {background-image: url('../img/develop.jpg');}
+#build_settle {background-image: url('../img/settle.jpg');}
+#build_town {background-image: url('../img/town.jpg');}
+#build_road {background-image: url('../img/road.jpg');}
+#trade_button {background-image: url('../img/trade.jpg');}
+#trade_button_accept {background-color: forestgreen;}
+#trade_button_reject {background-color: red;}
+#endturn_button {background-image: url('../img/turn.jpg');}
 
 .button span {
   opacity: 0;
@@ -177,21 +219,32 @@ div.usercard.trading figure img {
   -webkit-transition: 0.3s;
 }
 
-.button:not(.clicked) a:hover span {
-  opacity: 1;
-}
-
 .button a.inside {
   display: none;
   position: absolute;
-  width: 45px;
-  height: 45px;
-  border-radius: 35px;
-  font-size: 12px;
-  line-height: 45px;
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
   -webkit-transition: 0.3s;
   left: auto;
   top: auto;
+}
+
+.button a.inside span {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: none;
+  line-height: 50px; 
+}
+
+.button:not(.clicked) a:hover, .button a.inside:hover {
+  box-shadow: inset 0 0 18px rgba(0,0,0,0.7);
+  -webkit-transition: 0.3s;
+}
+
+.button:not(.clicked) a:hover span, .button a.inside:hover span {
+  opacity: 1;
+  -webkit-transition: 0.3s;
 }
 
 .button.clicked a.main {
@@ -212,15 +265,10 @@ div.usercard.trading figure img {
   -webkit-transition: 0.3s;
 }
 
-.button.clicked a.inside:nth-of-type(2) {top: 5px; left: 5px;}
-.button.clicked a.inside:nth-of-type(3) {top: 5px; right: 5px;}
-.button.clicked a.inside:nth-of-type(4) {bottom: 5px; left: 5px;}
-.button.clicked a.inside:nth-of-type(5) {bottom: 5px; right: 5px;}
-
-.button.clicked a.inside:hover {
-  padding: 3px;
-  -webkit-transition: 0.3s;
-}
+.button.clicked a.inside:nth-of-type(2) {top: 0; left: 5px;}
+.button.clicked a.inside:nth-of-type(3) {top: 0; right: 5px;}
+.button.clicked a.inside:nth-of-type(4) {bottom: 0; left: 5px;}
+.button.clicked a.inside:nth-of-type(5) {bottom: 0; right: 5px;}
 
 /***********Resource Cards*********************/
 
@@ -240,11 +288,12 @@ div.usercard.trading figure img {
 
 .res_card {
     position: relative;
-    width: 70px;
-    height: 70px;
-    border: 5px solid dimgrey;
+    width: 72px;
+    height: 72px;
+    border-width: 4px;
+    border-style: solid;
     margin: 20px auto;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+    box-shadow: inset 0 0 16px rgba(0,0,0,0.7);
     border-radius: 40px;
     background-origin: border-box;
     background-position: center;
@@ -259,11 +308,9 @@ div.usercard.trading figure img {
     width: 40px;
     height: 40px;
     border-radius: 20px;
-    background-color: dimgrey;
     text-align: center;
     z-index: 1;
     color: white;
-    font-family: 'ubuntu', 'arial';
     font-size: 22px;
     font-weight: bold;
     line-height: 40px;
@@ -290,6 +337,7 @@ p.trading {
 }
 
 .res_card.greyscale p.trading {
+  background-color: dimgrey;
   display: block;
 }
 
@@ -303,7 +351,6 @@ p.trading {
     text-align: center;
     z-index: 1;
     color: white;
-    font-family: 'ubuntu', 'arial';
     font-size: 28px;
     font-weight: bold;
     line-height: 35px;
@@ -367,110 +414,69 @@ p.trading {
 
 /* ------------ kostki i tury ------------- */
 
+.boardcorner {
+  margin: 20px 10px;
+  width: 120px;
+  height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  color: silver;
+}
+
 #dice {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 20px 10px;
-  width: 120px;
-  height: 70px;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: 'ubuntu', 'arial';
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1em;
-  color: silver;
 }
-
-#dice span, #turn span {
-  color: grey;
-  text-shadow: 0 0 4px rgba(0,0,0,0.4);
-  font-family: 'ubuntu', 'arial';
-  font-size: 52px;
-  font-weight: bold;
-  line-height: 1em;
-}
-
-.dice1 {background-image: url('../img/dice1.jpg');}
-.dice2 {background-image: url('../img/dice2.jpg');}
-.dice3 {background-image: url('../img/dice3.jpg');}
-.dice4 {background-image: url('../img/dice4.jpg');}
-.dice5 {background-image: url('../img/dice5.jpg');}
-.dice6 {background-image: url('../img/dice6.jpg');}
-
 
 #turn {
-    position: absolute;
-    top: 0;
-    right: 0;
-  margin: 20px 10px;
-  width: 120px;
-  height: 70px;
-  text-align: center;
-  text-transform: uppercase;
-    font-family: 'ubuntu', 'arial';
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1em;
-  color: silver;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.boardcorner span {
+  color: grey;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  font-size: 52px;
+  font-weight: bold;
 }
 
 /*******************DEVELOPMENT CARDS**********************/
 
-.development_card {
-  position: relative;
-  float: left;
-  margin: 0 5px;
-}
-
 .dev_card {
-    position: relative;
-    width: 70px;
-    height: 70px;
-    border: 5px solid darkslategrey;
-    margin: 20px auto;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
-    border-radius: 40px;
-    background-origin: border-box;
-    background-position: center;
-    background-size: cover;
+  float: right;
+  width: 53px;
+  height: 53px;
+  border-width: 3px;
+  border-style: solid ;
+  margin: 8px;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
+  border-radius: 30px;
+  background-origin: border-box;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
 }
 
-.dev_card p {
-    display: block;
-    position: absolute;
-    left: 15px;
-    top: 45px;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: darkslategrey;
-    text-align: center;
-    z-index: 1;
-    color: white;
-    font-family: 'ubuntu', 'arial';
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 40px;
-    -webkit-transition: 0.3s;
-}
-
-.dev_card.greyscale {
-  -webkit-filter: grayscale(100%);
-}
-
-.dev_card.greyscale p {
-  display: none;
-}
 .victorypoint {background-image: url('../img/card_victorypoint.png');}
-.knight {background-image: url('../img/card_knight.png');}
+.knight {background-image: url('../img/devcards/knight.jpg');}
 .yearofplenty {background-image: url('../img/card_yearofplenty.jpg');}
 .roadbuilding {background-image: url('../img/card_roadbuilding.jpg');}
 .monopoly {background-image: url('../img/card_monopoly.jpg');}
+
+/* ----------------- ANIMACJE------------------ */
 
 @-webkit-keyframes blink {
   0% {border-color: transparent;}
   50% {border-color: black;}
   100% {border-color: transparent;}
+}
+
+@-webkit-keyframes pulse {
+  0% {color: initial;}
+  50% {color: red;}
+  100% {color: initial;}
 }
