@@ -216,8 +216,8 @@ Route::post('game/ajax/playcard', function(){
     {
       $offer[$resource] = $input["trade_$resource"];
     }
-  }
   $data['offer'] = $offer;
+  }
   try
   {
     $card->play($data);

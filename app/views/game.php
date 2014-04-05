@@ -69,14 +69,14 @@
       <?php echo Session::get('message'); ?>
       <div class="panel" player="<?php echo Player::findByGameByUser($game->model->id, Auth::user()->id)->id; ?>">
         <div class="button">
-          <a id="build_button" class="main"><?php echo HTML::image('img/hammer_icon.png', 'hammer'); ?></a>
-          <a id="build_settle" class="inside"><?php echo HTML::image('img/icon_house.png', 'hammer'); ?></a>
-          <a id="build_city" class="inside"><?php echo HTML::image('img/icon_city.png', 'exchange'); ?></a>
+          <a id="build_button" class="main"><?php echo HTML::image('img/icon_hammer.png', 'hammer'); ?></a>
+          <a id="build_settle" class="inside"><?php echo HTML::image('img/icon_settle.png', 'hammer'); ?></a>
+          <a id="build_city" class="inside"><?php echo HTML::image('img/icon_town.png', 'exchange'); ?></a>
           <a id="build_road" class="inside"><?php echo HTML::image('img/icon_road.png', 'cards'); ?></a>
-          <a id="buy_card_button" class="inside"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
+          <a id="buy_card_button" class="inside"><?php echo HTML::image('img/icon_card.png', 'cards'); ?></a>
         </div>
         <div class="button">
-          <a id="trade_button" class="main"><?php echo HTML::image('img/exchange_icon.png', 'exchange'); ?></a>
+          <a id="trade_button" class="main"><?php echo HTML::image('img/icon_trade.png', 'exchange'); ?></a>
           <a id="trade_button_accept" class="inside"><?php echo HTML::image('img/accept.png', 'accept'); ?></a>
           <a id="trade_button_reject" class="inside"><?php echo HTML::image('img/reject.png', 'reject'); ?></a>
           <a id="trade_button_withbank" class="inside"><?php echo HTML::image('img/withbank.png', 'withbank'); ?></a>
@@ -86,7 +86,7 @@
           <a id="buy_card_button"><?php echo HTML::image('img/cards_icon.png', 'cards'); ?></a>
         </div>
         <div class="button">
-          <a id="endturn_button" class="main"><?php echo HTML::image('img/hourglass_icon.png', 'hourglass'); ?></a>
+          <a id="endturn_button" class="main"><?php echo HTML::image('img/icon_dice.png', 'hourglass'); ?></a>
         </div>
       </div>
       </div>
