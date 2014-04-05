@@ -7,7 +7,7 @@ html {
   background-color: whitesmoke;
   /*background-image: url('http://trickvilla.com/wp-content/uploads/Light-Wood-Background.jpg');*/
   background-size: cover;
-  font-family: 'ubuntu','arial',sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
   padding-right: 470px;
   height: 100%;
@@ -183,40 +183,41 @@ div.usercard.trading figure img {
   cursor: pointer;
   width: 80px;
   height: 80px;
-  background-size: cover;
+  background-size: 100%;
   background-position: center;
+  background-repeat: no-repeat;
   border-width: 5px;
   border-style: solid;
   border-radius: 60px;
-  box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
   text-align: center;
-  -webkit-transition: 0.3s;
+  -webkit-transition: 0.2s;
 }
 
-#build_button {background-image: url('../img/develop.jpg');}
-#build_settle {background-image: url('../img/settle.jpg');}
-#build_town {background-image: url('../img/town.jpg');}
-#build_road {background-image: url('../img/road.jpg');}
-#trade_button {background-image: url('../img/trade.jpg');}
+#build_button {background-image: url('../img/icon_hammer.png');}
+#build_settle {background-image: url('../img/icon_settle.png');}
+#build_town {background-image: url('../img/icon_town.png');}
+#build_road {background-image: url('../img/icon_road.png');}
+#buy_card_button {background-image: url('../img/icon_card.png');}
+#trade_button {background-image: url('../img/icon_trade.png');}
 #trade_button_accept {background-color: forestgreen;}
 #trade_button_reject {background-color: red;}
-#endturn_button {background-image: url('../img/turn.jpg');}
+#endturn_button {background-image: url('../img/icon_dice.png');}
 
 .button span {
   opacity: 0;
-  text-shadow: 0 0 5px rgba(0,0,0,0.7);
   font-size: 16px;
   font-weight: bold;
   color: white;
   text-transform: uppercase;
   line-height: 80px;
   vertical-align: middle;
-  -webkit-transition: 0.3s;
+  -webkit-transition: 0.4s;
 }
 
 .button a.inside {
   display: none;
   position: absolute;
+  background-size: 85%;
   width: 50px;
   height: 50px;
   border-radius: 30px;
@@ -233,8 +234,8 @@ div.usercard.trading figure img {
 }
 
 .button:not(.clicked) a:hover, .button a.inside:hover {
-  box-shadow: inset 0 0 18px rgba(0,0,0,0.7);
-  -webkit-transition: 0.3s;
+  background-size: 0;
+  -webkit-transition: 0.4s;
 }
 
 .button:not(.clicked) a:hover span, .button a.inside:hover span {
@@ -243,7 +244,8 @@ div.usercard.trading figure img {
 }
 
 .button.clicked a.main {
-  opacity: 0.4;
+  opacity: 0.3;
+  background-size: 55%;
   -webkit-transition: 0.3s;
 }
 .button.clicked a.main img{
@@ -368,7 +370,7 @@ p.trading {
 }
 
 .trade_quantity {
-    text-align: center;
+  text-align: center;
 }
 
 #trade_submit {

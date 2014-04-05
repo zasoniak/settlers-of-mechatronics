@@ -6,6 +6,7 @@
     <?php echo HTML::style('css/gameinterface_1.css'); ?>
     <?php echo HTML::style('css/hex.css'); ?>
     <?php echo HTML::style('css/colors.css'); ?>
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
     <title>Settlers of Mechatronics</title>
   </head>
   <body>
@@ -15,7 +16,7 @@
         <div class="usercard" player="2">
           <figure>
             <p class="yellow" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
-            <p class="yellow" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
+            <p class="yellow" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
             <label for="player_1"><img src="http://localhost/catan/public/img/konrad.jpg" class="yellow"></label>
           </figure>
           <figcaption>Fellglen</figcaption>
@@ -33,7 +34,7 @@
           <a id="build_settle" class="inside yellow"><span>osada</span></a>
           <a id="build_town" class="inside yellow"><span>miasto</span></a>
           <a id="build_road" class="inside yellow"><span>droga</span></a>
-          <a id="buy_card_button" class="inside yellow">karta</a>
+          <a id="buy_card_button" class="inside yellow"><span>karta</span></a>
         </div>
         <div class="button">
           <a id="trade_button" class="main yellow"><span>handel</span></a>
@@ -86,7 +87,7 @@
         <div class="usercard" player="2">
           <figure>
             <p class="red" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
-            <p class="red" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
+            <p class="red" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
             <label for="player_2"><img src="http://localhost/catan/public/img/mroova.jpg" class="red"></label>
           </figure>
           <figcaption>mroova</figcaption>
@@ -95,7 +96,7 @@
         <div class="usercard" player="3">
           <figure>
             <p class="green" id="res_number"><img src="http://localhost/catan/public/img/resource.png">2</p>
-            <p class="green" id="cards_number"><img src="http://localhost/catan/public/img/cards_icon.png">1</p>
+            <p class="green" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
             <label for="player_3"><img src="http://localhost/catan/public/img/sony.jpg" class="green"></label>
           </figure>
           <figcaption>Sony</figcaption>
