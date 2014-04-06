@@ -28,7 +28,7 @@ $(document).ready(function() {
           });
   loadJSON(game);
   $(".main").click(function() {
-    $(this).parent().siblings().removeClass("clicked");
+    $(this).parent().parent().siblings().removeClass("clicked");
     $(".road.active").hide();
     $(".settle.active").hide();
   });
@@ -38,7 +38,7 @@ $(document).ready(function() {
     $(".usercard figure").removeClass("clickable");
     $(".res_card p").removeClass("trading");
     $(".res_card p span:last-of-type").hide();
-    $(this).parent().toggleClass("clicked");
+    $(this).parent().parent().toggleClass("clicked");
   });
   
       $("#build_settle").click(function() {
@@ -156,7 +156,7 @@ $(document).ready(function() {
     $(".trade").slideToggle('300');
     $(".usercard figure").toggleClass("clickable");
     $(".res_card p span:last-of-type").toggle();
-    $(this).parent().toggleClass("clicked");
+    $(this).parent().parent().toggleClass("clicked");
   });
   
     $(document).on("click", "figure.clickable", function(event) {
@@ -275,6 +275,27 @@ $(document).ready(function() {
       loadJSON(game);
     }
   }, 3000);
+  // ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   
+  $(".ring:not(.grey)").each(function(){
+    var diameter=parseInt($(this).css("width"),10);
+    var ring_pos=-(diameter+10)/2+80;
+    $(this).css({"height":diameter+"px","top":ring_pos+"px","right":ring_pos+"px"});
+    var child = $(this).children().first();
+    var child_width = parseInt(child.css("width"));
+    $(this).children().each(function() {
+      $(this).css({"left":-child_width/2+"px","top":(diameter-child_width)/2+"px","-webkit-transform-origin-x": (diameter+child_width)/2+"px"});
+    });
+  });
+  $(".ring.grey").each(function(){
+    var diameter=parseInt($(this).css("width"),10);
+    var ring_pos=-(diameter+10)/2+80;
+    $(this).css({"height":diameter+"px","top":parseInt($("aside").css("height"))-150+"px","right":ring_pos+"px"});
+    var child = $(this).children().first();
+    var child_width = parseInt(child.css("width"));
+    $(this).children().each(function() {
+      $(this).css({"top":10-child_width/2+"px","left":(diameter-child_width)/2+"px","-webkit-transform-origin-y": (diameter+child_width)/2+"px"});
+    });
+  });
   // LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
