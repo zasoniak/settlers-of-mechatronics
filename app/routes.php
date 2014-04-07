@@ -249,8 +249,8 @@ Route::post('game/ajax/playcard', function(){
     {
       $offer[$resource] = $input["trade_$resource"];
     }
-  }
   $data['offer'] = $offer;
+  }
   try
   {
     $card->play($data);
@@ -288,7 +288,7 @@ Route::post('game/ajax/build', array('before'=>'turn', function(){
     } 
     catch (Exception $exc)
     {
-      return Response::make($exc->getMessage(),403);
+      return Response::make(var_dump($exc),403);
     }
   }
   return Response::make('OK!',200);

@@ -120,8 +120,10 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
         $player->{$resource} -= $quantity;
       }
     }
+    
     $this->model->player_id = $player->id;
     $player->save();
+    $tradeLenght=$this->findTradeRoad();
     $this->model->save();
     return true;
   }
@@ -140,9 +142,80 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
   
   public function findTradeRoad()
   {
-    return 3;
+    $temp=$this->model->player->roads;
+    $roads=array();
+    $usedRoads=array();
+    $endRoads=array();
+    
+    foreach($temp as $i=>$road)
+    {
+      $roads[$i]=$road;
+    }
+    foreach($roads as $i=>$road)
+    {
+        $usedRoads[$i]=0;
+        $check1=0;
+        $check2=0;
+        if ($roads[$i]->x % 10 == 0)
+            {   
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(-5, 5, 0)))))
+                    $check1++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(-5, 0, 5)))))
+                    $check1++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(5, -5, 0)))))
+                    $check2++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(5, 0, -5)))))
+                    $check2++;
+                if($check1==0 || $check2==0)
+                    $endRoads[$i]=1;
+                else
+                    $endRoads[$i]=0;
+            }
+        if ($roads[$i]->y % 10 == 0)
+            {   
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(0, -5, 5)))))
+                    $check1++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(5, -5, 0)))))
+                    $check1++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(-5, 5, 0)))))
+                    $check2++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(0, 5, -5)))))
+                    $check2++;
+                if($check1==0 || $check2==0)
+                    $endRoads[$i]=1;
+                else
+                    $endRoads[$i]=0;
+            }
+        if ($roads[$i]->z % 10 == 0)
+            {   
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(-5, 0, 5)))))
+                    $check1++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(0, -5, 5)))))
+                    $check1++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(0, 5, -5)))))
+                    $check2++;
+                if(!is_null(Road::searchRoadArray($roads, $roads[$i]->coords(array(5, 0, -5)))))
+                    $check2++;
+                if($check1==0 || $check2==0)
+                    $endRoads[$i]=1;
+                else
+                    $endRoads[$i]=0;
+            }
+    }
+    
+    $longest=0;
+    foreach($roads as $i=>$road)
+    {
+        if($endRoads[$i]==1)
+        {
+            $temp=$roads[$i]->findRoute($roads,$usedRoads);
+            if($temp>$longest)
+                $longest=$temp;
+        }
+    }
+    return $longest;
+    
   }
-  
   public function buyZero(Player $player)
   {
     if(!$this->buildCheckZero($player->id))
