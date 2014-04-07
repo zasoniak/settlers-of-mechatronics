@@ -36,6 +36,11 @@ class Player extends Eloquent{
       return $this->hasMany('Trade','host_id');
     }
     
+    public function tradesReturned()
+    {
+      return $this->tradesHosted()->where('updated', 1)->orWhere('accepted', 1);
+    }
+    
     public function getResources()
     {
       return array(

@@ -197,6 +197,39 @@ Route::post('game/ajax/tradereject', function(){
   return Response::make('OK', 200);
 });
 
+Route::post('game/ajax/tradeconfirm', function(){
+  $input  = Input::all();
+  $key = array_search('on', $input);
+  $hostarray = explode('_', $key);
+  $client = $hostarray[1];
+  $host = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $trade = Trade::findByHostByClient($host, $client->id);
+  try
+  {
+    $trade->confirm();
+  } catch (Exception $exc) {
+    return Response::make($exc->getMessage(),403);
+  }
+  $trade->delete();
+  $rejected = Trade::where('host_id', $host)->get();
+  foreach ($rejected as $reject)
+  {
+    $reject->delete();
+  }
+  return Response::make('OK',200);
+});
+
+Route::post('game/ajax/tradedelete', function(){
+  $input  = Input::all();
+  $key = array_search('on', $input);
+  $hostarray = explode('_', $key);
+  $client = $hostarray[1];
+  $host = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $trade = Trade::findByHostByClient($host, $client->id);
+  $trade->delete();
+  return Response::make('OK',200);
+});
+
 Route::post('game/ajax/playcard', function(){
   $input = Input::all();
   $player = Player::findByGameByUser($input['game_id'], Auth::user()->id);

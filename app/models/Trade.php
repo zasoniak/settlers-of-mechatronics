@@ -50,6 +50,28 @@ class Trade extends Eloquent {
     $this->save();
   }
   
+  public function confirm()
+  { 
+    if($this->accepted)
+    {
+      $host = $this->host();
+      $client = $this->client();
+      $resources = array('wood','sheep','clay','stone','wheat');
+      foreach ($resources as $resource)
+      {
+        $host->addResource($resource, $this->{$resource});
+        $client->addResource($resource, -$this->{$resource});
+      }
+      $host->save();
+      $client->save();
+      return true;
+    }
+    else
+    {
+      throw new Exception('Ta oferta nie została zaakceptowana przez klienta.');
+    }
+  }
+  
   public static function findByHostByClient($host_id, $client_id)
   {
     return self::where('host_id', $host_id)->where('client_id', $client_id)->first();

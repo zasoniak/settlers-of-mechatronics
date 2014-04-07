@@ -84,7 +84,7 @@ class CatanPlayer
     return array(
         'resources' => $this->model->getResources(),
         'cards' => $cards,
-        'trades_hosted' => $this->model->tradesHosted->toArray(),
+        'trades_hosted' => $this->model->tradesReturned()->get()->toArray(),
         'trade_received' => $tradereceived,
         'id' => $this->model->id
     );
