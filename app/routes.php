@@ -65,6 +65,10 @@ Route::get('board/{id}', function($id){
   $board = new CatanBoard(Board::find($id));
   return View::make('board')->with('board', $board);
 });
+Route::get('interface', function()
+{
+  return View::make('interface');
+});
 
 /* game routes */
 
@@ -110,12 +114,24 @@ Route::get('game/{id}/waitroom', function($id) {
   return View::make('join')->with('game', $game)->with('players', $playersByColor);
 });
 
-Route::post('ajax/color', function() {
+Route::get('game/{id}/start', function($id) {
+  $game = new CatanGame(Game::find($id));
+  try
+  {
+    $game->start();
+  } catch (Exception $exc)
+  {
+    return Response::make($exc->getMessage());
+  }
+  return Redirect::to("game/$id");
+});
+
+Route::post('game/{id}/ajax/color', function($id) {
   $colors = Game::find(Input::get('game_id'))->players()->lists('color');
   $color = Input::get('color');
   if(array_search($color, $colors) !== false)
   {
-    return Response::make('Błąd '.json_encode($colors),403);
+    return Response::make('Ktoś już zajął ten kolor :(',403);
   }
   $player = Player::findByGameByUser(Input::get('game_id'), Auth::user()->id);
   $player->color = $color;
@@ -170,14 +186,46 @@ Route::post('game/ajax/tradeaccept', function(){
   return Response::make('OK', 200);
 });
 
-Route::get('game/{id}/start', function($id) {
-  $game = new CatanGame(Game::find($id));
-  if($game->model->players()->count() > 1)
+Route::post('game/ajax/tradereject', function(){
+  $input  = Input::all();
+  $key = array_search('on', $input);
+  $hostarray = explode('_', $key);
+  $host = $hostarray[1];
+  $client = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $trade = Trade::findByHostByClient($host, $client->id);
+  $trade->reject();
+  return Response::make('OK', 200);
+});
+
+Route::post('game/ajax/playcard', function(){
+  $input = Input::all();
+  $player = Player::findByGameByUser($input['game_id'], Auth::user()->id);
+  $card = new CatanCard(Card::find($input['id']));
+  if($card->model->player->id != $player->id)
   {
-    $game->start();
-    return Redirect::to("game/$id");
+    return Response::make('To nie Twoja karta!', 403);
   }
-  return Redirect::back()->with('message', 'Na pewno masz 4 graczy?');
+  if(isset($input['res']))
+  {
+    $data['resource'] = $input['res'];
+  }
+  if(isset($input['trade_wood']))
+  {
+    $resources = array('wood', 'stone', 'sheep', 'clay', 'wheat');
+    foreach ($resources as $resource)
+    {
+      $offer[$resource] = $input["trade_$resource"];
+    }
+  $data['offer'] = $offer;
+  }
+  try
+  {
+    $card->play($data);
+  } catch (Exception $exc)
+  {
+    return Response::make($exc->getMessage(), 403);
+  }
+  return Response::make('OK', 200);
 });
 
 Route::post('game/ajax/next', array('before'=>'turn', function() {
@@ -216,16 +264,4 @@ Route::post('game/ajax/build', array('before'=>'turn', function(){
 Route::get('game/ajax/update', function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
   return Response::json($game->toJSON());
-});
-
-/* pierdolnik */
-
-Route::get('interface', function()
-{
-  return View::make('interface');
-});
-
-Route::get('generator', function()
-{
-  return View::make('generator');
 });

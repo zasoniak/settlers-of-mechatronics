@@ -4,7 +4,7 @@ class Game extends Eloquent {
   
   public static function waiting()
   {
-    return self::has('players', '<', 4)->get();
+    return self::has('players', '<', 4)->where('is_started', 0)->get();
   }
 
   public function board() {
@@ -24,6 +24,11 @@ class Game extends Eloquent {
   {
     $game = self::find($game_id);
     return $game->players()->where('turn_order',$game->current_player)->first();
+  }
+  
+  public function getOpponents()
+  {
+    return $this->players()->where('user_id','<>',  Auth::user()->id);
   }
   
   public function users()

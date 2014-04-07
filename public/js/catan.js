@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var game = $("#game_id").val();
+  // LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   
   $.getJSON("ajax/board", {game_id: game})
           .done(function(data) {
             $.each(data.tiles, function(index, item) {
@@ -7,12 +8,13 @@ $(document).ready(function() {
                       .hide()
                       .addClass(item.classes)
                       .css(item.styles)
+                      .attr(item.attr)
                       .append($("<span>").html(item.prob))
                       .append($("<div class=\"face1\"></div>"))
                       .append($("<div class=\"face2\"></div>"))
                       .appendTo("#board")
                       .delay(50 * index)
-                      .fadeIn(120);
+                      .fadeIn('120');
             });
             $.each(data.ports, function(index, item) {
               $("<div>")
@@ -20,36 +22,132 @@ $(document).ready(function() {
                       .addClass(item.classes)
                       .css(item.styles)
                       .appendTo("#board")
-                      .delay(720)
-                      .fadeIn(120);
+                      .delay('720')
+                      .fadeIn('120');
             });
           });
   loadJSON(game);
+  $(".main").click(function() {
+    $(this).parent().parent().siblings().removeClass("clicked");
+    $(".road.active").hide();
+    $(".settle.active").hide();
+  });
+  // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
   $("#build_button").click(function() {
-    $(".road.active").hide();
-    $(".settle.active").hide();
     $(".trade").slideUp('300');
-    $("#slide2").slideUp('300');
+    $(".usercard figure").removeClass("clickable");
     $(".res_card p").removeClass("trading");
-    $(this).parent().toggleClass("clicked");
+    $(".res_card p span:last-of-type").hide();
+    $(this).parent().parent().toggleClass("clicked");
   });
-  $("#build_settle").click(function() {
-    $(".road.active").hide();
-    $(".settle.active").toggle('300');
-  });
-  $("#build_road").click(function() {
-    $(".settle.active").hide();
-    $(".road.active").toggle('300');
-  });
+  
+      $("#build_settle").click(function() {
+        $(".road.active").hide('300');
+        $(".settle.active").toggle('300');
+      });
+      
+      $("#build_road").click(function() {
+        $(".settle.active").hide('300');
+        $(".road.active").toggle('300');
+      });
+      
+      $(document).on("click", ".settle.active", function(event) {
+        $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
+                .done(function(data) {
+                  loadJSON(game);
+                })
+                .error(function(data) {
+                  alert(data.responseText);
+                });
+      });
+      
+      $(document).on("click", ".settle:not(.active)", function(event) {
+        $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
+                .done(function(data) {
+                  loadJSON(game);
+                })
+                .error(function(data) {
+                  alert(data.responseText);
+                });
+      });
+      
+      $(document).on("click", ".road.active", function(event) {
+        $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
+                .done(function(data) {
+                  loadJSON(game);
+                })
+                .error(function(data) {
+                  alert(data.responseText);
+                });
+      });
+      
+  // CARDS    CARDS    CARDS    CARDS    CARDS    CARDS    CARDS   
   $("#buy_card_button").click(function() {
     $.post("ajax/build", {game_id: game, item: "card", id: null})
+        .done(function(data) {
+          loadJSON(game);
+        })
+        .error(function(data) {
+          alert(data.responseText);
+        });
+  });
+  // purchasing card   purchasing card   purchasing card   
+  $(document).on("click", ".knight", function(event){
+    var r  = confirm("Czy na pewno chcesz zagrać tę kartę?");
+    if(r)
+    {
+      $.post("ajax/playcard", {game_id: game, id: $(this).attr("card")})
             .done(function(data) {
-              loadJSON(game);
+              alert("Zagrano :)");
             })
             .error(function(data) {
               alert(data.responseText);
             });
+    }
   });
+  
+  // monopoly card   monopoly card   monopoly card 
+  var card_id;
+  $(document).on("click", ".monopoly", function(){
+    $(".resource").addClass("for_monopoly");
+    card_id = $(this).attr("card");
+  });
+  $(document).on("click", ".for_monopoly .res_card", function(){
+    $.post("ajax/playcard", {game_id: game, res: $(this).attr("res"), id: card_id})
+        .done(function(data) {
+          alert("Zagrano :) Zgrniasz wszystko!");
+          loadJSON(game);
+        })
+        .error(function(data) {
+          alert(data.responseText);
+        });
+    $(".resource").removeClass("for_monopoly");
+  });
+  // year of plenty card   year of plenty card   year of plenty card
+  $(document).on("click", ".yearofplenty", function(){
+    $(".res_card p").addClass("trading");
+    $(".resource").removeClass("on");
+    $(".trade").slideDown('300');
+    $(".res_card p span:last-of-type").show();
+    $("#trade_button").parent().addClass("clicked");
+    card_id = $(this).attr("card");
+  });
+  $(document).on("click", "#trade_button_yearofplenty", function(){
+    $.post("ajax/playcard", jQuery.param(jQuery.merge($("#trade_form").serializeArray(),[{name:"id",value:card_id}])))
+        .done(function(data) {
+          alert("Zagrano :) Masz wymarzone dwa surowce!");
+          loadJSON(game);
+        })
+        .error(function(data) {
+          alert(data.responseText);
+        });
+    $(".res_card p").removeClass("trading");
+    $(".resource").addClass("on");
+    $(".trade").slideUp('300');
+    $(".res_card p span:last-of-type").hide();
+    $("#trade_button").parent().removeClass("clicked");
+  });
+  // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     
   $("#trade_button").click(function() {
     $(".road.active").hide();
     $(".settle.active").hide();
@@ -57,84 +155,108 @@ $(document).ready(function() {
     $(".resource").removeClass("on");
     $(".trade").slideToggle('300');
     $(".usercard figure").toggleClass("clickable");
-    $("#slide1").slideUp('300');
-    $("#slide2").slideUp('300');
-    $("#trade_submit").toggle('300');
     $(".res_card p span:last-of-type").toggle();
+    $(this).parent().parent().toggleClass("clicked");    
   });
+  
+    $(document).on("click", "figure.clickable", function(event) {
+      var usercard = $(this).parent().parent();
+      usercard.toggleClass("trading");
+    });
+    
+    $(".trade.up").click(function() {
+      var res = $(this).parent().find(".res_card").attr("res");
+      var spanoffer = $("#trade_form").find("[res=" + res + "]").val();
+      var spanres = $(this).parent().find(".res_card p span").first();
+      var spandiff = $(this).parent().find(".res_card p span").last();
+      var q = (+spanoffer) + 1;
+      spandiff.html(+spanres.html() + q);
+      if(spandiff.html()>0)
+      {
+        $(this).next().removeClass("greyscale");
+      }
+      if(q>0)
+      {
+        $(this).html("+"+q).css("font-size","25px");
+      }
+      else
+      {
+        if(q<0)
+        {
+          $(this).next().html(q).css("font-size","25px");
+        }
+        else
+        {
+          $(this).empty().html("+").css("font-size","30px");
+          $(this).next().empty().html("-").css("font-size","30px");
+        }
+      }
+      $("#trade_form").find("[res=" + res + "]").val(q);
+    });
+    
+    $(".trade:not(.greyscale).down").click(function() {
+      var res = $(this).parent().find(".res_card").attr("res");
+      var spanoffer = $("#trade_form").find("[res=" + res + "]").val();
+      var spanres = $(this).parent().find(".res_card p span").first();
+      var spandiff = $(this).parent().find(".res_card p span").last();
+      var q = (+spanoffer) - 1;
+      spandiff.html(+spanres.html() + q);
+      if(spandiff.html()<1)
+      {
+        $(this).addClass("greyscale");
+      }
+      if(q>0)
+      {
+        $(this).prev().html("+"+q).css("font-size","25px");;
+      }
+      else
+      {
+        if(q<0)
+        {
+          $(this).html(q).css("font-size","25px");;
+        }
+        else
+        {
+          $(this).prev().empty().html("+").css("font-size","30px");;
+          $(this).empty().html("-").css("font-size","30px");;
+        }
+      }
+      $("#trade_form").find("[res=" + res + "]").val(q);
+    });
+    
+    $("#trade_button_withbank").click(function() {
+      $.post("ajax/trade", $("#trade_form").serialize())
+              .done(function() {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+    
+    $(document).on("click", "#trade_button_accept", function(event) {
+      $.post("ajax/tradeaccept", $("#trade_form").serialize())
+              .done(function(data) {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+    
+    $(document).on("click", "#trade_button_reject", function(event) {
+      $.post("ajax/tradereject", $("#trade_form").serialize())
+              .done(function(data) {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+  // ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   
   $("#endturn_button").click(function() {
+    $(".usercard figure").toggleClass("clickable");
     $.post("ajax/next", {game_id: game})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", "figure.clickable", function(event) {
-    var usercard = $(this).parent().parent();
-    usercard.toggleClass("trading");
-    usercard.find(".offer").slideToggle(150);
-    usercard.find(".stats").slideToggle(150);
-  });
-  $(".trade.up").click(function() {
-    var res = $(this).parent().find(".res_card").attr("res");
-    var spanoffer = $(".offer").find("." + res);
-    var spanres = $(this).parent().find(".res_card p span").first();
-    var spandiff = $(this).parent().find(".res_card p span").last();
-    var q = (+spanoffer.html()) + 1;
-    spanoffer.html(q);
-    spandiff.html(+spanres.html()+q);
-    $("#trade_form").find("[res=" + res + "]").val(q);
-  });
-  $(".trade.down").click(function() {
-    var res = $(this).parent().find(".res_card").attr("res");
-    var spanoffer = $(".offer").find("." + res);
-    var spanres = $(this).parent().find(".res_card p span").first();
-    var spandiff = $(this).parent().find(".res_card p span").last();
-    var q = (+spanoffer.html()) - 1;
-    spanoffer.html(q);
-    spandiff.html(+spanres.html()+q);
-    $("#trade_form").find("[res=" + res + "]").val(q);
-  });
-  $("#trade_submit").click(function() {
-    $.post("ajax/trade", $("#trade_form").serialize())
-            .done(function() {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".settle.active", function(event) {
-    $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".settle:not(.active)", function(event) {
-    $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".road.active", function(event) {
-    $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
-            .done(function(data) {
-              loadJSON(game);
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-  });
-  $(document).on("click", ".offer .accept", function(event) {
-    $.post("ajax/tradeaccept", $("#trade_form").serialize())
             .done(function(data) {
               loadJSON(game);
             })
@@ -147,108 +269,128 @@ $(document).ready(function() {
   $("#loadjson").click(function() {
     loadJSON(game);
   });
-  setInterval(function(){
-    if(current != player)
+  setInterval(function() {
+    if (current != player)
     {
       loadJSON(game);
     }
   }, 3000);
+  // ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   
+  $(".ring:not(.grey)").each(function(){
+    var diameter=parseInt($(this).css("width"),10);
+    var ring_pos=-(diameter+10)/2+80;
+    $(this).css({"height":diameter+"px","top":ring_pos+"px","right":ring_pos+"px"});
+    var child = $(this).children().first();
+    var child_width = parseInt(child.css("width"));
+    $(this).children().each(function() {
+      $(this).css({"left":-child_width/2+"px","top":(diameter-child_width)/2+"px","-webkit-transform-origin-x": (diameter+child_width)/2+"px"});
+    });
+  });
+  $(".ring.grey").each(function(){
+    var diameter=parseInt($(this).css("width"),10);
+    var ring_pos=-(diameter+10)/2+80;
+    $(this).css({"height":diameter+"px","top":parseInt($("aside").css("height"))-150+"px","right":ring_pos+"px"});
+    var child = $(this).children().first();
+    var child_width = parseInt(child.css("width"));
+    $(this).children().each(function() {
+      $(this).css({"top":10-child_width/2+"px","left":(diameter-child_width)/2+"px","-webkit-transform-origin-y": (diameter+child_width)/2+"px"});
+    });
+  });
+  // LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
-            .done(function(data) {
-              $("#board").find(".road").remove();
-              $("#board").find(".settle").remove();
-              $.each(data.board.settlements, function(index, item, i) {
-                $("<div>")
-                        .addClass(item.classes)
-                        .css(item.styles)
-                        .attr(item.attr)
-                        .appendTo("#board")
-              });
-              $.each(data.board.roads, function(index, item) {
-                $("<div>")
-                        .addClass(item.classes)
-                        .css(item.styles)
-                        .attr(item.attr)
-                        .appendTo("#board");
-              });
-              $.each(data.opponents, function(index, item) {
-                $("[player=" + index + "]").find("td").last().html(item.resources);
-              });
-              $.each(data.player.resources, function(index, item) {
-                var card = $(".res_card." + index);
-                if (item == 0)
-                {
-                  card.addClass("greyscale");
-                  card.find("p span").html(item);
-                }
-                else
-                {
-                  card.removeClass("greyscale");
-                  card.find("p span").html(item);
-                }
-              });
-              $("#dev_cards").html("");
-              $.each(data.player.cards, function(index, item) {
-                $("<div>")
-                        .addClass("development_card")
-                        .appendTo("#dev_cards")
-                        .append($("<div>"))
-                        .children().first()
-                        .addClass(item.classes)
-                        .attr(item.attr);
-              });
-              $.each(data.player.trades_hosted, function(index, item) {
-                var div = $("[player=" + item.client_id + "]").find(".offer");
-                div.find(".wood").html(item.wood);
-                div.find(".stone").html(item.stone);
-                div.find(".sheep").html(item.sheep);
-                div.find(".clay").html(item.clay);
-                div.find(".wheat").html(item.wheat);
-              });
-              if (data.player.trade_received)
-              {
-                var trade = data.player.trade_received;
-                var usercard = $("[player=" + trade.host_id + "]");
-                $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
-                usercard.addClass("trading");
-                usercard.find(".stats").hide(150);
-                var div = usercard.find(".offer");
-                div.show(150);
-                div.find(".wood").html(trade.wood);
-                $("#trade_form").find("[res=wood]").val(trade.wood);
-                div.find(".stone").html(trade.stone);
-                $("#trade_form").find("[res=stone]").val(trade.stone);
-                div.find(".sheep").html(trade.sheep);
-                $("#trade_form").find("[res=sheep]").val(trade.sheep);
-                div.find(".clay").html(trade.clay);
-                $("#trade_form").find("[res=clay]").val(trade.clay);
-                div.find(".wheat").html(trade.wheat);
-                $("#trade_form").find("[res=wheat]").val(trade.wheat);
-              }
-              $("#die1").html(data.dice[0]);
-              $("#die2").html(data.dice[1]);
-              $("#turn span").html(data.turn);
-              $("[player]").removeClass("current");
-              $("[player='"+data.current+"']").addClass("current");
-              current = data.current;
-              player = data.player.id;
-            })
-            .error(function(data) {
-              alert("Musiało się zrąbać połączenie.");
-            });
+      .done(function(data) {
+        $("#board").find(".road").remove();
+        $("#board").find(".settle").remove();
+        // settlements   settlements   settlements   
+        $.each(data.board.settlements, function(index, item, i) {
+          $("<div>")
+                  .addClass(item.classes)
+                  .css(item.styles)
+                  .attr(item.attr)
+                  .appendTo("#board")
+        });
+        // roads   roads   roads   roads
+        $.each(data.board.roads, function(index, item) {
+          $("<div>")
+                  .addClass(item.classes)
+                  .css(item.styles)
+                  .attr(item.attr)
+                  .appendTo("#board");
+        });
+        $.each(data.opponents, function(index, item) {
+          $("[player=" + index + "]").find("td").last().html(item.resources);
+        });
+        // resources   resources   resources   resources   
+        $.each(data.player.resources, function(index, item) {
+          var card = $(".res_card." + index);
+          if (item == 0)
+          {
+            card.addClass("greyscale");
+            card.find("p span").html(item);
+          }
+          else
+          {
+            card.removeClass("greyscale");
+            card.find("p span").html(item);
+          }
+        });
+        // dev cards   dev cards   dev cards   dev cards   
+        $("#dev_cards").html("");
+        $.each(data.player.cards, function(index, item) {
+          $("<div>")
+                  .addClass("development_card")
+                  .appendTo("#dev_cards")
+                  .append($("<div>"))
+                  .children().first()
+                  .addClass(item.classes)
+                  .attr(item.attr);
+        });
+        // trade received   trade received   trade received   
+        if (data.player.trade_received)
+        {
+          var trade = data.player.trade_received;
+          var usercard = $("[player=" + trade.host_id + "]");
+          $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
+          usercard.addClass("withoffer");
+          div.find(".wood").html(trade.wood);
+          $("#trade_form").find("[res=wood]").val(trade.wood);
+          div.find(".stone").html(trade.stone);
+          $("#trade_form").find("[res=stone]").val(trade.stone);
+          div.find(".sheep").html(trade.sheep);
+          $("#trade_form").find("[res=sheep]").val(trade.sheep);
+          div.find(".clay").html(trade.clay);
+          $("#trade_form").find("[res=clay]").val(trade.clay);
+          div.find(".wheat").html(trade.wheat);
+          $("#trade_form").find("[res=wheat]").val(trade.wheat);
+        }
+        $("#die1").html(data.dice[0]);
+        $("#die2").html(data.dice[1]);
+        $("#turn span").html(data.turn);
+        $("[player]").removeClass("current");
+        $("[player='" + data.current + "']").addClass("current");
+        current = data.current;
+        player = data.player.id;
+        $("[tile='" + data.thief_location + "']").append($("<div id=\"thief\"></div>"));
+        $(".usercard.current").parent().addClass("current");
+      })
+      .error(function(data) {
+        alert("Musiało się zrąbać połączenie.");
+      });
   }
   ;
 });
-function disableText(e){
+
+// TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    
+function disableText(e) {
   return false;
 }
-function reEnable(){
+function reEnable() {
   return true;
 }
-document.onselectstart = new Function ("return false");
+document.onselectstart = new Function("return false");
 
-if (window.sidebar){
+if (window.sidebar) {
   document.onmousedown = disableText;
   document.onclick = reEnable;
 }

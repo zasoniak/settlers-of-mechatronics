@@ -11,7 +11,7 @@
     $(document).ready(function(){
       $("div.colors").find("li").click(function(event){
         var color = $(this).attr("class")
-        $.post("<?php echo URL::to("ajax/color"); ?>",{ color:color,game_id:<?php echo Request::segment(2);?> })
+        $.post("ajax/color",{ color:color,game_id:<?php echo Request::segment(2);?> })
                 .error(function(data){
                   alert(data.responseText);
                 })
@@ -19,6 +19,7 @@
                   window.location.reload();
                 });
       });
+      $("li").find("img").parent().addClass("busy")
     });
     </script>
   </head>

@@ -50,11 +50,10 @@ html {
   width: 100px;
   height: 100px;
   border-radius: 50px;
-  box-shadow: 0 0 7px rgba(0,0,0,0.8);
   -webkit-transition: 0.3s;
 }
 
-.colors li:hover {
+.colors li:hover, .colors li.busy {
   box-shadow: 0 0 15px rgba(0,0,0,0.8);
   opacity: 1;
   -webkit-transition: 0.5s;

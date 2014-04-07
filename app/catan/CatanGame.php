@@ -68,6 +68,21 @@ class CatanGame
 
   public function start() 
   {
+    if($this->model->players()->count() < 2)
+    {
+      throw new Exception('Minimalna liczba graczy to: 2.');
+    }
+    foreach ($this->model->players as $player)
+    {
+      if(is_null($player->color))
+      {
+        throw new Exception('Ktoś nie wybrał koloru.');
+      }
+    }
+    $this->model->is_started = 1;
+    // historia rzutów kostką
+    $this->model->dice_history = serialize(array_fill(2, 11, 0));
+    $this->model->save();
     //generacja planszy
     $board = CatanBoard::generate($this->model);
     $order=1;
@@ -76,7 +91,7 @@ class CatanGame
       $player->turn_order=$order;
       $order++;
       $player->save();
-    } 
+    }
   }
   
   public function endMove()
@@ -94,8 +109,10 @@ class CatanGame
     {
       $this->model->current_player++;
     }
-    $this->model->is_changed=1;
     $this->model->save();
+    $player = $this->model->players()->where('user_id',  Auth::user()->id)->first();
+    $player->has_played_card = 0;
+    $player->save();
     $this->throwDice();
   }
   
@@ -126,8 +143,11 @@ class CatanGame
   {
     $this->model->dice1 = mt_rand(1, 6);
     $this->model->dice2 = mt_rand(1, 6);
-    $this->model->save();
     $dice=$this->model->dice1+$this->model->dice2;
+    $history = unserialize($this->model->dice_history);    
+    $history[$dice]++;
+    $this->model->dice_history = serialize($history);
+    $this->model->save();
     
     if($dice==7)
     {
@@ -290,6 +310,7 @@ class CatanGame
         'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
         'dice' => array($this->model->dice1,$this->model->dice2),
+        'thief' => $this->board->model->thief_location,
         'board' => $this->board->toJSON()
     );
   }

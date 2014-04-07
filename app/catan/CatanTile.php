@@ -50,6 +50,7 @@ class CatanTile implements DrawableInterface
     {
       return array(
           'classes' => 'hex '.$this->model->type,
+          'attr' => array('tile'=>$this->model->id),
           'styles' => array('left'=>$this->mapX(108, 12, 0).'px','top'=>$this->mapY(124, -21, 0).'px'),
           'prob' => $this->model->probability
       );
