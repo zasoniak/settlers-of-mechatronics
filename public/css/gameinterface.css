@@ -1,32 +1,56 @@
 /* 
     Created on : 2014-03-03, 14:59:23
-    Author     : Konrad Kowalewski <k.j.kowalewski@gmail.com>, Michał Kowalik <michal@kowalik.net>
+    Author     : Konrad Kowalewski
 */
 
 html {
   background-color: whitesmoke;
   /*background-image: url('http://trickvilla.com/wp-content/uploads/Light-Wood-Background.jpg');*/
   background-size: cover;
-  font-family: 'arial';
-  font-size: 16px;
-  padding-right: 450px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 14px;
+  padding-right: 470px;
   height: 100%;
 }
 
 body {
-    height: 100%;
-    overflow-x: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 
 aside {
+  overflow: visible;
   position: relative;
   display: block;
-  width: 460px;
+  width: 470px;
   height: 100%;
   float: right;
   z-index: 1;
-  margin-right: -450px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
+  margin-right: -470px;   //to razem z padding-right dla html pozwala wyśrodkować planszę bez dodatkowego kontenera.
 }
+
+div.ring {
+  position: absolute;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 100%;
+  border-color: silver;
+  background-color: transparent;
+}
+
+.panel {
+  overflow: hidden;
+  width: 450px;
+  margin: 5px 10px;
+}
+
+p.panel {
+  height: 1em;
+  padding: 0.8em 0;
+  text-align: center;
+  -webkit-animation: pulse 2s infinite;
+}
+
 
 @media all and (max-device-height: 800px) {
   aside {
@@ -48,45 +72,79 @@ aside {
 /*********************USERCARD************************/
 
 div.usercard {
-  float: left;
   width: 150px;
-  padding: 5px 0;
+  height: 150px;
+}
+
+div.usercard.your {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+}
+
+div.ring.grey {width: 1700px;}
+
+#opponents div.usercard {
+  position: absolute;
+  bottom: 130px;
+  right: 5px;
+}
+
+#opponents div.usercard:nth-of-type(3) {-webkit-transform: rotate(-0deg);}
+#opponents div.usercard:nth-of-type(3) div {-webkit-transform: rotate(0deg);}
+#opponents div.usercard:nth-of-type(2) {-webkit-transform: rotate(-10deg);}
+#opponents div.usercard:nth-of-type(2) div {-webkit-transform: rotate(10deg);}
+#opponents div.usercard:nth-of-type(1) {-webkit-transform: rotate(-20deg);}
+#opponents div.usercard:nth-of-type(1) div {-webkit-transform: rotate(20deg);}
+
+div.usercard figure {
   position: relative;
 }
 
-div.usercard figure img {
-  margin: 5px auto;
+div.usercard figure label img {
+  margin: 0 auto;
   display: block;
-  width: 100px;
-  height: 100px;
-  border-width: 8px;
+  width: 106px;
+  height: 106px;
+  border-width: 7px;
   border-style: solid;
-  border-radius: 58px;
-  -webkit-transition: 0.5s;
-}
-
-div.usercard table
-{
-  table-layout: fixed;
-  width: 100%;
+  border-radius: 60px;
 }
 
 div.usercard figcaption {
-  font-size: larger;
+  font-family: 'purisa', cursive;
+  font-size: 18px;
+  color: black;
   text-align: center;
+  margin: 5px 0;
 }
 
-div.usercard th, div.usercard td {
-  padding: 3px;
-}
-
-div.usercard th {
-  text-align: right;
-}
-
-div.usercard td {
-  text-align: left;
+div.usercard figure p {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  font-size: 16px;
   font-weight: bold;
+  line-height: 30px;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+}
+
+div.usercard p img {
+  vertical-align: baseline;
+  width: 16px;
+  height: 16px;
+}
+
+div.usercard p#cards_number {
+  top: 0;
+  left: 20px;
+}
+div.usercard p#res_number {
+  bottom: 0;
+  right: 20px;
 }
 
 div.usercard .icon {
@@ -110,91 +168,118 @@ div.usercard.withoffer .icon {
   border-radius: 20px;
   -webkit-animation: blink 1s infinite;
 }
-  
-/*div.usercard.trading figure img {
-  width: 60px;
-  height: 60px;
-  border-width: 6px;
-  border-radius: 44px;
-  -webkit-transition: 0.5s;
-}
-*/
+
+.none {display: none;}
+
 div.usercard.trading figure img {
     box-shadow: 0 0 50px greenyellow;
 }
 
-#opponents {
-  height: 220px;
+.grey {
+  background-color: silver;
+  border-color: silver;
 }
 
-.panel {
-  overflow: hidden;
-  width: 450px;
-  margin: 10px 5px;
-  background-color: rgba(0,0,0,0.3);
-}
-
-.current {
-  background-color: rgba(0,0,0,0.5);
-}
 
 /******************BUTTONY*******************/
 
 .button {
-  display: block;
-  position: relative;
-  width: 110px;
-  height: 110px;
-  float: left;
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  z-index: 1;
 }
+
+.ring .button, .ring .button div {
+  -webkit-transition: 1s;
+}
+
+div.ring:nth-of-type(2) {width: 350px; z-index: -1;}
+
+.button:nth-of-type(1) {-webkit-transform: rotate(0deg);}
+.button:nth-of-type(1) div {-webkit-transform: rotate(0deg);}
+.button:nth-of-type(2) {-webkit-transform: rotate(-45deg);}
+.button:nth-of-type(2) div {-webkit-transform: rotate(45deg);}
+.button:nth-of-type(3) {-webkit-transform: rotate(-90deg);}
+.button:nth-of-type(3) div {-webkit-transform: rotate(90deg);}
+
+
+.ring:not(.current) .button:nth-of-type(1) {-webkit-transform: rotate(-150deg);}
+.ring:not(.current) .button:nth-of-type(1) div {-webkit-transform: rotate(150deg);}
+.ring:not(.current) .button:nth-of-type(2) {-webkit-transform: rotate(-195deg);}
+.ring:not(.current) .button:nth-of-type(2) div {-webkit-transform: rotate(195deg);}
+.ring:not(.current) .button:nth-of-type(3) {-webkit-transform: rotate(-240deg);}
+.ring:not(.current) .button:nth-of-type(3) div {-webkit-transform: rotate(240deg);}
 
 .button a {
   display: block;
   position: relative;
-  top: 20px;
-  left: 20px;
-  background-color: #dddddd;
-  border-radius: 50px;
-  width: 70px;
-  -webkit-transition: 0.3s;
   cursor: pointer;
-}
-
-.button:not(.clicked) a:hover {
-  top: 10px;
-  left: 10px;
-  background-color: silver;
+  width: 80px;
+  height: 80px;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-width: 5px;
+  border-style: solid;
   border-radius: 60px;
-  padding: 10px;
-  -webkit-transition: 0.3s;
+  text-align: center;
+  -webkit-transition: 0.2s;
 }
 
-.button a img {
-  width: 70px;
-  height: 70px;
-  border-radius: 35px;
+#build_button {background-image: url('../img/icon_hammer.png');}
+#build_settle {background-image: url('../img/icon_settle.png');}
+#build_town {background-image: url('../img/icon_town.png');}
+#build_road {background-image: url('../img/icon_road.png');}
+#buy_card_button {background-image: url('../img/icon_card.png');}
+#trade_button {background-image: url('../img/icon_trade.png');}
+#trade_button_accept {background-color: forestgreen;}
+#trade_button_reject {background-color: red;}
+#endturn_button {background-image: url('../img/icon_dice.png');}
+
+.button span {
+  opacity: 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  line-height: 80px;
+  vertical-align: middle;
+  -webkit-transition: 0.4s;
 }
 
 .button a.inside {
   display: none;
   position: absolute;
-  width: 45px;
-  height: 45px;
-  background-color: #dddddd;
-  border-radius: 25px;
+  background-size: 85%;
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
   -webkit-transition: 0.3s;
   left: auto;
   top: auto;
 }
 
-.button a.inside img {
-  width: 45px;
-  height: 45px;
-  border-radius: 25px;
+.button a.inside span {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: none;
+  line-height: 50px; 
+}
+
+.button:not(.clicked) a:hover, .button a.inside:hover {
+  background-size: 0;
+  -webkit-transition: 0.4s;
+}
+
+.button:not(.clicked) a:hover span, .button a.inside:hover span {
+  opacity: 1;
+  -webkit-transition: 0.3s;
 }
 
 .button.clicked a.main {
   opacity: 0.3;
+  background-size: 55%;
   -webkit-transition: 0.3s;
 }
 .button.clicked a.main img{
@@ -202,7 +287,7 @@ div.usercard.trading figure img {
   -webkit-transition: 0.3s;
 }
 .button.clicked a.main:hover {
-  opacity: 0.6;
+  opacity: 0.5;
   -webkit-transition: 0.3s;
 }
 
@@ -211,33 +296,13 @@ div.usercard.trading figure img {
   -webkit-transition: 0.3s;
 }
 
-.button.clicked a.inside:hover {
-  background-color: silver;
-  -webkit-transition: 0.3s;
-}
+#button_develop_outside.clicked a.inside:nth-of-type(2) {top: -30px; left: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(3) {top: -30px; right: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(4) {bottom: -30px; left: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(5) {bottom: -30px; right: -30px;}
 
-.accept {
-    background-image: url('../img/accept.png');
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-.reject {
-    background-image: url('../img/reject.png');
-    opacity: 0.8;
-    cursor: pointer;
-}
-
-.accept:hover, .reject:hover {
-    opacity: 1;
-    -webkit-transition: 0.3s;
-}
-
-.button.clicked a.inside:nth-of-type(2) {top: 0; left: 0;}
-.button.clicked a.inside:nth-of-type(3) {top: 0; right: 0;}
-.button.clicked a.inside:nth-of-type(4) {bottom: 0; left: 0;}
-.button.clicked a.inside:nth-of-type(4):last-of-type {bottom: 0; left: 33px;}
-.button.clicked a.inside:nth-of-type(5) {bottom: 0; right: 0;}
+#button_trade_outside.clicked a.inside:nth-of-type(2n+0) {top: -30px; left: -30px;}
+#button_trade_outside.clicked a.inside:nth-of-type(2n+1) {top: -30px; right: -30px;}
 
 /***********Resource Cards*********************/
 
@@ -246,45 +311,54 @@ div.usercard.trading figure img {
 }
 
 .resource {
-  position: relative;
-  float: left;
-  margin: 0 5px;
+  position: absolute;
 }
+
+div.ring:nth-of-type(3) {width: 600px; z-index: -2;}
+
+.resource:nth-of-type(1) {-webkit-transform: rotate(0deg);}
+.resource:nth-of-type(1) .res_in {-webkit-transform: rotate(0deg);}
+.resource:nth-of-type(2) {-webkit-transform: rotate(-23deg);}
+.resource:nth-of-type(2) .res_in {-webkit-transform: rotate(23deg);}
+.resource:nth-of-type(3) {-webkit-transform: rotate(-45deg);}
+.resource:nth-of-type(3) .res_in {-webkit-transform: rotate(45deg);}
+.resource:nth-of-type(4) {-webkit-transform: rotate(-68deg);}
+.resource:nth-of-type(4) .res_in{-webkit-transform: rotate(68deg);}
+.resource:nth-of-type(5) {-webkit-transform: rotate(-90deg);}
+.resource:nth-of-type(5) .res_in {-webkit-transform: rotate(90deg);}
 
 .trade {
   display: none;
 }
 
 .res_card {
-    position: relative;
-    width: 70px;
-    height: 70px;
-    border: 5px solid darkslategrey;
-    margin: 20px auto;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
-    border-radius: 40px;
-    background-origin: border-box;
-    background-position: center;
-    background-size: cover;
+  position: relative;
+  width: 72px;
+  height: 72px;
+  border-width: 4px;
+  border-style: solid;
+  box-shadow: inset 0 0 16px rgba(0,0,0,0.7);
+  border-radius: 40px;
+  background-origin: border-box;
+  background-position: center;
+  background-size: cover;
 }
 
 .res_card p {
-    display: block;
-    position: absolute;
-    left: 15px;
-    top: 45px;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: darkslategrey;
-    text-align: center;
-    z-index: 1;
-    color: white;
-    font-family: 'ubuntu', 'arial';
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 40px;
-    -webkit-transition: 0.3s;
+  display: block;
+  position: absolute;
+  left: 15px;
+  top: 45px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 1;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 40px;
+  -webkit-transition: 0.3s;
 }
 
 .res_card p span:last-of-type {
@@ -294,8 +368,12 @@ div.usercard.trading figure img {
 }
 
 p.trading {
-    top: 15px;
-    -webkit-transition: 0.3s;
+  top: 15px;
+  -webkit-transition: 0.3s;
+}
+
+.res_card.greyscale {
+  -webkit-filter: grayscale(100%);
 }
 
 .res_card.greyscale p {
@@ -303,160 +381,174 @@ p.trading {
 }
 
 .res_card.greyscale p.trading {
+  background-color: dimgrey;
   display: block;
 }
 
 .trade {
-    display: none;
-    position: absolute;
-    left: 23px;
-    width: 35px;
-    height: 35px;
-    border-radius: 18px;
-    text-align: center;
-    z-index: 1;
-    color: white;
-    font-family: 'ubuntu', 'arial';
-    font-size: 30px;
-    font-weight: bold;
-    line-height: 35px;
-    cursor: pointer;
-    
+  display: none;
+  position: absolute;
+  left: 23px;
+  width: 35px;
+  height: 35px;
+  border-radius: 18px;
+  text-align: center;
+  z-index: 1;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 35px;
+  vertical-align: middle;
+  cursor: pointer;
 }
-
 .up {
-    bottom: 0;
-    background-color: green;
+  top: -20px;
+  background-color: forestgreen;
+}
+.up:hover {
+  background-color: limegreen;
 }
 .down {
-    top:0;
+  bottom: -20px;
+  background-color: firebrick;
+}
+.down:hover {
   background-color: red;
 }
 
 .trade_quantity {
-    text-align: center;
+  text-align: center;
 }
 
 #trade_submit {
   display: none;
 }
 
-.for_monopoly .res_card{
-  box-shadow: 0 0 25px white;
+#offers {
+  height: 200px;
+  outline: 1px dotted lightgrey;
+  display: none;
 }
 
-.for_yearofplenty .res_card {
-  box-shadow: 0 0 25px white;
+.offer {
+  display: none;
+  width: 100%;
+  height: 110px;
+}
+.offer .empty {
+  visibility: hidden;
 }
 
-.for_yearofplenty.marked .res_card {
-  box-shadow: 0 0 25px green;
+.offer .accept {
+  background-image: url('../img/accept.png');
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.offer .reject {
+  background-image: url('../img/reject.png');
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.accept:hover, .reject:hover {
+  opacity: 1;
+  -webkit-transition: 0.3s;
+}
+
+/* ------------ kostki i tury ------------- */
+
+.boardcorner {
+  margin: 20px 10px;
+  width: 120px;
+  height: 70px;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  color: silver;
 }
 
 #dice {
   position: absolute;
   top: 0;
   left: 0;
-  margin: 20px 10px;
-  width: 120px;
-  height: 70px;
-  text-align: center;
-  text-transform: uppercase;
-  font-family: 'ubuntu', 'arial';
-  font-size: 16px;
-  font-weight: bold;
-  line-height: 1em;
-  color: silver;
 }
-
-#dice span, #turn span {
-  color: grey;
-  text-shadow: 0 0 4px rgba(0,0,0,0.4);
-  font-family: 'ubuntu', 'arial';
-  font-size: 52px;
-  font-weight: bold;
-  line-height: 1em;
-}
-
-.dice1 {background-image: url('../img/dice1.jpg');}
-.dice2 {background-image: url('../img/dice2.jpg');}
-.dice3 {background-image: url('../img/dice3.jpg');}
-.dice4 {background-image: url('../img/dice4.jpg');}
-.dice5 {background-image: url('../img/dice5.jpg');}
-.dice6 {background-image: url('../img/dice6.jpg');}
-
 
 #turn {
-    position: absolute;
-    top: 0;
-    right: 0;
-  margin: 20px 10px;
-  width: 120px;
-  height: 70px;
-  text-align: center;
-  text-transform: uppercase;
-    font-family: 'ubuntu', 'arial';
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1em;
-  color: silver;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
-.greyscale {
-  -webkit-filter: grayscale(100%);
+.boardcorner span {
+  color: grey;
+  text-shadow: 0 0 4px rgba(0,0,0,0.4);
+  font-size: 52px;
+  font-weight: bold;
 }
 
 /*******************DEVELOPMENT CARDS**********************/
 
-.development_card {
-  position: relative;
-  float: left;
-  margin: 0 5px;
-}
-
 .dev_card {
-    position: relative;
-    width: 70px;
-    height: 70px;
-    border: 5px solid darkslategrey;
-    margin: 20px auto;
-    box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
-    border-radius: 40px;
-    background-origin: border-box;
-    background-position: center;
-    background-size: cover;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  position: absolute;
 }
 
-.dev_card p {
-    display: block;
-    position: absolute;
-    left: 15px;
-    top: 45px;
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background-color: darkslategrey;
-    text-align: center;
-    z-index: 1;
-    color: white;
-    font-family: 'ubuntu', 'arial';
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 40px;
-    -webkit-transition: 0.3s;
+div.ring:nth-of-type(4) {width: 800px; z-index: -3;}
+
+.dev_card:nth-of-type(1) {-webkit-transform: rotate(-90deg);}
+.dev_card:nth-of-type(1) div {-webkit-transform: rotate(90deg);}
+.dev_card:nth-of-type(2) {-webkit-transform: rotate(-80deg);}
+.dev_card:nth-of-type(2) div {-webkit-transform: rotate(80deg);}
+.dev_card:nth-of-type(3) {-webkit-transform: rotate(-70deg);}
+.dev_card:nth-of-type(3) div {-webkit-transform: rotate(70deg);}
+.dev_card:nth-of-type(4) {-webkit-transform: rotate(-60deg);}
+.dev_card:nth-of-type(4) div {-webkit-transform: rotate(60deg);}
+.dev_card:nth-of-type(5) {-webkit-transform: rotate(-50deg);}
+.dev_card:nth-of-type(5) div {-webkit-transform: rotate(50deg);}
+.dev_card:nth-of-type(6) {-webkit-transform: rotate(-40deg);}
+.dev_card:nth-of-type(6) div {-webkit-transform: rotate(40deg);}
+.dev_card:nth-of-type(7) {-webkit-transform: rotate(-30deg);}
+.dev_card:nth-of-type(7) div {-webkit-transform: rotate(30deg);}
+.dev_card:nth-of-type(8) {-webkit-transform: rotate(-20deg);}
+.dev_card:nth-of-type(8) div {-webkit-transform: rotate(20deg);}
+.dev_card:nth-of-type(9) {-webkit-transform: rotate(-10deg);}
+.dev_card:nth-of-type(9) div {-webkit-transform: rotate(10deg);}
+.dev_card:nth-of-type(10) {-webkit-transform: rotate(0deg);}
+.dev_card:nth-of-type(10) div {-webkit-transform: rotate(0deg);}
+
+.dev_card div {
+  width: 53px;
+  height: 53px;
+  border-width: 3px;
+  border-style: solid;
+  box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
+  border-radius: 30px;
+  background-origin: border-box;
+  background-position: center;
+  background-size: cover;
+  cursor: pointer;
 }
 
-.dev_card.greyscale p {
-  display: none;
-}
-.victorypoint {background-image: url('../img/card_victorypoint.png');}
-.knight {background-image: url('../img/card_knight.png');}
-.yearofplenty {background-image: url('../img/card_yearofplenty.jpg');}
-.roadbuilding {background-image: url('../img/card_roadbuilding.jpg');}
-.monopoly {background-image: url('../img/card_monopoly.jpg');}
+.victorypoint div {background-image: url('../img/card_victorypoint.png');}
+.knight div {background-image: url('../img/devcards/knight.jpg');}
+.yearofplenty div {background-image: url('../img/card_yearofplenty.jpg');}
+.roadbuilding div {background-image: url('../img/card_roadbuilding.jpg');}
+.monopoly div {background-image: url('../img/card_monopoly.jpg');}
+
+/* ----------------- ANIMACJE------------------ */
 
 @-webkit-keyframes blink {
   0% {border-color: transparent;}
   50% {border-color: black;}
   100% {border-color: transparent;}
+}
+
+@-webkit-keyframes pulse {
+  0% {color: initial;}
+  50% {color: red;}
+  100% {color: initial;}
 }

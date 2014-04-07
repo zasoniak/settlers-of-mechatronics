@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <?php echo HTML::style('css/reset.css'); ?>
-    <?php echo HTML::style('css/gameinterface_1.css'); ?>
+    <?php echo HTML::style('css/gameinterface.css'); ?>
     <?php echo HTML::style('css/hex.css'); ?>
     <?php echo HTML::style('css/colors.css'); ?>
     <title>Settlers of Mechatronics</title>
@@ -20,35 +20,35 @@
         <input type="text" name="trade_<?php echo $type ?>" res="<?php echo $type; ?>" value="0" />
         <?php endforeach; ?>
       </form>
-      <?php $player=Player::findByGameByUser($game->model->id, Auth::user()) ?>
-      <div class="usercard your" player="<?php echo $player->model->id; ?>"><div>
+      <?php $you = new CatanPlayer(Player::findByGameByUser($game->model->id, Auth::user()->id)); ?>
+      <div class="usercard your"><div>
           <figure>
-            <p class="red" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
-            <p class="red" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
-            <label for="player_<?php echo $player->model->id; ?>">
-              <?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?>
+            <p class="<?php echo $you->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
+            <p class="<?php echo $you->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
+            <label for="player_<?php echo $you->model->id; ?>">
+              <?php echo HTML::image('img/'.$you->model->user->image, 'morda', array('class'=>$you->model->color)); ?>
             </label>
           </figure>
-          <figcaption><?php echo $player->model->user->nickname; ?></figcaption>
+          <figcaption><?php echo $you->model->user->nickname; ?></figcaption>
           <div class="icon"></div>
           </div></div>
-      <div class="ring" player="<?php echo Player::findByGameByUser($game->model->id, Auth::user()->id)->id; ?>">
+      <div class="ring" player="<?php echo $you->model->id; ?>">
         <div id="button_develop_outside" class="button"><div>
-          <a id="build_button" class="main <?php echo $color; ?>"><span>rozwój</span></a>
-          <a id="build_settle" class="inside <?php echo $color; ?>"><span>osada</span></a>
-          <a id="build_town" class="inside <?php echo $color; ?>"><span>miasto</span></a>
-          <a id="build_road" class="inside <?php echo $color; ?>"><span>droga</span></a>
-          <a id="buy_card_button" class="inside <?php echo $color; ?>"><span>karta</span></a>
+          <a id="build_button" class="main <?php echo $you->model->color; ?>"><span>rozwój</span></a>
+          <a id="build_settle" class="inside <?php echo $you->model->color; ?>"><span>osada</span></a>
+          <a id="build_town" class="inside <?php echo $you->model->color; ?>"><span>miasto</span></a>
+          <a id="build_road" class="inside <?php echo $you->model->color; ?>"><span>droga</span></a>
+          <a id="buy_card_button" class="inside <?php echo $you->model->color; ?>"><span>karta</span></a>
         </div></div>
         <div id="button_trade_outside" class="button"><div>
-          <a id="trade_button" class="main <?php echo $color; ?>"><span>handel</span></a>
-          <a id="trade_button_send" class="inside <?php echo $color; ?>"><span>wyślij</span></a>
-          <a id="trade_button_cancel" class="inside <?php echo $color; ?>"><span>anuluj</span></a>
-          <a id="trade_button_accept" class="inside <?php echo $color; ?>"><span>akceptuj</span></a>
-          <a id="trade_button_reject" class="inside <?php echo $color; ?>"><span>odrzuć</span></a>
+          <a id="trade_button" class="main <?php echo $you->model->color; ?>"><span>handel</span></a>
+          <a id="trade_button_send" class="inside <?php echo $you->model->color; ?>"><span>wyślij</span></a>
+          <a id="trade_button_cancel" class="inside <?php echo $you->model->color; ?>"><span>anuluj</span></a>
+          <a id="trade_button_accept" class="inside <?php echo $you->model->color; ?>"><span>akceptuj</span></a>
+          <a id="trade_button_reject" class="inside <?php echo $you->model->color; ?>"><span>odrzuć</span></a>
         </div></div>
         <div class="button"><div>
-          <a id="endturn_button" class="main <?php echo $color; ?>"><span>koniec</span></a>
+          <a id="endturn_button" class="main <?php echo $you->model->color; ?>"><span>koniec</span></a>
         </div></div>
       </div>
       <div class="ring">
@@ -56,7 +56,7 @@
         <div class="resource"><div class="res_in">
           <div class="trade up">+</div>
           <div class="trade down">-</div>
-          <div class="res_card greyscale <?php echo $type." ".$color; ?>" res="<?php echo $type; ?>">
+          <div class="res_card greyscale <?php echo $type." ".$you->model->color; ?>" res="<?php echo $type; ?>">
             <p><span></span><span></span></p>
           </div>
         </div></div>
@@ -68,8 +68,8 @@
         <?php foreach($game->getOpponents() as $player): ?>
         <div class="usercard" player="<?php echo $player->model->id; ?>"><div>
           <figure>
-            <p class="red" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
-            <p class="red" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
+            <p class="<?php echo $player->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
+            <p class="<?php echo $player->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
             <label for="player_<?php echo $player->model->id; ?>">
               <?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?>
             </label>

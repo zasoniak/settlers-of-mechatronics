@@ -372,6 +372,7 @@ $(document).ready(function() {
         current = data.current;
         player = data.player.id;
         $("[tile='" + data.thief_location + "']").append($("<div id=\"thief\"></div>"));
+        $(".usercard.current").parent().addClass("current");
       })
       .error(function(data) {
         alert("Musiało się zrąbać połączenie.");
