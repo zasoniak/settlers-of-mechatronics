@@ -207,7 +207,7 @@ Route::post('game/ajax/build', array('before'=>'turn', function(){
     } 
     catch (Exception $exc)
     {
-      return Response::make($exc->getMessage(),403);
+      return Response::make(var_dump($exc),403);
     }
   }
   return Response::make('OK!',200);
