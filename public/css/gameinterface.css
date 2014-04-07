@@ -82,12 +82,18 @@ div.usercard.your {
   right: 5px;
 }
 
-div.ring.grey {width: 1700px;}
+div.ring.grey {
+  width: 1700px;
+  height: 1700px;   /*width*/
+  bottom: -1550px;   /*-(width-150)*/
+  right: -775px;  /*-(width+10)/2+80 */
+}
 
 #opponents div.usercard {
   position: absolute;
-  bottom: 130px;
-  right: 5px;
+  top: -65px;   /* 10-width/2 */
+  left: 775px;   /* ()ring width-width)/2 */
+  -webkit-transform-origin-y: 925px;  /*(diameter+child_width)/2 */
 }
 
 #opponents div.usercard:nth-of-type(3) {-webkit-transform: rotate(-0deg);}
@@ -188,13 +194,22 @@ div.usercard.trading figure img {
   width: 90px;
   height: 90px;
   z-index: 1;
+  top: 130px;  /* (ring_width-width)/2 */
+  left: -45px;  /* -width/2 */
+  -webkit-transform-origin-x: 220px;  /* (ring_width+width)/2 */
 }
 
 .ring .button, .ring .button div {
   -webkit-transition: 1s;
 }
 
-div.ring:nth-of-type(2) {width: 350px; z-index: -1;}
+div.ring:nth-of-type(2) {
+  width: 350px;
+  height: 350px;   /*width*/
+  top: -100px;   /*-(width+10)/2+80 */
+  right: -100px;  /*-(width+10)/2+80 */
+  z-index: -1;
+}
 
 .button:nth-of-type(1) {-webkit-transform: rotate(0deg);}
 .button:nth-of-type(1) div {-webkit-transform: rotate(0deg);}
@@ -312,9 +327,18 @@ div.ring:nth-of-type(2) {width: 350px; z-index: -1;}
 
 .resource {
   position: absolute;
+  top: 260px;  /* (ring_width-width)/2 */
+  left: -40px;  /* -width/2 */
+  -webkit-transform-origin-x: 340px;  /* (ring_width+width)/2 */
 }
 
-div.ring:nth-of-type(3) {width: 600px; z-index: -2;}
+div.ring:nth-of-type(3) {
+  width: 600px;
+  height: 600px;   /*width*/
+  top: -225px;   /*-(width+10)/2+80 */
+  right: -225px;  /*-(width+10)/2+80 */
+  z-index: -2;
+}
 
 .resource:nth-of-type(1) {-webkit-transform: rotate(0deg);}
 .resource:nth-of-type(1) .res_in {-webkit-transform: rotate(0deg);}
@@ -493,11 +517,21 @@ p.trading {
 .dev_card {
   width: 60px;
   height: 60px;
+  left: -30px;
+  top: 370px;
+  -webkit-transform-origin-x: 430px;
   border-radius: 30px;
   position: absolute;
+  z-index: 2;
 }
 
-div.ring:nth-of-type(4) {width: 800px; z-index: -3;}
+div.ring:nth-of-type(4) {
+  width: 800px;
+  height: 800px;   /*width*/
+  top: -325px;   /*-(width+10)/2+80 */
+  right: -325px;  /*-(width+10)/2+80 */
+  z-index: -3;
+}
 
 .dev_card:nth-of-type(1) {-webkit-transform: rotate(-90deg);}
 .dev_card:nth-of-type(1) div {-webkit-transform: rotate(90deg);}
