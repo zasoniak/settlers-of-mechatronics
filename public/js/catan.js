@@ -156,7 +156,7 @@ $(document).ready(function() {
     $(".trade").slideToggle('300');
     $(".usercard figure").toggleClass("clickable");
     $(".res_card p span:last-of-type").toggle();
-    $(this).parent().parent().toggleClass("clicked");
+    $(this).parent().parent().toggleClass("clicked");    
   });
   
     $(document).on("click", "figure.clickable", function(event) {

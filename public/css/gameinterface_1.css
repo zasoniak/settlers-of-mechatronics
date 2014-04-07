@@ -19,9 +19,7 @@ body {
 }
 
 aside {
-  background-color: rgba(0,0,0,0.1);
-  box-shadow: 0 0 20px rgba(0,0,0,0.8);
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   display: block;
   width: 470px;
@@ -33,9 +31,10 @@ aside {
 
 div.ring {
   position: absolute;
-  border-width: 5px;
+  border-width: 3px;
   border-style: solid;
   border-radius: 100%;
+  border-color: silver;
   background-color: transparent;
 }
 
@@ -83,7 +82,7 @@ div.usercard.your {
   right: 5px;
 }
 
-div.ring.grey {width: 1700px; border-color: grey;}
+div.ring.grey {width: 1700px;}
 
 #opponents div.usercard {
   position: absolute;
@@ -194,6 +193,10 @@ div.usercard.trading figure img {
   z-index: 1;
 }
 
+.ring:not(current) .button {
+  -webkit-transition: 2s;
+}
+
 div.ring:nth-of-type(2) {width: 350px; z-index: -1;}
 
 .button:nth-of-type(1) {-webkit-transform: rotate(0deg);}
@@ -202,6 +205,14 @@ div.ring:nth-of-type(2) {width: 350px; z-index: -1;}
 .button:nth-of-type(2) div {-webkit-transform: rotate(45deg);}
 .button:nth-of-type(3) {-webkit-transform: rotate(-90deg);}
 .button:nth-of-type(3) div {-webkit-transform: rotate(90deg);}
+
+
+.ring:not(.current) .button:nth-of-type(1) {-webkit-transform: rotate(-150deg);}
+.ring:not(.current) .button:nth-of-type(1) div {-webkit-transform: rotate(150deg);}
+.ring:not(.current) .button:nth-of-type(2) {-webkit-transform: rotate(-195deg);}
+.ring:not(.current) .button:nth-of-type(2) div {-webkit-transform: rotate(195deg);}
+.ring:not(.current) .button:nth-of-type(3) {-webkit-transform: rotate(-240deg);}
+.ring:not(.current) .button:nth-of-type(3) div {-webkit-transform: rotate(240deg);}
 
 .button a {
   display: block;
@@ -288,10 +299,13 @@ div.ring:nth-of-type(2) {width: 350px; z-index: -1;}
   -webkit-transition: 0.3s;
 }
 
-.button.clicked a.inside:nth-of-type(2) {top: -30px; left: -30px;}
-.button.clicked a.inside:nth-of-type(3) {top: -30px; right: -30px;}
-.button.clicked a.inside:nth-of-type(4) {bottom: -30px; left: -30px;}
-.button.clicked a.inside:nth-of-type(5) {bottom: -30px; right: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(2) {top: -30px; left: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(3) {top: -30px; right: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(4) {bottom: -30px; left: -30px;}
+#button_develop_outside.clicked a.inside:nth-of-type(5) {bottom: -30px; right: -30px;}
+
+#button_trade_outside.clicked a.inside:nth-of-type(2n+0) {top: -30px; left: -30px;}
+#button_trade_outside.clicked a.inside:nth-of-type(2n+1) {top: -30px; right: -30px;}
 
 /***********Resource Cards*********************/
 
@@ -488,16 +502,26 @@ p.trading {
 
 div.ring:nth-of-type(4) {width: 800px; z-index: -3;}
 
-.dev_card:nth-of-type(1) {-webkit-transform: rotate(-35deg);}
-.dev_card:nth-of-type(1) div {-webkit-transform: rotate(35deg);}
-.dev_card:nth-of-type(2) {-webkit-transform: rotate(-45deg);}
-.dev_card:nth-of-type(2) div {-webkit-transform: rotate(45deg);}
-.dev_card:nth-of-type(3) {-webkit-transform: rotate(-55deg);}
-.dev_card:nth-of-type(3) div {-webkit-transform: rotate(55deg);}
-.dev_card:nth-of-type(4) {-webkit-transform: rotate(-65deg);}
-.dev_card:nth-of-type(4) div {-webkit-transform: rotate(65deg);}
-.dev_card:nth-of-type(5) {-webkit-transform: rotate(-75deg);}
-.dev_card:nth-of-type(5) div {-webkit-transform: rotate(75deg);}
+.dev_card:nth-of-type(1) {-webkit-transform: rotate(-90deg);}
+.dev_card:nth-of-type(1) div {-webkit-transform: rotate(90deg);}
+.dev_card:nth-of-type(2) {-webkit-transform: rotate(-80deg);}
+.dev_card:nth-of-type(2) div {-webkit-transform: rotate(80deg);}
+.dev_card:nth-of-type(3) {-webkit-transform: rotate(-70deg);}
+.dev_card:nth-of-type(3) div {-webkit-transform: rotate(70deg);}
+.dev_card:nth-of-type(4) {-webkit-transform: rotate(-60deg);}
+.dev_card:nth-of-type(4) div {-webkit-transform: rotate(60deg);}
+.dev_card:nth-of-type(5) {-webkit-transform: rotate(-50deg);}
+.dev_card:nth-of-type(5) div {-webkit-transform: rotate(50deg);}
+.dev_card:nth-of-type(6) {-webkit-transform: rotate(-40deg);}
+.dev_card:nth-of-type(6) div {-webkit-transform: rotate(40deg);}
+.dev_card:nth-of-type(7) {-webkit-transform: rotate(-30deg);}
+.dev_card:nth-of-type(7) div {-webkit-transform: rotate(30deg);}
+.dev_card:nth-of-type(8) {-webkit-transform: rotate(-20deg);}
+.dev_card:nth-of-type(8) div {-webkit-transform: rotate(20deg);}
+.dev_card:nth-of-type(9) {-webkit-transform: rotate(-10deg);}
+.dev_card:nth-of-type(9) div {-webkit-transform: rotate(10deg);}
+.dev_card:nth-of-type(10) {-webkit-transform: rotate(0deg);}
+.dev_card:nth-of-type(10) div {-webkit-transform: rotate(0deg);}
 
 .dev_card div {
   width: 53px;
