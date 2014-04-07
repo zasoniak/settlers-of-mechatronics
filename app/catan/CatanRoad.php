@@ -125,8 +125,6 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     $player->save();
     $tradeLenght=$this->findTradeRoad();
     $this->model->save();
-    $tradeLenght=$this->findTradeRoad();
-    throw new Exception("oto twoja droga: $tradeLenght");
     return true;
   }
   
