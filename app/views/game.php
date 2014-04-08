@@ -97,9 +97,9 @@
       <div id="board">
         <div class="boardcorner" id="dice">
           Kostki<br>
-          <span id="die1">6</span>
+          <span id="die1">?</span>
           <span>+</span>
-          <span id="die2">4</span>
+          <span id="die2">?</span>
         </div>
         <div class="boardcorner" id="turn">
           Tura<br>

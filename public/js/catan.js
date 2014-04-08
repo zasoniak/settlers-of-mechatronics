@@ -224,9 +224,9 @@ $(document).ready(function() {
       $("#trade_form").find("[res=" + res + "]").val(q);
     });
     
-    $("#trade_button_withbank").click(function() {
+    $(document).on("click", "#trade_button_send", function(event) {
       $.post("ajax/trade", $("#trade_form").serialize())
-              .done(function() {
+              .done(function(data) {
                 loadJSON(game);
               })
               .error(function(data) {
