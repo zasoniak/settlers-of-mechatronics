@@ -222,7 +222,9 @@ div.ring:nth-of-type(2) {
 .ring:not(.current) .button:nth-of-type(1) {-webkit-transform: rotate(-150deg);}
 .ring:not(.current) .button:nth-of-type(1) div {-webkit-transform: rotate(150deg);}
 .ring:not(.current) .button:nth-of-type(2) {-webkit-transform: rotate(-195deg);}
+.ring:not(.current) .button.withtrade:nth-of-type(2) {-webkit-transform: rotate(-45deg);}
 .ring:not(.current) .button:nth-of-type(2) div {-webkit-transform: rotate(195deg);}
+.ring:not(.current) .button.withtrade:nth-of-type(2) div {-webkit-transform: rotate(45deg);}
 .ring:not(.current) .button:nth-of-type(3) {-webkit-transform: rotate(-240deg);}
 .ring:not(.current) .button:nth-of-type(3) div {-webkit-transform: rotate(240deg);}
 

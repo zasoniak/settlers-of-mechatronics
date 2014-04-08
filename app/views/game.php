@@ -22,7 +22,6 @@
       </form>
       <?php $you = new CatanPlayer(Player::findByGameByUser($game->model->id, Auth::user()->id)); ?>
       <div class="usercard your"><div>
-          trolololololo where is my hope?
           <figure>
             <p class="<?php echo $you->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
             <p class="<?php echo $you->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>

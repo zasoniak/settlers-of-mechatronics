@@ -8,7 +8,7 @@ $(document).ready(function() {
                       .hide()
                       .addClass(item.classes)
                       .css(item.styles)
-                      .attr(item.attr)
+                       .attr(item.attr)
                       .append($("<span>").html(item.prob))
                       .append($("<div class=\"face1\"></div>"))
                       .append($("<div class=\"face2\"></div>"))
@@ -147,7 +147,14 @@ $(document).ready(function() {
     $(".res_card p span:last-of-type").hide();
     $("#trade_button").parent().removeClass("clicked");
   });
-  // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     
+  // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE    
+  function fromform() {
+    $(".res_card.wood p span").last().html($("#trade_form").find("[res=\"wood\"]").val());
+    $(".res_card.stone p span").last().html($("#trade_form").find("[res=\"stone\"]").val());
+    $(".res_card.sheep p span").last().html($("#trade_form").find("[res=\"sheep\"]").val());
+    $(".res_card.clay p span").last().html($("#trade_form").find("[res=\"clay\"]").val());
+    $(".res_card.wheat p span").last().html($("#trade_form").find("[res=\"wheat\"]").val());
+  }
   $("#trade_button").click(function() {
     $(".road.active").hide();
     $(".settle.active").hide();
@@ -192,6 +199,7 @@ $(document).ready(function() {
         }
       }
       $("#trade_form").find("[res=" + res + "]").val(q);
+      fromform();
     });
     
     $(".trade:not(.greyscale).down").click(function() {
@@ -222,6 +230,7 @@ $(document).ready(function() {
         }
       }
       $("#trade_form").find("[res=" + res + "]").val(q);
+      fromform();
     });
     
     $(document).on("click", "#trade_button_send", function(event) {
@@ -326,20 +335,17 @@ $(document).ready(function() {
         // trade received   trade received   trade received   
         if (data.player.trade_received)
         {
+          $("#button_trade_outside").addClass("withtrade");
           var trade = data.player.trade_received;
           var usercard = $("[player=" + trade.host_id + "]");
           $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
           usercard.addClass("withoffer");
-          div.find(".wood").html(trade.wood);
-          $("#trade_form").find("[res=wood]").val(trade.wood);
-          div.find(".stone").html(trade.stone);
-          $("#trade_form").find("[res=stone]").val(trade.stone);
-          div.find(".sheep").html(trade.sheep);
-          $("#trade_form").find("[res=sheep]").val(trade.sheep);
-          div.find(".clay").html(trade.clay);
-          $("#trade_form").find("[res=clay]").val(trade.clay);
-          div.find(".wheat").html(trade.wheat);
-          $("#trade_form").find("[res=wheat]").val(trade.wheat);
+          $("#trade_form").find("[res=\"wood\"]").val(trade.wood);
+          $("#trade_form").find("[res=\"stone\"]").val(trade.stone);
+          $("#trade_form").find("[res=\"sheep\"]").val(trade.sheep);
+          $("#trade_form").find("[res=\"clay\"]").val(trade.clay);
+          $("#trade_form").find("[res=\"wheat\"]").val(trade.wheat);
+          fromform();
         }
         $("#die1").html(data.dice[0]);
         $("#die2").html(data.dice[1]);
