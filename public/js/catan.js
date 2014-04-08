@@ -233,7 +233,7 @@ $(document).ready(function() {
       fromform();
     });
     
-    $(document).on("click", "#trade_button_send", function(event) {
+    $(document).on("click", "#trade_button_accept.send", function(event) {
       $.post("ajax/trade", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
@@ -243,7 +243,7 @@ $(document).ready(function() {
               });
     });
     
-    $(document).on("click", "#trade_button_accept", function(event) {
+    $(document).on("click", "#trade_button_accept.accept", function(event) {
       $.post("ajax/tradeaccept", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
@@ -253,8 +253,32 @@ $(document).ready(function() {
               });
     });
     
-    $(document).on("click", "#trade_button_reject", function(event) {
+    $(document).on("click", "#trade_button_accept.confirm", function(event) {
+      $.post("ajax/tradeconfirm", $("#trade_form").serialize())
+              .done(function(data) {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+    
+    $(document).on("click", "#trade_button_reject.cancel", function(event) {
+     
+    });
+    
+    $(document).on("click", "#trade_button_reject.reject", function(event) {
       $.post("ajax/tradereject", $("#trade_form").serialize())
+              .done(function(data) {
+                loadJSON(game);
+              })
+              .error(function(data) {
+                alert(data.responseText);
+              });
+    });
+    
+    $(document).on("click", "#trade_button_reject.delete", function(event) {
+      $.post("ajax/tradedelete", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
               })
@@ -332,10 +356,23 @@ $(document).ready(function() {
                   .append($("<div>").addClass($(".your div figure p").attr("class")))
                   .attr(item.attr);
         });
+        // trades hosted   trades hosted   trades hosted
+        if (!data.player.trades_hosted && !data.player.trade_received){
+          $("#trade_button_accept").addClass("send").removeClass("accept").removeClass("confirm");
+          $("#trade_button_reject").addClass("cancel").removeClass("reject").removeClass("delete");
+        }
+        
+        if (data.player.trades_hosted){
+          $("#trade_button_accept").addClass("confirm").removeClass("accept").removeClass("send");
+          $("#trade_button_reject").addClass("delete").removeClass("reject").removeClass("cancel");
+        }
+        
         // trade received   trade received   trade received   
         if (data.player.trade_received)
         {
           $("#button_trade_outside").addClass("withtrade");
+          $("#trade_button_accept").addClass("accept").removeClass("confirm").removeClass("send");
+          $("#trade_button_reject").addClass("reject").removeClass("delete").removeClass("cancel");
           var trade = data.player.trade_received;
           var usercard = $("[player=" + trade.host_id + "]");
           $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
