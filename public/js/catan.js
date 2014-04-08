@@ -274,28 +274,7 @@ $(document).ready(function() {
     {
       loadJSON(game);
     }
-  }, 3000);
-  // ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   ORBITS   
-  $(".ring:not(.grey)").each(function(){
-    var diameter=parseInt($(this).css("width"),10);
-    var ring_pos=-(diameter+10)/2+80;
-    $(this).css({"height":diameter+"px","top":ring_pos+"px","right":ring_pos+"px"});
-    var child = $(this).children().first();
-    var child_width = parseInt(child.css("width"));
-    $(this).children().each(function() {
-      $(this).css({"left":-child_width/2+"px","top":(diameter-child_width)/2+"px","-webkit-transform-origin-x": (diameter+child_width)/2+"px"});
-    });
-  });
-  $(".ring.grey").each(function(){
-    var diameter=parseInt($(this).css("width"),10);
-    var ring_pos=-(diameter+10)/2+80;
-    $(this).css({"height":diameter+"px","top":parseInt($("aside").css("height"))-150+"px","right":ring_pos+"px"});
-    var child = $(this).children().first();
-    var child_width = parseInt(child.css("width"));
-    $(this).children().each(function() {
-      $(this).css({"top":10-child_width/2+"px","left":(diameter-child_width)/2+"px","-webkit-transform-origin-y": (diameter+child_width)/2+"px"});
-    });
-  });
+  }, 3000);  
   // LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
@@ -339,11 +318,9 @@ $(document).ready(function() {
         $("#dev_cards").html("");
         $.each(data.player.cards, function(index, item) {
           $("<div>")
-                  .addClass("development_card")
-                  .appendTo("#dev_cards")
-                  .append($("<div>"))
-                  .children().first()
                   .addClass(item.classes)
+                  .appendTo("#dev_cards")
+                  .append($("<div>").addClass($(".your div figure p").attr("class")))
                   .attr(item.attr);
         });
         // trade received   trade received   trade received   
@@ -371,7 +348,8 @@ $(document).ready(function() {
         $("[player='" + data.current + "']").addClass("current");
         current = data.current;
         player = data.player.id;
-        $("[tile='" + data.thief_location + "']").append($("<div id=\"thief\"></div>"));
+        $("#thief").remove();
+        $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
         $(".usercard.current").parent().addClass("current");
       })
       .error(function(data) {

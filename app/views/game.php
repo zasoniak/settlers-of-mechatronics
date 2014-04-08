@@ -22,6 +22,7 @@
       </form>
       <?php $you = new CatanPlayer(Player::findByGameByUser($game->model->id, Auth::user()->id)); ?>
       <div class="usercard your"><div>
+          trolololololo where is my hope?
           <figure>
             <p class="<?php echo $you->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
             <p class="<?php echo $you->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
@@ -57,7 +58,7 @@
           <div class="trade up">+</div>
           <div class="trade down">-</div>
           <div class="res_card greyscale <?php echo $type." ".$you->model->color; ?>" res="<?php echo $type; ?>">
-            <p><span></span><span></span></p>
+            <p class="<?php echo $you->model->color; ?>"><span></span><span></span></p>
           </div>
         </div></div>
         <?php endforeach; ?>
@@ -78,18 +79,6 @@
           <div class="icon"></div>
           </div></div>
         <?php endforeach; ?>
-      </div>
-      <div id="dev_cards" class="panel">
-        <?php
-        /*
-        $cards = array('victorypoint','knight','monopoly','roadbuilding','yearofplenty');
-        foreach($cards as $card): ?>
-        <div class="development_card">
-          <div class="dev_card greyscale <?php echo $card; ?>" card="<?php echo $card; ?>">
-            <p><span></span></p>
-          </div>
-        </div>
-        <?php endforeach; */?>
       </div>
       <?php echo Session::get('message'); ?>
     </aside>
