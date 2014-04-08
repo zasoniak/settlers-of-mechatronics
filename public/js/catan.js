@@ -237,6 +237,7 @@ $(document).ready(function() {
       $.post("ajax/trade", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                $("#trade_button_outside").removeClass("clicked");
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -357,12 +358,10 @@ $(document).ready(function() {
                   .attr(item.attr);
         });
         // trades hosted   trades hosted   trades hosted
-        if (!data.player.trades_hosted && !data.player.trade_received){
           $("#trade_button_accept").addClass("send").removeClass("accept").removeClass("confirm");
           $("#trade_button_reject").addClass("cancel").removeClass("reject").removeClass("delete");
-        }
         
-        if (data.player.trades_hosted){
+        if (data.player.trades_hosted.length){
           $("#trade_button_accept").addClass("confirm").removeClass("accept").removeClass("send");
           $("#trade_button_reject").addClass("delete").removeClass("reject").removeClass("cancel");
         }
