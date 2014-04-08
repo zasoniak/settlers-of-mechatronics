@@ -42,8 +42,8 @@
         </div></div>
         <div id="button_trade_outside" class="button"><div>
           <a id="trade_button" class="main <?php echo $you->model->color; ?>"><span>handel</span></a>
-          <a id="trade_button_send" class="inside <?php echo $you->model->color; ?>"><span>wyślij</span></a>
-          <a id="trade_button_cancel" class="inside <?php echo $you->model->color; ?>"><span>anuluj</span></a>
+<!--          <a id="trade_button_send" class="inside <?php echo $you->model->color; ?>"><span>wyślij</span></a>
+          <a id="trade_button_cancel" class="inside <?php echo $you->model->color; ?>"><span>anuluj</span></a>-->
           <a id="trade_button_accept" class="inside <?php echo $you->model->color; ?>"><span>akceptuj</span></a>
           <a id="trade_button_reject" class="inside <?php echo $you->model->color; ?>"><span>odrzuć</span></a>
         </div></div>
