@@ -54,8 +54,8 @@ class Trade extends Eloquent {
   { 
     if($this->accepted)
     {
-      $host = $this->host();
-      $client = $this->client();
+      $host = $this->host;
+      $client = $this->client;
       $resources = array('wood','sheep','clay','stone','wheat');
       foreach ($resources as $resource)
       {

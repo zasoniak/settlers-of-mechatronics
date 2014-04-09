@@ -203,7 +203,7 @@ Route::post('game/ajax/tradeconfirm', function(){
   $hostarray = explode('_', $key);
   $client = $hostarray[1];
   $host = Player::findByGameByUser($input['game_id'], Auth::user()->id);
-  $trade = Trade::findByHostByClient($host, $client->id);
+  $trade = Trade::findByHostByClient($host->id, $client);
   try
   {
     $trade->confirm();
