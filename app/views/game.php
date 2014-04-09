@@ -23,8 +23,8 @@
       <?php $you = new CatanPlayer(Player::findByGameByUser($game->model->id, Auth::user()->id)); ?>
       <div class="usercard your"><div>
           <figure>
-            <p class="<?php echo $you->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
-            <p class="<?php echo $you->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
+            <p class="<?php echo $you->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png"><?php echo $player->model->countResources(); ?></p>
+            <p class="<?php echo $you->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png"><?php echo $player->model->countCards(); ?></p>
             <label for="player_<?php echo $you->model->id; ?>">
               <?php echo HTML::image('img/'.$you->model->user->image, 'morda', array('class'=>$you->model->color)); ?>
             </label>
@@ -68,8 +68,8 @@
         <?php foreach($game->getOpponents() as $player): ?>
         <div class="usercard" player="<?php echo $player->model->id; ?>"><div>
           <figure>
-            <p class="<?php echo $player->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png">3</p>
-            <p class="<?php echo $player->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png">1</p>
+            <p class="<?php echo $player->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png"><?php echo $player->model->countResources(); ?></p>
+            <p class="<?php echo $player->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png"><?php echo $player->model->countCards(); ?></p>
             <label for="player_<?php echo $player->model->id; ?>">
               <?php echo HTML::image('img/'.$player->model->user->image, 'morda', array('class'=>$player->model->color)); ?>
             </label>

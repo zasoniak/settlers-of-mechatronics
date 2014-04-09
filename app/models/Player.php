@@ -105,6 +105,11 @@ class Player extends Eloquent{
     {
       return $this->roads()->count();
     }
+    
+    public function countCards()
+    {
+      return $this->cards()->count();
+    }
        
     public static function findByGameByUser($game_id, $user_id)
     {
