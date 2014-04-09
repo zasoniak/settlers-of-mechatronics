@@ -237,6 +237,7 @@ $(document).ready(function() {
       $.post("ajax/trade", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                $("#trade_button_outside").removeClass("clicked");
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -357,22 +358,20 @@ $(document).ready(function() {
                   .attr(item.attr);
         });
         // trades hosted   trades hosted   trades hosted
-        if (!data.player.trades_hosted && !data.player.trade_received){
-          $("#trade_button_accept").addClass("send").removeClass("accept").removeClass("confirm");
-          $("#trade_button_reject").addClass("cancel").removeClass("reject").removeClass("delete");
-        }
+          $("#trade_button_accept").addClass("send").removeClass("accept").removeClass("confirm").find("span").html("Wyślij");
+          $("#trade_button_reject").addClass("cancel").removeClass("reject").removeClass("delete").find("span").html("Anuluj");
         
-        if (data.player.trades_hosted){
-          $("#trade_button_accept").addClass("confirm").removeClass("accept").removeClass("send");
-          $("#trade_button_reject").addClass("delete").removeClass("reject").removeClass("cancel");
+        if (data.player.trades_hosted.length){
+          $("#trade_button_accept").addClass("confirm").removeClass("accept").removeClass("send").find("span").html("Potwierdź");
+          $("#trade_button_reject").addClass("delete").removeClass("reject").removeClass("cancel").find("span").html("Rezygnuj");
         }
         
         // trade received   trade received   trade received   
         if (data.player.trade_received)
         {
-          $("#button_trade_outside").addClass("withtrade");
-          $("#trade_button_accept").addClass("accept").removeClass("confirm").removeClass("send");
-          $("#trade_button_reject").addClass("reject").removeClass("delete").removeClass("cancel");
+          $("#button_trade_outside").addClass("withtrade clicked");
+          $("#trade_button_accept").addClass("accept").removeClass("confirm").removeClass("send").find("span").html("Akceptuj");
+          $("#trade_button_reject").addClass("reject").removeClass("delete").removeClass("cancel").find("span").html("Odrzuć");
           var trade = data.player.trade_received;
           var usercard = $("[player=" + trade.host_id + "]");
           $("#trade_form").find("[name=player_" + trade.host_id + "]").prop('checked', true);
