@@ -119,6 +119,9 @@ div#board {
   border-radius: 15px;
   display: none;
 }
+.settle.upgrade {
+  box-shadow: 0 0 10px black;
+}
 .settle.active:hover {
   background: #fff;
   border-color: #aaa;

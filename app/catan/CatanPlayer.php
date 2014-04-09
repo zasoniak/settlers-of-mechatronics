@@ -86,7 +86,8 @@ class CatanPlayer
         'cards' => $cards,
         'trades_hosted' => $this->model->tradesReturned()->get()->toArray(),
         'trade_received' => $tradereceived,
-        'id' => $this->model->id
+        'id' => $this->model->id,
+        'color' => $this->model->color
     );
   }
 }

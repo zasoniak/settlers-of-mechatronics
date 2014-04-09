@@ -144,11 +144,11 @@ div.usercard p img {
   height: 16px;
 }
 
-div.usercard p#cards_number {
+div.usercard p.cards_number {
   top: 0;
   left: 20px;
 }
-div.usercard p#res_number {
+div.usercard p.res_number {
   bottom: 0;
   right: 20px;
 }

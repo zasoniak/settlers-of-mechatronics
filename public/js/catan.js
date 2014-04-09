@@ -1,5 +1,6 @@
 $(document).ready(function() {
   var game = $("#game_id").val();
+  var color;
   // LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   LOAD BOARD   
   $.getJSON("ajax/board", {game_id: game})
           .done(function(data) {
@@ -8,7 +9,7 @@ $(document).ready(function() {
                       .hide()
                       .addClass(item.classes)
                       .css(item.styles)
-                       .attr(item.attr)
+                      .attr(item.attr)
                       .append($("<span>").html(item.prob))
                       .append($("<div class=\"face1\"></div>"))
                       .append($("<div class=\"face2\"></div>"))
@@ -51,6 +52,10 @@ $(document).ready(function() {
         $(".road.active").toggle('300');
       });
       
+      $("#build_town").click(function() {
+        $(".settle."+color).toggleClass("upgrade");
+      });
+      
       $(document).on("click", ".settle.active", function(event) {
         $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
                 .done(function(data) {
@@ -61,7 +66,7 @@ $(document).ready(function() {
                 });
       });
       
-      $(document).on("click", ".settle:not(.active)", function(event) {
+      $(document).on("click", ".settle.upgrade", function(event) {
         $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
                 .done(function(data) {
                   loadJSON(game);
@@ -332,7 +337,7 @@ $(document).ready(function() {
                   .appendTo("#board");
         });
         $.each(data.opponents, function(index, item) {
-          $("[player=" + index + "]").find("td").last().html(item.resources);
+          $("[player=" + index + "]").find("p.res_number span").html(item.resources);
         });
         // resources   resources   resources   resources   
         $.each(data.player.resources, function(index, item) {
@@ -390,6 +395,8 @@ $(document).ready(function() {
         $("[player='" + data.current + "']").addClass("current");
         current = data.current;
         player = data.player.id;
+        color = data.player.color;
+        console.log(color);
         $("#thief").remove();
         $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
         $(".usercard.current").parent().addClass("current");
