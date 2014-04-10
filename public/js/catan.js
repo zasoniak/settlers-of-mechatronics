@@ -53,7 +53,7 @@ $(document).ready(function() {
       });
       
       $("#build_town").click(function() {
-        $(".settle."+color).toggleClass("upgrade");
+        $(".settle."+color+":not(.town)").toggleClass("upgrade");
       });
       
       $(document).on("click", ".settle.active", function(event) {
@@ -153,12 +153,42 @@ $(document).ready(function() {
     $("#trade_button").parent().removeClass("clicked");
   });
   // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE    
-  function fromform() {
-    $(".res_card.wood p span").last().html($("#trade_form").find("[res=\"wood\"]").val());
-    $(".res_card.stone p span").last().html($("#trade_form").find("[res=\"stone\"]").val());
-    $(".res_card.sheep p span").last().html($("#trade_form").find("[res=\"sheep\"]").val());
-    $(".res_card.clay p span").last().html($("#trade_form").find("[res=\"clay\"]").val());
-    $(".res_card.wheat p span").last().html($("#trade_form").find("[res=\"wheat\"]").val());
+  function clearform() {
+    document.getElementById("trade_form").reset();
+    fromform(false);
+  }
+  function fromform(resource) {
+    if(resource==false)
+    {
+      var res_array = ["wood","sheep","stone","wheat","clay"];
+    }
+    else
+    {
+      var res_array = [resource];
+    }
+    $.each(res_array, function(index, res){
+      var q = $("#trade_form").find("[res=\"" + res + "\"]").val();
+      var res_box = $(".res_card." + res).parent();
+      var spanres = res_box.find(" p span").first().html();
+      var spandiff = res_box.find(" p span").last();
+      spandiff.html(parseInt(+spanres)+parseInt(q));
+      if(q>0)
+        {
+          res_box.find(".up").html("+"+q).css("font-size","25px");
+        }
+        else
+        {
+          if(q<0)
+          {
+            res_box.find(".down").html(q).css("font-size","25px");
+          }
+          else
+          {
+            res_box.find(".up").empty().html("+").css("font-size","30px");
+            res_box.find(".down").empty().html("-").css("font-size","30px");
+          }
+        }
+    });
   }
   $("#trade_button").click(function() {
     $(".road.active").hide();
@@ -179,63 +209,17 @@ $(document).ready(function() {
     $(".trade.up").click(function() {
       var res = $(this).parent().find(".res_card").attr("res");
       var spanoffer = $("#trade_form").find("[res=" + res + "]").val();
-      var spanres = $(this).parent().find(".res_card p span").first();
-      var spandiff = $(this).parent().find(".res_card p span").last();
-      var q = (+spanoffer) + 1;
-      spandiff.html(+spanres.html() + q);
-      if(spandiff.html()>0)
-      {
-        $(this).next().removeClass("greyscale");
-      }
-      if(q>0)
-      {
-        $(this).html("+"+q).css("font-size","25px");
-      }
-      else
-      {
-        if(q<0)
-        {
-          $(this).next().html(q).css("font-size","25px");
-        }
-        else
-        {
-          $(this).empty().html("+").css("font-size","30px");
-          $(this).next().empty().html("-").css("font-size","30px");
-        }
-      }
+      var q = (+spanoffer) + 1; 
       $("#trade_form").find("[res=" + res + "]").val(q);
-      fromform();
+      fromform(res);
     });
     
     $(".trade:not(.greyscale).down").click(function() {
       var res = $(this).parent().find(".res_card").attr("res");
       var spanoffer = $("#trade_form").find("[res=" + res + "]").val();
-      var spanres = $(this).parent().find(".res_card p span").first();
-      var spandiff = $(this).parent().find(".res_card p span").last();
-      var q = (+spanoffer) - 1;
-      spandiff.html(+spanres.html() + q);
-      if(spandiff.html()<1)
-      {
-        $(this).addClass("greyscale");
-      }
-      if(q>0)
-      {
-        $(this).prev().html("+"+q).css("font-size","25px");;
-      }
-      else
-      {
-        if(q<0)
-        {
-          $(this).html(q).css("font-size","25px");;
-        }
-        else
-        {
-          $(this).prev().empty().html("+").css("font-size","30px");;
-          $(this).empty().html("-").css("font-size","30px");;
-        }
-      }
+      var q = (+spanoffer) - 1; 
       $("#trade_form").find("[res=" + res + "]").val(q);
-      fromform();
+      fromform(res);
     });
     
     $(document).on("click", "#trade_button_accept.send", function(event) {
@@ -243,6 +227,8 @@ $(document).ready(function() {
               .done(function(data) {
                 loadJSON(game);
                 $("#trade_button_outside").removeClass("clicked");
+                alert("Wysłano");
+                clearform();
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -253,6 +239,8 @@ $(document).ready(function() {
       $.post("ajax/tradeaccept", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                alert("Zaakceptowano :D");
+                clearform();
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -263,6 +251,8 @@ $(document).ready(function() {
       $.post("ajax/tradeconfirm", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                alert("Potwierdzono");
+                clearform();
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -270,13 +260,14 @@ $(document).ready(function() {
     });
     
     $(document).on("click", "#trade_button_reject.cancel", function(event) {
-     
+     clearform();
     });
     
     $(document).on("click", "#trade_button_reject.reject", function(event) {
       $.post("ajax/tradereject", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                clearform();
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -287,6 +278,7 @@ $(document).ready(function() {
       $.post("ajax/tradedelete", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                clearform();
               })
               .error(function(data) {
                 alert(data.responseText);
@@ -375,6 +367,7 @@ $(document).ready(function() {
         if (data.player.trade_received)
         {
           $("#button_trade_outside").addClass("withtrade clicked");
+          
           $("#trade_button_accept").addClass("accept").removeClass("confirm").removeClass("send").find("span").html("Akceptuj");
           $("#trade_button_reject").addClass("reject").removeClass("delete").removeClass("cancel").find("span").html("Odrzuć");
           var trade = data.player.trade_received;
@@ -386,7 +379,7 @@ $(document).ready(function() {
           $("#trade_form").find("[res=\"sheep\"]").val(trade.sheep);
           $("#trade_form").find("[res=\"clay\"]").val(trade.clay);
           $("#trade_form").find("[res=\"wheat\"]").val(trade.wheat);
-          fromform();
+          fromform(false);
         }
         $("#die1").html(data.dice[0]);
         $("#die2").html(data.dice[1]);
