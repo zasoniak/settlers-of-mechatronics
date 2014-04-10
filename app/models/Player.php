@@ -32,6 +32,10 @@ class Player extends Eloquent{
         return $this->hasOne('Trade','client_id');
     }
     
+    public function tradePending() {
+      return $this->tradeReceived()->where('updated', 0)->where('accepted', 0);
+    }
+
     public function tradesHosted() {
       return $this->hasMany('Trade','host_id');
     }

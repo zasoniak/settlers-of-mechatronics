@@ -22,7 +22,6 @@ div#board {
 /****************TILE*****************/
 
 .hex {
-  cursor: pointer;
   position: absolute;
   background-position: center;
   background-size: 124px;
@@ -120,7 +119,11 @@ div#board {
   display: none;
 }
 .settle.upgrade {
-  box-shadow: 0 0 10px black;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+.settle.upgrade:hover {
+  box-shadow: 0 0 12px white;
 }
 .settle.active:hover {
   background: #fff;

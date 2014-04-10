@@ -70,7 +70,7 @@ class CatanPlayer
           'resources' => $this->model->countResources()
       );
     }
-    $tradereceived = $this->model->tradeReceived;
+    $tradereceived = $this->model->tradePending()->first();
     if(!is_null($tradereceived))
     {
       $tradereceived = $tradereceived->toArray();
