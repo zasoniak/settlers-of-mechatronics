@@ -395,7 +395,6 @@ $(document).ready(function() {
         $(".usercard.current").parent().addClass("current");
       })
       .error(function(data) {
-        alert("Musiało się zrąbać połączenie.");
       });
   }
   ;
