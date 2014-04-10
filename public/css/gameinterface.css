@@ -96,12 +96,12 @@ div.ring.grey {
   -webkit-transform-origin-y: 925px;  /*(diameter+child_width)/2 */
 }
 
-#opponents div.usercard:nth-of-type(3) {-webkit-transform: rotate(-0deg);}
-#opponents div.usercard:nth-of-type(3) div {-webkit-transform: rotate(0deg);}
+#opponents div.usercard:nth-of-type(1) {-webkit-transform: rotate(-0deg);}
+#opponents div.usercard:nth-of-type(1) div {-webkit-transform: rotate(0deg);}
 #opponents div.usercard:nth-of-type(2) {-webkit-transform: rotate(-10deg);}
 #opponents div.usercard:nth-of-type(2) div {-webkit-transform: rotate(10deg);}
-#opponents div.usercard:nth-of-type(1) {-webkit-transform: rotate(-20deg);}
-#opponents div.usercard:nth-of-type(1) div {-webkit-transform: rotate(20deg);}
+#opponents div.usercard:nth-of-type(3) {-webkit-transform: rotate(-20deg);}
+#opponents div.usercard:nth-of-type(3) div {-webkit-transform: rotate(20deg);}
 
 div.usercard figure {
   position: relative;
@@ -155,31 +155,25 @@ div.usercard p.res_number {
 
 div.usercard .icon {
   display: none;
-}
-
-div.usercard.withoffer .icon {
-  display: block;
-  /*background-color: whitesmoke;*/
   background-image: url('../img/icon_check.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   background-origin: content-box;
   position: absolute;
-  top: 100px;
-  left: 90px;
+  top: 45px;
+  right: 0px;
   width: 30px;
   height: 30px;
   border: 5px transparent solid;
   border-radius: 20px;
-  -webkit-animation: blink 1s infinite;
+}
+
+div.usercard.withoffer .icon, div.usercard.trading .icon {
+  display: block;
 }
 
 .none {display: none;}
-
-div.usercard.trading figure img {
-    box-shadow: 0 0 50px greenyellow;
-}
 
 .grey {
   background-color: silver;
@@ -464,7 +458,8 @@ p.trading {
 }
 
 #trade_submit {
-  display: none;
+  /*display: none;*/
+  z-index: 8;
 }
 
 #offers {
