@@ -101,10 +101,14 @@ class CatanGame
     /*
     if($this->model->trades()->count())
     {
-      throw new Exception('Najpier dokończ transakcje, kanciarzu!');
+      throw new Exception('Najpierw dokończ transakcje, kanciarzu!');
     }
      *
      */
+    if($this->model->turn_number == 0)
+    {
+      throw new Exception('Jeszcze nie teraz!');
+    }
     $playersQuantity=$this->model->players()->count();
     //$playersQuantity=4;
      //jesli doszedl do konca nowa tura
@@ -147,11 +151,13 @@ class CatanGame
     $this->model->save();
   }
   
- public function throwDice()
+  public function throwDice()
   {
-    $this->model->dice1 = mt_rand(1, 6);
-    $this->model->dice2 = mt_rand(1, 6);
-    $dice=$this->model->dice1+$this->model->dice2;
+    $die1 = ceil((float)mt_rand(1, 6000)/1000);
+    $die2 = ceil((float)mt_rand(1, 6000)/1000);
+    $this->model->dice1 = $die1;
+    $this->model->dice2 = $die2;
+    $dice=$die1+$die2;
     $history = unserialize($this->model->dice_history);    
     $history[$dice]++;
     $this->model->dice_history = serialize($history);
