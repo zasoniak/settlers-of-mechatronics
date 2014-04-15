@@ -82,6 +82,10 @@ Route::get('game/create', function(){
 
 Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
+  if($game->model->is_finished)
+  {
+    return Response::make("Gra została zakończona.",200);
+  }
   return View::make('game')->with('game',$game);
 });
 
@@ -238,6 +242,7 @@ Route::post('game/ajax/playcard', function(){
   {
     return Response::make('To nie Twoja karta!', 403);
   }
+  $data = array();
   if(isset($input['res']))
   {
     $data['resource'] = $input['res'];
@@ -249,7 +254,7 @@ Route::post('game/ajax/playcard', function(){
     {
       $offer[$resource] = $input["trade_$resource"];
     }
-  $data['offer'] = $offer;
+    $data['offer'] = $offer;
   }
   try
   {
@@ -261,10 +266,26 @@ Route::post('game/ajax/playcard', function(){
   return Response::make('OK', 200);
 });
 
+Route::post('game/ajax/thief', array('before'=>'turn', function(){
+  $game = new CatanGame(Game::find(Input::get('game_id')));
+  try
+  {
+    $game->moveThief();
+  } catch (Exception $ex) {
+    return Response::make($exc->getMessage(),403);
+  }
+  return Response::make('OK!', 200);
+}));
+
 Route::post('game/ajax/next', array('before'=>'turn', function() {
-    $game = new CatanGame(Game::find(Input::get('game_id')));
+  $game = new CatanGame(Game::find(Input::get('game_id')));
+  try
+  {
     $game->endMove();
-    return Response::make('OK!', 200);
+  } catch (Exception $exc) {
+    return Response::make($exc->getMessage(),403);
+  }
+  return Response::make('OK!', 200);
 }));
 
 Route::post('game/ajax/build', array('before'=>'turn', function(){

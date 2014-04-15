@@ -32,6 +32,10 @@ class Player extends Eloquent{
         return $this->hasOne('Trade','client_id');
     }
     
+    public function tradePending() {
+      return $this->tradeReceived()->where('updated', 0)->where('accepted', 0);
+    }
+
     public function tradesHosted() {
       return $this->hasMany('Trade','host_id');
     }
@@ -75,7 +79,6 @@ class Player extends Eloquent{
         {
             $sum=floor($sum/2);
             $resourceList=array('stone','clay','sheep','wood','wheat');
-            $resource;
             while($sum>0)
             {
                 $resource=$resourceList[mt_rand(0,4)];
@@ -89,6 +92,22 @@ class Player extends Eloquent{
             return true;
         }
         return false;   
+    }
+    
+    public function stealRandom()
+    {
+      $resources = array();
+      foreach($this->getResources() as $res => $quentity)
+      {
+        for($i = 0; $i < $quantity; $i++)
+        {
+          array_push($resources, $res);
+        }
+      }
+      $resource = $resources[array_rand($resources)];
+      $this->{$resource}--;
+      $this->save();
+      return $resource;
     }
     
     public function countSettles()

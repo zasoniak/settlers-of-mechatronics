@@ -97,6 +97,11 @@ class CatanGame
   public function endMove()
   {
     $this->isWinner();
+    //warunki zakonczenia tury
+    if($this->model->trades()->count())
+    {
+      throw new Exception('Najpier dokończ transakcje, kanciarzu!');
+    }
     $playersQuantity=$this->model->players()->count();
     //$playersQuantity=4;
      //jesli doszedl do konca nowa tura
@@ -234,6 +239,37 @@ class CatanGame
     return (string)$this->board;
   }
   
+  public function moveThief($new_tile_id, $player_id)
+  {
+    $settles = Tile::find($new_tile_id)->nearestSettles();
+    $flag = false;
+    foreach ($settles as $settle)
+    {
+      if($settle->player_id == $player_id)
+      {
+        $flag = true;
+      }
+    }
+    if ($flag == false)
+    {
+      throw new Exception('Ten człowiek nie ma tam osady...');
+    }
+    if ($this->model->active_thief == 0)
+    {
+      throw new Exception('Chyba nie teraz...');
+    }
+    $this->board->model->thief_location=$new_tile_id;
+    $this->board->model->save();
+    $robbed = Player::find($player_id);
+    $robbedResource = $robbed->stealRandom();
+    $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
+    $player->addResource($robbedResource, 1);
+    $player->save();
+    $this->model->active_thief = 0;
+    $this->model->save();
+    return true;
+  }
+  
   public function buyItem($itemname,$id)
   {
     $buyer = $this->model->players()->where('user_id', Auth::user()->id)->first();
@@ -310,6 +346,7 @@ class CatanGame
         'player' => $this->playerList[Player::findByGameByUser($this->model->id, Auth::user()->id)->id]->toJSON(false),
         'opponents' => $opponents,
         'dice' => array($this->model->dice1,$this->model->dice2),
+        'active_thief' => $this->model->active_thief,
         'thief' => $this->board->model->thief_location,
         'board' => $this->board->toJSON()
     );
