@@ -23,8 +23,8 @@
       <?php $you = new CatanPlayer(Player::findByGameByUser($game->model->id, Auth::user()->id)); ?>
       <div class="usercard your"><div>
           <figure>
-            <p class="<?php echo $you->model->color; ?>" id="res_number"><img src="http://localhost/catan/public/img/resource.png"><span>0</span></p>
-            <p class="<?php echo $you->model->color; ?>" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png"><?php echo $player->model->countCards(); ?></p>
+            <p class="<?php echo $you->model->color; ?> res_number" id="res_number"><img src="http://localhost/catan/public/img/resource.png"><span>0</span></p>
+            <p class="<?php echo $you->model->color; ?> cards_number" id="cards_number"><img src="http://localhost/catan/public/img/icon_card.png"><?php echo $player->model->countCards(); ?></p>
             <label for="player_<?php echo $you->model->id; ?>">
               <?php echo HTML::image('img/'.$you->model->user->image, 'morda', array('class'=>$you->model->color)); ?>
             </label>
@@ -35,17 +35,15 @@
       <div class="ring" player="<?php echo $you->model->id; ?>">
         <div id="button_develop_outside" class="button"><div>
           <a id="build_button" class="main <?php echo $you->model->color; ?>"><span>rozwój</span></a>
-          <a id="build_settle" class="inside <?php echo $you->model->color; ?>"><span>osada</span></a>
-          <a id="build_town" class="inside <?php echo $you->model->color; ?>"><span>miasto</span></a>
-          <a id="build_road" class="inside <?php echo $you->model->color; ?>"><span>droga</span></a>
-          <a id="buy_card_button" class="inside <?php echo $you->model->color; ?>"><span>karta</span></a>
+            <a id="build_settle" class="inside <?php echo $you->model->color; ?>"><span>osada</span></a>
+            <a id="build_town" class="inside <?php echo $you->model->color; ?>"><span>miasto</span></a>
+            <a id="build_road" class="inside <?php echo $you->model->color; ?>"><span>droga</span></a>
+            <a id="buy_card_button" class="inside <?php echo $you->model->color; ?>"><span>karta</span></a>
         </div></div>
         <div id="button_trade_outside" class="button"><div>
           <a id="trade_button" class="main <?php echo $you->model->color; ?>"><span>handel</span></a>
-<!--          <a id="trade_button_send" class="inside <?php echo $you->model->color; ?>"><span>wyślij</span></a>
-          <a id="trade_button_cancel" class="inside <?php echo $you->model->color; ?>"><span>anuluj</span></a>-->
-          <a id="trade_button_accept" class="inside <?php echo $you->model->color; ?>"><span></span></a>
-          <a id="trade_button_reject" class="inside <?php echo $you->model->color; ?>"><span></span></a>
+            <a id="trade_button_accept" class="inside <?php echo $you->model->color; ?>"><span></span></a>
+            <a id="trade_button_reject" class="inside <?php echo $you->model->color; ?>"><span></span></a>
         </div></div>
         <div class="button"><div>
           <a id="endturn_button" class="main <?php echo $you->model->color; ?>"><span>koniec</span></a>

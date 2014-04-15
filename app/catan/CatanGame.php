@@ -98,10 +98,10 @@ class CatanGame
   {
     $this->isWinner();
     //warunki zakonczenia tury
-    if($this->model->trades()->count())
-    {
-      throw new Exception('Najpier dokończ transakcje, kanciarzu!');
-    }
+//    if($this->model->trades()->count())
+//    {
+//      throw new Exception('Najpier dokończ transakcje, kanciarzu!');
+//    }
     $playersQuantity=$this->model->players()->count();
     //$playersQuantity=4;
      //jesli doszedl do konca nowa tura

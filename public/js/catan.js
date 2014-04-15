@@ -29,6 +29,9 @@ $(document).ready(function() {
             });
           });
   loadJSON(game);
+  function showDevelop() {
+    $("#button_develop_outside").addClass("clicked"); 
+  }
   function hideDevelop() {
     $(".settle.active").hide(300);
     $(".road.active").hide(300);
@@ -50,26 +53,31 @@ $(document).ready(function() {
     $(".res_card p span:last-of-type").hide(300);
     $("#button_trade_outside").removeClass("clicked");
   }
-  function hideButtons() {
-    $(".main").removeClass("clicked");
-  }
   // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
-  $("#build_button:not(.active)").click(function() {
+  $(document).on("click", "#build_button", function(event) {
     hideTrade();
-    $(this).parent().parent().toggleClass("clicked");
+    $(this).parent().parent().addClass("clicked");
   });
-      $("#build_settle").click(function() {
+  $(document).on("click", ".clicked .main", function(event) {
+    hideTrade();
+    hideDevelop();
+  });
+      $(document).on("click", "#build_settle", function(event) {
         $(".road.active").hide('300');
         $(".settle.active").toggle('300');
+        $(".settle."+color+":not(.town)").removeClass("upgrade");
       });
       
-      $("#build_road").click(function() {
+      $(document).on("click", "#build_road", function(event) {
         $(".settle.active").hide('300');
         $(".road.active").toggle('300');
+        $(".settle."+color+":not(.town)").removeClass("upgrade");
       });
       
-      $("#build_town").click(function() {
+      $(document).on("click", "#build_town", function(event) {
         $(".settle."+color+":not(.town)").toggleClass("upgrade");
+        $(".settle.active").hide('300');
+        $(".road.active").hide('300');
       });
       
       $(document).on("click", ".settle.active", function(event) {
@@ -86,7 +94,7 @@ $(document).ready(function() {
       $(document).on("click", ".settle.upgrade", function(event) {
         $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
                 .done(function(data) {
-                  hideDevelop;
+                  hideDevelop();
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -97,7 +105,7 @@ $(document).ready(function() {
       $(document).on("click", ".road.active", function(event) {
         $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
                 .done(function(data) {
-                  hideDevelop
+                  hideDevelop();
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -202,13 +210,9 @@ $(document).ready(function() {
         }
     });
   }
-  $(document).on("click", "#trade_button:not(.clicked)", function(event) {
+  $(document).on("click", ".button:not(.clicked) #trade_button", function(event) {
     hideDevelop();
     showTrade();   
-  });
-  $(document).on("click", ".button.clicked", function(event) {
-    hideTrade();
-    hideDevelop();
   });
     $(document).on("click", "figure.clickable", function(event) {
       var usercard = $(this).parent().parent();
@@ -402,6 +406,7 @@ $(document).ready(function() {
         $("#thief").remove();
         $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
         $(".usercard.current").parent().addClass("current");
+        
       })
       .error(function(data) {
       });

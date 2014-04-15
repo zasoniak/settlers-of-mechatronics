@@ -6,6 +6,7 @@
 html {
   background-color: whitesmoke;
   /*background-image: url('http://trickvilla.com/wp-content/uploads/Light-Wood-Background.jpg');*/
+  
   background-size: cover;
   font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
@@ -94,6 +95,17 @@ div.ring.grey {
   top: -65px;   /* 10-width/2 */
   left: 775px;   /* ()ring width-width)/2 */
   -webkit-transform-origin-y: 925px;  /*(diameter+child_width)/2 */
+  -webkit-transition: 0.3s;
+}
+
+#opponents div.usercard.current, #opponents div.usercard:not(.current).active {
+  top: -95px;
+  -webkit-transform-origin-y: 955px;
+  -webkit-transition: 0.3s;
+}
+
+#opponents div.usercard:not(.current) {
+  -webkit-filter: grayscale(65%);
 }
 
 #opponents div.usercard:nth-of-type(1) {-webkit-transform: rotate(-0deg);}
@@ -179,7 +191,6 @@ div.usercard.withoffer .icon, div.usercard.trading .icon {
   background-color: silver;
   border-color: silver;
 }
-
 
 /******************BUTTONY*******************/
 
