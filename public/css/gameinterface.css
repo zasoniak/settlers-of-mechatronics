@@ -98,10 +98,11 @@ div.ring.grey {
   -webkit-transition: 0.3s;
 }
 
-#opponents div.usercard.current, #opponents div.usercard:not(.current).active {
+#opponents div.usercard.current, #opponents div.usercard:not(.current).trading {
   top: -95px;
   -webkit-transform-origin-y: 955px;
   -webkit-transition: 0.3s;
+  -webkit-filter: grayscale(0%);
 }
 
 #opponents div.usercard:not(.current) {
