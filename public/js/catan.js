@@ -17,6 +17,7 @@ $(document).ready(function() {
                       .delay(50 * index)
                       .fadeIn('120');
             });
+            $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
             $.each(data.ports, function(index, item) {
               $("<div>")
                       .hide()
@@ -28,20 +29,35 @@ $(document).ready(function() {
             });
           });
   loadJSON(game);
-  $(".main").click(function() {
-    $(this).parent().parent().siblings().removeClass("clicked");
-    $(".road.active").hide();
-    $(".settle.active").hide();
-  });
-  // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
-  $("#build_button").click(function() {
-    $(".trade").slideUp('300');
+  function hideDevelop() {
+    $(".settle.active").hide(300);
+    $(".road.active").hide(300);
+    $(".settle").removeClass("upgrade");
+    $("#button_develop_outside").removeClass("clicked"); 
+  }
+  function showTrade() {
+    $(".trade").slideDown(300);
+    $(".usercard figure").addClass("clickable");
+    $(".res_card p").addClass("trading");
+    $(".res_card p span:last-of-type").show(300);
+    $("#button_trade_outside").addClass("clicked");    
+  }
+  function hideTrade() {
+    $(".trade").slideUp(300);
     $(".usercard figure").removeClass("clickable");
+    $(".usercard ").removeClass("withoffer");
     $(".res_card p").removeClass("trading");
-    $(".res_card p span:last-of-type").hide();
+    $(".res_card p span:last-of-type").hide(300);
+    $("#button_trade_outside").removeClass("clicked");
+  }
+  function hideButtons() {
+    $(".main").removeClass("clicked");
+  }
+  // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
+  $("#build_button:not(.active)").click(function() {
+    hideTrade();
     $(this).parent().parent().toggleClass("clicked");
   });
-  
       $("#build_settle").click(function() {
         $(".road.active").hide('300');
         $(".settle.active").toggle('300');
@@ -59,6 +75,7 @@ $(document).ready(function() {
       $(document).on("click", ".settle.active", function(event) {
         $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
                 .done(function(data) {
+                  hideDevelop();
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -69,6 +86,7 @@ $(document).ready(function() {
       $(document).on("click", ".settle.upgrade", function(event) {
         $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
                 .done(function(data) {
+                  hideDevelop;
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -79,6 +97,7 @@ $(document).ready(function() {
       $(document).on("click", ".road.active", function(event) {
         $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
                 .done(function(data) {
+                  hideDevelop
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -130,11 +149,8 @@ $(document).ready(function() {
   });
   // year of plenty card   year of plenty card   year of plenty card
   $(document).on("click", ".yearofplenty", function(){
-    $(".res_card p").addClass("trading");
-    $(".resource").removeClass("on");
-    $(".trade").slideDown('300');
-    $(".res_card p span:last-of-type").show();
-    $("#trade_button").parent().addClass("clicked");
+    showTrade();
+    $(".usercard figure").removeClass("clickable");
     card_id = $(this).attr("card");
   });
   $(document).on("click", "#trade_button_yearofplenty", function(){
@@ -146,11 +162,7 @@ $(document).ready(function() {
         .error(function(data) {
           alert(data.responseText);
         });
-    $(".res_card p").removeClass("trading");
-    $(".resource").addClass("on");
-    $(".trade").slideUp('300');
-    $(".res_card p span:last-of-type").hide();
-    $("#trade_button").parent().removeClass("clicked");
+    hideTrade();
   });
   // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE    
   function clearform() {
@@ -190,17 +202,14 @@ $(document).ready(function() {
         }
     });
   }
-  $("#trade_button").click(function() {
-    $(".road.active").hide();
-    $(".settle.active").hide();
-    $(".res_card p").toggleClass("trading");
-    $(".resource").removeClass("on");
-    $(".trade").slideToggle('300');
-    $(".usercard figure").toggleClass("clickable");
-    $(".res_card p span:last-of-type").toggle();
-    $(this).parent().parent().toggleClass("clicked");    
+  $(document).on("click", "#trade_button:not(.clicked)", function(event) {
+    hideDevelop();
+    showTrade();   
   });
-  
+  $(document).on("click", ".button.clicked", function(event) {
+    hideTrade();
+    hideDevelop();
+  });
     $(document).on("click", "figure.clickable", function(event) {
       var usercard = $(this).parent().parent();
       usercard.toggleClass("trading");
@@ -367,7 +376,8 @@ $(document).ready(function() {
         if (data.player.trade_received)
         {
           $("#button_trade_outside").addClass("withtrade clicked");
-          
+          $(".res_card p").addClass("trading");
+          $(".trade").slideDown('300');
           $("#trade_button_accept").addClass("accept").removeClass("confirm").removeClass("send").find("span").html("Akceptuj");
           $("#trade_button_reject").addClass("reject").removeClass("delete").removeClass("cancel").find("span").html("Odrzuć");
           var trade = data.player.trade_received;
@@ -389,7 +399,6 @@ $(document).ready(function() {
         current = data.current;
         player = data.player.id;
         color = data.player.color;
-        console.log(color);
         $("#thief").remove();
         $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
         $(".usercard.current").parent().addClass("current");
