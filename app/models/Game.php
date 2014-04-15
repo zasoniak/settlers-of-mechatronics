@@ -15,11 +15,6 @@ class Game extends Eloquent {
     return $this->hasMany('Player');
   }
   
-  public function trades()
-  {
-    return $this->hasMany('Trade');
-  }
-  
   public function currentPlayer()
   {
     return $this->players()->where('turn_order',$this->current_player)->first();
