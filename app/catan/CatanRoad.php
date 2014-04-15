@@ -122,7 +122,22 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     }
     
     $this->model->player_id = $player->id;
-    $player->route_length = $this->findTradeRoad();
+    $myRoute = $this->findLongestRoute();
+    $player->route_length = $myRoute;
+    $opponentsRoutes = $this->model->board->game->players()->pluck('route_length');
+    $flag = true;
+    foreach ($opponentsRoutes as $length)
+    {
+      if($myRoute <= $length)
+      {
+        $flag = false;
+      }
+    }
+    if($flag)
+    {
+      $this->model->board->game->getOpponents()->update(array('has_longest_route'=>0));
+      $player->has_longest_route = 1;
+    }
     $player->save();
     $this->model->save();
     return true;
@@ -140,7 +155,7 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     return false;
   }
   
-  public function findTradeRoad()
+  public function findLongestRoute()
   {
     $temp=$this->model->player->roads;
     $roads=array();
@@ -214,8 +229,8 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
         }
     }
     return $longest;
-    
   }
+  
   public function buyZero(Player $player)
   {
     if(!$this->buildCheckZero($player->id))
