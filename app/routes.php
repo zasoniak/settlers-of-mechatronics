@@ -270,8 +270,8 @@ Route::post('game/ajax/thief', array('before'=>'turn', function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
   try
   {
-    $game->moveThief();
-  } catch (Exception $ex) {
+    $game->moveThief(Input::get('new_thief_location'), Input::get('player_id'));
+  } catch (Exception $exc) {
     return Response::make($exc->getMessage(),403);
   }
   return Response::make('OK!', 200);

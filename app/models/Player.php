@@ -97,7 +97,7 @@ class Player extends Eloquent{
     public function stealRandom()
     {
       $resources = array();
-      foreach($this->getResources() as $res => $quentity)
+      foreach($this->getResources() as $res => $quantity)
       {
         for($i = 0; $i < $quantity; $i++)
         {

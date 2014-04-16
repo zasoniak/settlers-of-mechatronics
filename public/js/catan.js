@@ -300,29 +300,28 @@ $(document).ready(function() {
               });
     });
   // MOVE THIEF    MOVE THIEF    MOVE THIEF    MOVE THIEF    MOVE THIEF   
+  var thief_announced = 0;
   var new_thief_location=0;
   $(document).on("click", ".put_thief", function() {
     new_thief_location = $(this).attr("tile");
     $("#thief").remove();
-    $("[tile=\"" + new_thief_location + "\"]").append($("<div id=\"thief\"></div>"));
+    $("[tile=\"" + new_thief_location + "\"]").prepend($("<div id=\"thief\"></div>"));
     alert("Mega, teraz wybierz frajera, którego bezczelnie ograbisz");
+    $(".usercard").addClass("frajer");
+    console.log(new_thief_location);
   });
-  if(new_thief_location!==0)
-  {
-    $(document).on("click", ".usercard", function() {
-      alert("Okradasz frajera!");
-      $.post("ajax/thief", {game_id: game, player_id: $(this).attr("player"), new_thief_location: new_thief_location})
-            .done(function(data) {
-              alert("Okradasz frajera!");
-              console.log("poszło");
-              thief_anounced=0;
-            })
-            .error(function(data) {
-              alert(data.responseText);
-            });
-    });
-    
-  }
+  $(document).on("click", ".frajer", function() {
+    $.post("ajax/thief", {game_id: game, player_id: $(this).attr("player"), new_thief_location: new_thief_location})
+          .done(function(data) {
+            alert("Okradasz frajera!");
+            thief_announced=0;
+            $(".usercard").removeClass("frajer");
+            loadJSON(game);
+          })
+          .error(function(data) {
+            alert(data.responseText);
+          });
+  });
     
   // ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   
   $("#endturn_button").click(function() {
@@ -347,7 +346,6 @@ $(document).ready(function() {
     }
   }, 3000);  
   // LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   
-  var thief_anounced = 0;
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
       .done(function(data) {
@@ -432,11 +430,11 @@ $(document).ready(function() {
         player = data.player.id;
         color = data.player.color;
         $("#thief").remove();
-        $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
+        $("[tile=\"" + data.thief + "\"]").prepend($("<div id=\"thief\"></div>"));
         $(".usercard.current").parent().addClass("current");
-        if(data.active_thief==1 && thief_anounced!=1)
+        if(data.active_thief==1 && thief_announced!=1)
         {
-          thief_anounced = 1;
+          thief_announced = 1;
           alert("Łolaboga! Kradnom!");
           if(current==player)
           {
@@ -446,7 +444,7 @@ $(document).ready(function() {
         }
         if(data.active_thief==0)
         {
-          thief_anounced = 0;
+          thief_announced = 0;
         }
       })
       .error(function(data) {
