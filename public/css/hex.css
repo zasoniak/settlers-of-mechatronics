@@ -94,6 +94,14 @@ div#board {
   -webkit-transition: 0.4s;
 }
 
+.hex.put_thief:hover {
+  cursor: pointer;
+}
+
+.hex.put_thief:hover span {
+  text-shadow: 0 0 50px white;
+}
+
 /******************************SETTLEMENT***********************/
 
 .settle {
@@ -276,5 +284,7 @@ div#board {
   border-radius: 35px;
   background-image: url('../img/thief.jpg');
   background-size: cover;
-  margin: -5px auto;
+  position: absolute;
+  top: 0px;
+  left: 20px;
 }

@@ -17,6 +17,7 @@ $(document).ready(function() {
                       .delay(50 * index)
                       .fadeIn('120');
             });
+            $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
             $.each(data.ports, function(index, item) {
               $("<div>")
                       .hide()
@@ -28,37 +29,61 @@ $(document).ready(function() {
             });
           });
   loadJSON(game);
-  $(".main").click(function() {
-    $(this).parent().parent().siblings().removeClass("clicked");
-    $(".road.active").hide();
-    $(".settle.active").hide();
-  });
-  // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
-  $("#build_button").click(function() {
-    $(".trade").slideUp('300');
+  function showDevelop() {
+    $("#button_develop_outside").addClass("clicked"); 
+  }
+  function hideDevelop() {
+    $(".settle.active").hide(300);
+    $(".road.active").hide(300);
+    $(".settle").removeClass("upgrade");
+    $("#button_develop_outside").removeClass("clicked"); 
+  }
+  function showTrade() {
+    $(".trade").slideDown(300);
+    $(".usercard figure").addClass("clickable");
+    $(".res_card p").addClass("trading");
+    $(".res_card p span:last-of-type").show(300);
+    $("#button_trade_outside").addClass("clicked");    
+  }
+  function hideTrade() {
+    $(".trade").slideUp(300);
     $(".usercard figure").removeClass("clickable");
+    $(".usercard ").removeClass("withoffer");
     $(".res_card p").removeClass("trading");
-    $(".res_card p span:last-of-type").hide();
-    $(this).parent().parent().toggleClass("clicked");
+    $(".res_card p span:last-of-type").hide(300);
+    $("#button_trade_outside").removeClass("clicked");
+  }
+  // BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    BUILD    
+  $(document).on("click", "#build_button", function(event) {
+    hideTrade();
+    $(this).parent().parent().addClass("clicked");
   });
-  
-      $("#build_settle").click(function() {
+  $(document).on("click", ".clicked .main", function(event) {
+    hideTrade();
+    hideDevelop();
+  });
+      $(document).on("click", "#build_settle", function(event) {
         $(".road.active").hide('300');
         $(".settle.active").toggle('300');
+        $(".settle."+color+":not(.town)").removeClass("upgrade");
       });
       
-      $("#build_road").click(function() {
+      $(document).on("click", "#build_road", function(event) {
         $(".settle.active").hide('300');
         $(".road.active").toggle('300');
+        $(".settle."+color+":not(.town)").removeClass("upgrade");
       });
       
-      $("#build_town").click(function() {
+      $(document).on("click", "#build_town", function(event) {
         $(".settle."+color+":not(.town)").toggleClass("upgrade");
+        $(".settle.active").hide('300');
+        $(".road.active").hide('300');
       });
       
       $(document).on("click", ".settle.active", function(event) {
         $.post("ajax/build", {game_id: game, item: "settlement", id: $(this).attr("settle")})
                 .done(function(data) {
+                  hideDevelop();
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -69,6 +94,7 @@ $(document).ready(function() {
       $(document).on("click", ".settle.upgrade", function(event) {
         $.post("ajax/build", {game_id: game, item: "town", id: $(this).attr("settle")})
                 .done(function(data) {
+                  hideDevelop();
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -79,6 +105,7 @@ $(document).ready(function() {
       $(document).on("click", ".road.active", function(event) {
         $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
                 .done(function(data) {
+                  hideDevelop();
                   loadJSON(game);
                 })
                 .error(function(data) {
@@ -130,11 +157,8 @@ $(document).ready(function() {
   });
   // year of plenty card   year of plenty card   year of plenty card
   $(document).on("click", ".yearofplenty", function(){
-    $(".res_card p").addClass("trading");
-    $(".resource").removeClass("on");
-    $(".trade").slideDown('300');
-    $(".res_card p span:last-of-type").show();
-    $("#trade_button").parent().addClass("clicked");
+    showTrade();
+    $(".usercard figure").removeClass("clickable");
     card_id = $(this).attr("card");
   });
   $(document).on("click", "#trade_button_yearofplenty", function(){
@@ -146,11 +170,7 @@ $(document).ready(function() {
         .error(function(data) {
           alert(data.responseText);
         });
-    $(".res_card p").removeClass("trading");
-    $(".resource").addClass("on");
-    $(".trade").slideUp('300');
-    $(".res_card p span:last-of-type").hide();
-    $("#trade_button").parent().removeClass("clicked");
+    hideTrade();
   });
   // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE    
   function clearform() {
@@ -190,17 +210,10 @@ $(document).ready(function() {
         }
     });
   }
-  $("#trade_button").click(function() {
-    $(".road.active").hide();
-    $(".settle.active").hide();
-    $(".res_card p").toggleClass("trading");
-    $(".resource").removeClass("on");
-    $(".trade").slideToggle('300');
-    $(".usercard figure").toggleClass("clickable");
-    $(".res_card p span:last-of-type").toggle();
-    $(this).parent().parent().toggleClass("clicked");    
+  $(document).on("click", ".button:not(.clicked) #trade_button", function(event) {
+    hideDevelop();
+    showTrade();   
   });
-  
     $(document).on("click", "figure.clickable", function(event) {
       var usercard = $(this).parent().parent();
       usercard.toggleClass("trading");
@@ -260,13 +273,14 @@ $(document).ready(function() {
     });
     
     $(document).on("click", "#trade_button_reject.cancel", function(event) {
-     clearform();
+      clearform();
     });
     
     $(document).on("click", "#trade_button_reject.reject", function(event) {
       $.post("ajax/tradereject", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                alert("Odrzuciłeś niesamowitą ofertę...");
                 clearform();
               })
               .error(function(data) {
@@ -278,12 +292,38 @@ $(document).ready(function() {
       $.post("ajax/tradedelete", $("#trade_form").serialize())
               .done(function(data) {
                 loadJSON(game);
+                alert("Co? Marudzimy? Jednak nie pasuje?");
                 clearform();
               })
               .error(function(data) {
                 alert(data.responseText);
               });
     });
+  // MOVE THIEF    MOVE THIEF    MOVE THIEF    MOVE THIEF    MOVE THIEF   
+  var new_thief_location=0;
+  $(document).on("click", ".put_thief", function() {
+    new_thief_location = $(this).attr("tile");
+    $("#thief").remove();
+    $("[tile=\"" + new_thief_location + "\"]").append($("<div id=\"thief\"></div>"));
+    alert("Mega, teraz wybierz frajera, którego bezczelnie ograbisz");
+  });
+  if(new_thief_location!==0)
+  {
+    $(document).on("click", ".usercard", function() {
+      alert("Okradasz frajera!");
+      $.post("ajax/thief", {game_id: game, player_id: $(this).attr("player"), new_thief_location: new_thief_location})
+            .done(function(data) {
+              alert("Okradasz frajera!");
+              console.log("poszło");
+              thief_anounced=0;
+            })
+            .error(function(data) {
+              alert(data.responseText);
+            });
+    });
+    
+  }
+    
   // ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   ENDTURN   
   $("#endturn_button").click(function() {
     $(".usercard figure").toggleClass("clickable");
@@ -307,6 +347,7 @@ $(document).ready(function() {
     }
   }, 3000);  
   // LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   LOAD JSON   
+  var thief_anounced = 0;
   function loadJSON(game) {
     $.getJSON("ajax/update", {game_id: game})
       .done(function(data) {
@@ -367,7 +408,8 @@ $(document).ready(function() {
         if (data.player.trade_received)
         {
           $("#button_trade_outside").addClass("withtrade clicked");
-          
+          $(".res_card p").addClass("trading");
+          $(".trade").slideDown('300');
           $("#trade_button_accept").addClass("accept").removeClass("confirm").removeClass("send").find("span").html("Akceptuj");
           $("#trade_button_reject").addClass("reject").removeClass("delete").removeClass("cancel").find("span").html("Odrzuć");
           var trade = data.player.trade_received;
@@ -389,10 +431,23 @@ $(document).ready(function() {
         current = data.current;
         player = data.player.id;
         color = data.player.color;
-        console.log(color);
         $("#thief").remove();
         $("[tile=\"" + data.thief + "\"]").append($("<div id=\"thief\"></div>"));
         $(".usercard.current").parent().addClass("current");
+        if(data.active_thief==1 && thief_anounced!=1)
+        {
+          thief_anounced = 1;
+          alert("Łolaboga! Kradnom!");
+          if(current==player)
+          {
+            $(".hex:not(.ocean)").addClass("put_thief");
+            $(".desert").removeClass("put_thief");
+          }
+        }
+        if(data.active_thief==0)
+        {
+          thief_anounced = 0;
+        }
       })
       .error(function(data) {
       });
