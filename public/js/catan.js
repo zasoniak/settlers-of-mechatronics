@@ -114,6 +114,7 @@ $(document).ready(function() {
       });
       
   // CARDS    CARDS    CARDS    CARDS    CARDS    CARDS    CARDS   
+  // purchasing card   purchasing card   purchasing card   
   $("#buy_card_button").click(function() {
     $.post("ajax/build", {game_id: game, item: "card", id: null})
         .done(function(data) {
@@ -123,7 +124,7 @@ $(document).ready(function() {
           alert(data.responseText);
         });
   });
-  // purchasing card   purchasing card   purchasing card   
+  // knight card    knight card    knight card    knight card    knight card    knight card    
   $(document).on("click", ".knight", function(event){
     var r  = confirm("Czy na pewno chcesz zagrać tę kartę?");
     if(r)
@@ -159,9 +160,12 @@ $(document).ready(function() {
   $(document).on("click", ".yearofplenty", function(){
     showTrade();
     $(".usercard figure").removeClass("clickable");
+    hideDevelop();
+    $("#trade_button_accept").addClass("confirm_yearofplenty").removeClass("accept").removeClass("send").find("span").html("Potwierdź");
+    $("#trade_button_reject").addClass("cancel_yearofplenty").removeClass("reject").removeClass("cancel").find("span").html("Rezygnuj");
     card_id = $(this).attr("card");
   });
-  $(document).on("click", "#trade_button_yearofplenty", function(){
+  $(document).on("click", ".confirm_yearofplenty", function(){
     $.post("ajax/playcard", jQuery.param(jQuery.merge($("#trade_form").serializeArray(),[{name:"id",value:card_id}])))
         .done(function(data) {
           alert("Zagrano :) Masz wymarzone dwa surowce!");
@@ -316,6 +320,7 @@ $(document).ready(function() {
             alert("Okradasz frajera!");
             thief_announced=0;
             $(".usercard").removeClass("frajer");
+            $(".hex").removeClass("put_thief");
             loadJSON(game);
           })
           .error(function(data) {
@@ -440,6 +445,7 @@ $(document).ready(function() {
           {
             $(".hex:not(.ocean)").addClass("put_thief");
             $(".desert").removeClass("put_thief");
+            alert("Przestaw złodzieja");
           }
         }
         if(data.active_thief==0)
