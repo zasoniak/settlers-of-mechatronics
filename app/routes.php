@@ -115,10 +115,6 @@ Route::get('game/{id}/join', function($id) {
 
 Route::get('game/{id}/waitroom', function($id) {
   $game = new CatanGame(Game::find($id));
-  if($game->model->is_started)
-  {
-    return Redirect::back()->with('message','Już rozpoczęta');
-  }
   $playersByColor = array();
   foreach ($game->model->players as $player)
   {

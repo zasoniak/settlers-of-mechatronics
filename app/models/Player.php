@@ -104,6 +104,10 @@ class Player extends Eloquent{
           array_push($resources, $res);
         }
       }
+      if(count($resources) == 0)
+      {
+        throw new Exception('On nie miał surowców! :P');
+      }
       $resource = $resources[array_rand($resources)];
       $this->{$resource}--;
       $this->save();
