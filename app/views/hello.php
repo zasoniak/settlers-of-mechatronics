@@ -31,6 +31,7 @@
     <?php if(Auth::check()): ?>
     <nav class="centered">
       <?php echo HTML::link('game/create', 'utwórz stół'); ?>
+      <?php echo HTML::link('game/my', 'twoje rozpoczęte gry'); ?>
       <?php echo HTML::link('game', 'dołącz do gry'); ?>
       <?php echo HTML::link('logout', 'wyloguj się'); ?>
     </nav>
