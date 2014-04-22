@@ -96,13 +96,13 @@ class Road extends Eloquent {
   public function findRoute($roads,$usedRoads, $begin=0)
   {
       $begin++;
-      // var_dump("poczatek: ");
-     //  var_dump($begin);
+       var_dump("poczatek: ");
+       var_dump($begin);
       $temp=$begin;
       $longest=$begin;
       $usedRoads[array_search($this,$roads)]=1;
-     // var_dump("uzyte drogi:");
-    //  var_dump($usedRoads);
+        var_dump("uzyte drogi:");
+        var_dump($usedRoads);
       //find neighbours
       $neighbours=array();
       $temp1;
@@ -143,7 +143,7 @@ class Road extends Eloquent {
             array_push($neighbours, $temp2);
         }
       }
-      if($this->z%10==0)
+      if($this->z%10 ==0)
       {
         $temp1=Road::searchRoadArray($roads,$this->coords(array(5,0,-5)));
         $temp2=Road::searchRoadArray($roads,$this->coords(array(0,5,-5)));

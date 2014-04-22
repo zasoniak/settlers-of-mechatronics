@@ -122,6 +122,7 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     }
     
     $this->model->player_id = $player->id;
+    $this->model->save();
     $myRoute = $this->findLongestRoute();
     $player->route_length = $myRoute;
     $opponentsRoutes = $this->model->board->game->players()->lists('route_length');
@@ -162,6 +163,8 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
     $usedRoads=array();
     $endRoads=array();
     
+    var_dump("wszystkie drogi: ");
+    var_dump($temp);
     foreach($temp as $i=>$road)
     {
       $roads[$i]=$road;
@@ -226,6 +229,10 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
             $temp=$roads[$i]->findRoute($roads,$usedRoads);
             if($temp>$longest)
                 $longest=$temp;
+        }
+        foreach($usedRoads as $used)
+        {
+            $used=0;
         }
     }
     return $longest;
