@@ -181,8 +181,6 @@ div#loading div {
   -webkit-animation: spin 1.3s linear infinite;
 }
 
-@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-
 div#loading div div {
   position: relative;
   top: 0;
@@ -192,6 +190,17 @@ div#loading div div {
   height: 148px;
 }
 
+/*div#loading div {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -10px;
+  left: 55px;
+  background-color: whitesmoke;
+  -webkit-transform-origin-y: 80px;
+  -webkit-animation: spin 3s linear infinite;
+}*/
+
 div.ring {
   border-width: 3px;
   border-style: solid;
@@ -199,3 +208,5 @@ div.ring {
   border-color: silver;
   background-color: transparent;
 }
+
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }

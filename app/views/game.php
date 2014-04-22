@@ -62,6 +62,7 @@
       </div>
       <div id="dev_cards" class="ring">
       </div>
+      <div id="message">Sony się sprzedał!</div>
       <div id="opponents" class="ring grey">
         <?php foreach($game->getOpponents() as $player): ?>
         <div class="usercard" player="<?php echo $player->model->id; ?>"><div>

@@ -54,7 +54,10 @@
     <div class="centered" id="load">
       <div class="ring" id="loading">
         <span>Ładowanie...</span>
-        <div><div class="ring"></div></div>
+        <div>
+          <div class="ring"></div>
+            
+        </div>
       </div>
     </div>
     <nav class="centered">

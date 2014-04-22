@@ -440,12 +440,12 @@ $(document).ready(function() {
         if(data.active_thief==1 && thief_announced!=1)
         {
           thief_announced = 1;
-          alert("Łolaboga! Kradnom!");
+          viewMessage("Łolaboga! Kradnom!");
           if(current==player)
           {
             $(".hex:not(.ocean)").addClass("put_thief");
             $(".desert").removeClass("put_thief");
-            alert("Przestaw złodzieja");
+            viewMessage("Przestaw złodzieja");
           }
         }
         if(data.active_thief==0)
@@ -457,6 +457,55 @@ $(document).ready(function() {
       });
   }
   ;
+});
+
+// MESSAGE    MESSAGE    MESSAGE    MESSAGE    MESSAGE    MESSAGE    
+
+function viewMessage (message) {
+  $("#message").empty();
+  $("#message").html(message);
+}
+
+function hideMessage () {
+  $("#message").empty();
+}
+
+// hover messages   hover messages   hover messages   hover messages   
+
+$("#build_button").hover( 
+  function(){
+  viewMessage("Tutaj możesz budować osady, miasta, drogi i kupować karty rozwoju");
+  },
+  function(){
+  hideMessage();
+});
+$("#build_settle").hover( 
+  function(){
+  viewMessage("Osada. Koszt: 1 x Drewno, 1 x Glina, 1 x Owca, 1 x Zboże");
+  },
+  function(){
+  hideMessage();
+});
+$("#build_road").hover( 
+  function(){
+  viewMessage("Droga. Koszt: 1 x Drewno, 1 x Glina");
+  },
+  function(){
+  hideMessage();
+});
+$("#build_town").hover( 
+  function(){
+  viewMessage("Miasto. Koszt: 3 x Kamień, 2 x Zboże");
+  },
+  function(){
+  hideMessage();
+});
+$("#buy_card_button").hover( 
+  function(){
+  viewMessage("Karta rozwoju. Koszt: 1 x Kamień, 1 x Owca, 1 x Zboże");
+  },
+  function(){
+  hideMessage();
 });
 
 // TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    

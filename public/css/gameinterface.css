@@ -5,8 +5,6 @@
 
 html {
   background-color: whitesmoke;
-  /*background-image: url('http://trickvilla.com/wp-content/uploads/Light-Wood-Background.jpg');*/
-  
   background-size: cover;
   font-family: 'Ubuntu', sans-serif;
   font-size: 14px;
@@ -38,20 +36,6 @@ div.ring {
   border-color: silver;
   background-color: transparent;
 }
-
-.panel {
-  overflow: hidden;
-  width: 450px;
-  margin: 5px 10px;
-}
-
-p.panel {
-  height: 1em;
-  padding: 0.8em 0;
-  text-align: center;
-  -webkit-animation: pulse 2s infinite;
-}
-
 
 @media all and (max-device-height: 800px) {
   aside {
@@ -603,6 +587,25 @@ div.ring:nth-of-type(4) {
 .roadbuilding div {background-image: url('../img/card_roadbuilding.jpg');}
 .monopoly div {background-image: url('../img/card_monopoly.jpg');}
 
+#message {
+  position: absolute;
+  top: 500px;
+  right: 10px;
+  overflow: hidden;
+  width: 400px;
+  height: 40px;
+  border: 2px lightgrey solid;
+  border-radius: 8px;
+  color: darkslategray;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+#message:before {
+  content: '>';
+  -webkit-animation: pulse .8s linear infinite;
+}
+
 /* ----------------- ANIMACJE------------------ */
 
 @-webkit-keyframes blink {
@@ -613,6 +616,8 @@ div.ring:nth-of-type(4) {
 
 @-webkit-keyframes pulse {
   0% {color: initial;}
-  50% {color: red;}
+  49% {color: initial;}
+  50% {color: transparent;}
+  99% {color: transparent;}
   100% {color: initial;}
 }
