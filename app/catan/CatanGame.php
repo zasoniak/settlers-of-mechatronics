@@ -270,7 +270,15 @@ class CatanGame
     $this->board->model->thief_location=$new_tile_id;
     $this->board->model->save();
     $robbed = Player::find($player_id);
-    $robbedResource = $robbed->stealRandom();
+    try
+    {
+      $robbedResource = $robbed->stealRandom();
+    } catch (Exception $exc)
+    {
+      $this->model->active_thief = 0;
+      $this->model->save();
+      return true;
+    }
     $player = Player::findByGameByUser($this->model->id, Auth::user()->id);
     $player->addResource($robbedResource, 1);
     $player->save();

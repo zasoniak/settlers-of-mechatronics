@@ -80,6 +80,16 @@ Route::get('game/create', function(){
   return Redirect::to('game/'.$game->model->id.'/join');
 });
 
+Route::get('game/my', function(){
+  $games = Game::your();
+  return View::make('yourgamelist')->with('games', $games);
+});
+
+Route::get('game', function(){
+  $games = Game::waiting();
+  return View::make('gamelist')->with('games', $games);
+});
+
 Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
   if($game->model->is_finished)
@@ -87,11 +97,6 @@ Route::get('game/{id}', function($id){
     return Response::make("Gra została zakończona.",200);
   }
   return View::make('game')->with('game',$game);
-});
-
-Route::get('game', function(){
-  $games = Game::waiting();
-  return View::make('gamelist')->with('games', $games);
 });
 
 Route::get('game/{id}/join', function($id) {

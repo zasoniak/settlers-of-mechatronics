@@ -6,6 +6,11 @@ class Game extends Eloquent {
   {
     return self::has('players', '<', 4)->where('is_started', 0)->get();
   }
+  
+  public static function your()
+  {
+    return Auth::user()->games()->where('is_started', 1)->where('is_finished', 0)->get();
+  }
 
   public function board() {
     return $this->hasOne('Board');
