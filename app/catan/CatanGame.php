@@ -178,7 +178,7 @@ class CatanGame
     {
       foreach($this->board->model->findDicedTiles($dice) as $tile)
       {          
-        if($this->model->thief_location != $tile->id)
+        if($this->model->board->thief_location != $tile->id)
         {
           foreach($tile->nearestSettles() as $settle)
           {
