@@ -19,7 +19,11 @@
                   window.location.reload();
                 });
       });
-      $("li").find("img").parent().addClass("busy")
+      $("li").find("img").parent().addClass("busy");
+      $(document).on("click","nav a",function(event){
+        $(this).hide();
+        $("#load").show();
+      });
     });
     </script>
   </head>
@@ -46,6 +50,12 @@
           ?>
         </li>
         <?php endforeach; ?>
+    </div>
+    <div class="centered" id="load">
+      <div class="ring" id="loading">
+        <span>Ładowanie...</span>
+        <div><div class="ring"></div></div>
+      </div>
     </div>
     <nav class="centered">
       <?php
