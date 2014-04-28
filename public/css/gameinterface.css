@@ -601,6 +601,10 @@ div.ring:nth-of-type(4) {
   vertical-align: middle;
 }
 
+#message:empty {
+  visibility: hidden;
+}
+
 #message:before {
   content: '>';
   -webkit-animation: pulse .8s linear infinite;

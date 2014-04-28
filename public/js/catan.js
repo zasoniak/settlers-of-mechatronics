@@ -492,13 +492,10 @@ $(document).ready(function() {
 // MESSAGE    MESSAGE    MESSAGE    MESSAGE    MESSAGE    MESSAGE    
 
 function viewMessage (message) {
-  $("#message").empty();
-  $("#message").html(message);
+  $("#message").html(message).fadeIn(300).delay(3000).fadeOut(300);
 }
 
-function hideMessage () {
-  $("#message").empty();
-}
+function hideMessage () {}
 
 // hover messages   hover messages   hover messages   hover messages   
 
