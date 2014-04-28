@@ -140,7 +140,6 @@ class CatanRoad implements DrawableInterface, PurchasableInterface
       $player->has_longest_route = 1;
     }
     $player->save();
-    $this->model->save();
     return true;
   }
   
