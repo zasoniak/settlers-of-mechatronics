@@ -102,7 +102,7 @@ $(document).ready(function() {
                 });
       });
       
-      $(document).on("click", ".road.active", function(event) {
+      $(document).on("click", ".road.active:not(.roadcard)", function(event) {
         $.post("ajax/build", {game_id: game, item: "road", id: $(this).attr("road")})
                 .done(function(data) {
                   hideDevelop();
@@ -175,6 +175,36 @@ $(document).ready(function() {
           alert(data.responseText);
         });
     hideTrade();
+  });
+  // roadbuilding card   roadbuilding card   roadbuilding card
+  var road1, road2;
+  $(document).on("click", ".roadcard", function(){
+    if (road1)
+    {
+      road2 = $(this).attr("road");
+      $(".road.active").removeClass("roadcard");
+      $.post("ajax/playcard", {game_id: game, road1: road1, road2: road2, id: card_id})
+          .done(function(data) {
+            viewMessage("Zagrano :)");
+            loadJSON(game);
+          })
+          .error(function(data) {
+            alert(data.responseText);
+            delete road1;
+            delete road2;
+          });
+    }
+    else 
+    {
+      road1 = $(this).attr("road");
+      viewMessage("Wybierz jeszcze jedną.");
+    }
+  });
+  $(document).on("click", ".roadbuilding", function(){
+    viewMessage("Wybierz dwie drogi, które chcesz zbudować.");
+    $(".road.active").show('300');
+    $(".road.active").addClass("roadcard");
+    card_id = $(this).attr("card");
   });
   // TRADE     TRADE     TRADE     TRADE     TRADE     TRADE     TRADE    
   function clearform() {

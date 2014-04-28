@@ -9,6 +9,11 @@ class Card extends Eloquent {
     return $query->where('is_used',1);
   }
   
+  public function scopeUnused($query)
+  {
+    return $query->where('is_used',0);
+  }
+  
   public function board(){
       return $this->belongsTo('Board');
   }

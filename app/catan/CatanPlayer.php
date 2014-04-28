@@ -76,7 +76,7 @@ class CatanPlayer
       $tradereceived = $tradereceived->toArray();
     }
     $cards=array();
-    foreach($this->model->cards as $card)
+    foreach($this->model->cards()->unused()->get() as $card)
     {
       $catancard = new CatanCard($card);
       $cards[] = $catancard->toJSON();

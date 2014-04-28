@@ -84,8 +84,8 @@ class CatanCard implements PurchasableInterface
         $player->save();
         break;
       case 'roadbuilding':
-        //$data['road1']->buy(Player::findByGameByUser($this->model->board->game->id, Auth::user()->id), TRUE);
-        //$data['road2']->buy(Player::findByGameByUser($this->model->board->game->id, Auth::user()->id), TRUE);
+        $data['road1']->buy(Player::findByGameByUser($this->model->board->game->id, Auth::user()->id), TRUE);
+        $data['road2']->buy(Player::findByGameByUser($this->model->board->game->id, Auth::user()->id), TRUE);
         break;
       default:
         break;

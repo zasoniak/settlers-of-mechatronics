@@ -261,6 +261,12 @@ Route::post('game/ajax/playcard', function(){
     }
     $data['offer'] = $offer;
   }
+  if(isset($input['road1']))
+  {
+    $game = new CatanGame(Game::find($input['game_id']));
+    $data['road1'] = $game->board->roadList[$input['road1']];
+    $data['road2'] = $game->board->roadList[$input['road2']];
+  }
   try
   {
     $card->play($data);
