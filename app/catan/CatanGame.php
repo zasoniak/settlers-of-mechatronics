@@ -54,6 +54,8 @@ class CatanGame
       $player->is_host = 1;
     }
     $this->model->players()->save($player);
+    $user->games_played++;
+    $user->save();
     return true;
   }
   
@@ -188,10 +190,12 @@ class CatanGame
               if ($settle->is_town)
               {
                 $player->addResource($tile->type, 2);
+                $player->resources_collected+=2;
               }
               else
               {
                 $player->addResource($tile->type, 1);
+                $player->resources_collected+=1;
               }
               $player->save();
             }
@@ -386,6 +390,8 @@ class CatanGame
     $this->model->save();
     foreach($this->model->players as $player)
     {
+      $player->point=$player->getScore();
+      $player->save();
       $user = $player->user;
       $user->games_completed += 1;
       $user->save();
@@ -481,6 +487,7 @@ class CatanGame
     {
          $player->addResource($resource,(int)$quantity);
     }
+    $player->transactions_made++;
     $player->save();
     return true;
   }

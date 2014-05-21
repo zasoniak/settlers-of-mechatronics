@@ -90,6 +90,11 @@ Route::get('game', function(){
   return View::make('gamelist')->with('games', $games);
 });
 
+Route::get('stats', function(){
+  $players = Auth::user()->players;
+  return View::make('stats')->with('players', $players);
+});
+
 Route::get('game/{id}', function($id){
   $game = new CatanGame(Game::find($id));
   if($game->model->is_finished)

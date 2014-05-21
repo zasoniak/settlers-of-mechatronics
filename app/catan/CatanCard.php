@@ -114,6 +114,7 @@ class CatanCard implements PurchasableInterface
     if(is_null($this->model->player_id))
     {
       $this->model->player_id = $player->id;
+      $player->cards_bought++;
     }
     $player->save();
     $this->model->save();

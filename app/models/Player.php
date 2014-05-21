@@ -85,6 +85,7 @@ class Player extends Eloquent{
                 if($this->{$resource}>0)
                 {
                     $this->{$resource}-=1;
+                    $this->resources_stolen+=1;
                     $sum--;
                 }
             }
@@ -110,6 +111,7 @@ class Player extends Eloquent{
       }
       $resource = $resources[array_rand($resources)];
       $this->{$resource}--;
+      $this->resources_stolen++;
       $this->save();
       return $resource;
     }
