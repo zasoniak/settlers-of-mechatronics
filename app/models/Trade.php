@@ -62,6 +62,8 @@ class Trade extends Eloquent {
         $host->addResource($resource, $this->{$resource});
         $client->addResource($resource, -$this->{$resource});
       }
+      $client->transactions_made++;
+      $host->transactions_made++;
       $host->save();
       $client->save();
       return true;
