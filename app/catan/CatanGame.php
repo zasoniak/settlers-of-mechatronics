@@ -382,6 +382,8 @@ class CatanGame
       $winner->save();
       $this->endGame();
     }
+    $player->points=$player->getScore();
+    $player->save();
   }
   
   public function endGame()
@@ -390,7 +392,7 @@ class CatanGame
     $this->model->save();
     foreach($this->model->players as $player)
     {
-      $player->point=$player->getScore();
+      $player->points=$player->getScore();
       $player->save();
       $user = $player->user;
       $user->games_completed += 1;

@@ -335,3 +335,12 @@ Route::get('game/ajax/update', function(){
   $game = new CatanGame(Game::find(Input::get('game_id')));
   return Response::json($game->toJSON());
 });
+
+
+/* admin mode */
+
+Route::get('admin', function(){
+  $games = Game::all();
+  $users = User::all();
+  return View::make('admin')->with('games', $games)->with('users', $users);
+});
