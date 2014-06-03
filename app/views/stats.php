@@ -17,13 +17,20 @@
     <nav class="centered">
         
         <?php $user=Auth::user();?>
-        <p> gracz: <?php echo $user->nickname;?> </p>
-        <p> gier granych: <?php echo $user->games_played;?> </p>
-        <p> gier ukończonych: <?php echo $user->games_completed;?> </p>
-        <p> gier wygranych: <?php echo $user->games_won;?> </p>
+        <div class="admin stats">
+        <div>
+        <?php echo HTML::image('img/'.$user->image, 'morda'); ?>
+        </div>
+        <div>
+          <p class="nick"><?php echo $user->nickname;?></p><br>
+          gier granych: <?php echo $user->games_played;?> <br>
+          gier ukończonych: <?php echo $user->games_completed;?><br>
+          gier wygranych: <?php echo $user->games_won;?>
+        </div> 
+      </div>
         
       <?php foreach($players as $player): ?>
-      <?php echo "gra nr ". $player->game->id; ?>
+      <span class="stats"><?php echo "gra nr ". $player->game->id; ?></span>
       <p>punkty: <?php echo $player->points; ?><br /></p>
       <p>surowce zebrane: <?php echo $player->resources_collected; ?><br /></p>
       <p>surowce skradzione: <?php echo $player->resources_stolen; ?><br /></p>

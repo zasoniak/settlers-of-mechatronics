@@ -23,8 +23,8 @@
         graczy: <?php echo $game->players()->count(); ?><br />
         utworzono: <?php echo $game->created_at->diffForHumans(); ?><br />
         skończona: <?php echo $game->is_finnished; ?>
-      </div>
       <?php echo HTML::link("game/$game->id/delete", "usuń"); ?>
+      </div>
       <?php endforeach; ?>
       </div>
       <span id="showUsersList">Gracze</span>

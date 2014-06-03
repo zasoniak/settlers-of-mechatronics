@@ -164,6 +164,9 @@ div.admin p {
 nav div.admin:hover {
   background: rgba(0,0,255,0.1);
 }
+nav div.admin.stats:hover{
+  background: none;
+}
 
 div.admin img {
   margin: 10px;
@@ -175,6 +178,11 @@ div.admin img {
   -webkit-transition: 0.3s;
 }
 
+div.stats img {
+  width: 90px;
+  height: 90px;
+}
+
 div.admin a {
   width: 100%;
   margin-left: -8px;
@@ -182,7 +190,7 @@ div.admin a {
   text-align: center;
 }
 
-nav a:hover, nav span:hover, input[type="submit"]:hover {
+nav a:hover, nav span:not(.stats):hover, input[type="submit"]:hover {
   color: white;
   background-color: steelblue;
   -webkit-transition: 0.3s;
@@ -250,6 +258,8 @@ div#GamesList, div#UsersList {
   overflow-y: auto;
   overflow-x: hidden;
   overflow-style: move;
+  width: 360px;
+  margin-left: -15px;
 }
 
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
