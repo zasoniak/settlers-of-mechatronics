@@ -17,11 +17,12 @@
     <nav class="centered">
       <p>Gry: </p>
       <?php foreach($games as $game): ?>
-      <?php echo HTML::link("game/$game->id/join", "gra nr $game->id"); ?>
+      <?php echo HTML::link("game/admin/#", "gra nr $game->id"); ?>
       <p>
         graczy: <?php echo $game->players()->count(); ?><br />
         utworzono: <?php echo $game->created_at->diffForHumans(); ?><br />
         skończona: <?php echo $game->is_finnished; ?>
+        <?php echo HTML::link("game/$game->id/delete", "usuń"); ?>
       </p>
       <?php endforeach; ?>
       
@@ -29,6 +30,7 @@
       <?php foreach($users as $user): ?>
       <p>
         Nick: <?php echo $user->nickname; ?>
+        <?php echo HTML::link("user/$user->id/delete", "usuń"); ?>
       </p>
       <?php endforeach; ?>
       <?php echo HTML::link('/', 'wróć'); ?>

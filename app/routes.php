@@ -23,6 +23,10 @@ Route::post('login', function() {
 
 		if (Auth::attempt($login))
 		{
+                        if(Auth::user()->is_admin==1)
+                        {
+                            return Redirect::to('admin');
+                        }
 			return Redirect::home();
 		}
 		return Redirect::home()->with('message', 'Email lub hasło są niepoprawne');
@@ -343,4 +347,43 @@ Route::get('admin', function(){
   $games = Game::all();
   $users = User::all();
   return View::make('admin')->with('games', $games)->with('users', $users);
+});
+
+
+Route::get('game/{id}/delete', function($id) {
+    if(Auth::user()->is_admin==0)
+    {
+        $game = Game::find($id);
+        foreach($game->board->tiles as $tile) {
+            $tile->delete();
+        }
+        foreach($game->board->ports as $port) {
+            $port->delete();
+        }
+        foreach($game->board->roads as $road) {
+            $road->delete();
+        }
+        foreach($game->board->settlements as $settlement) {
+            $settlement->delete();
+        }
+        foreach($game->board->cards as $card) {
+            $card->delete();
+        }
+        $game->board->delete();
+        $game->delete();
+    }
+  return Redirect::to('admin');
+});
+
+
+Route::get('user/{id}/delete', function($id) {
+    if(Auth::user()->is_admin==0)
+    {
+        $user = User::find($id);
+        foreach($user->players as $player) {
+            $player->delete();
+        }
+        $user->delete();
+    }
+  return Redirect::to('admin');
 });
