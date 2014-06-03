@@ -34,6 +34,12 @@
       <?php echo HTML::link('game/my', 'twoje rozpoczęte gry'); ?>
       <?php echo HTML::link('game', 'dołącz do gry'); ?>
       <?php echo HTML::link('stats', 'statystyki');?>
+      <?php
+        if(Auth::user()->is_admin==1)
+                          {
+                              echo HTML::link('admin', 'hakuj to!');
+                          }
+      ?>
       <?php echo HTML::link('logout', 'wyloguj się'); ?>
     </nav>
     <?php endif; ?>

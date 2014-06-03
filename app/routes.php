@@ -23,10 +23,6 @@ Route::post('login', function() {
 
 		if (Auth::attempt($login))
 		{
-                        if(Auth::user()->is_admin==1)
-                        {
-                            return Redirect::to('admin');
-                        }
 			return Redirect::home();
 		}
 		return Redirect::home()->with('message', 'Email lub hasło są niepoprawne');
@@ -344,14 +340,21 @@ Route::get('game/ajax/update', function(){
 /* admin mode */
 
 Route::get('admin', function(){
+  if(Auth::user()->is_admin==1)
+  {
   $games = Game::all();
   $users = User::all();
   return View::make('admin')->with('games', $games)->with('users', $users);
+  }
+  else
+  {
+    return Redirect::home()->with('message', 'Nie masz do tego uprawnień, cwaniaczku');
+  }
 });
 
 
 Route::get('game/{id}/delete', function($id) {
-    if(Auth::user()->is_admin==0)
+    if(Auth::user()->is_admin==1)
     {
         $game = Game::find($id);
         foreach($game->board->tiles as $tile) {
@@ -377,7 +380,7 @@ Route::get('game/{id}/delete', function($id) {
 
 
 Route::get('user/{id}/delete', function($id) {
-    if(Auth::user()->is_admin==0)
+    if(Auth::user()->is_admin==1)
     {
         $user = User::find($id);
         foreach($user->players as $player) {

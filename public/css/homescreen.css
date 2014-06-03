@@ -125,7 +125,7 @@ input[type="text"], input[type="email"], input[type="password"] {
   box-shadow: 0 -1px 0 rgba(0,0,0,0.5);
 }
 
-nav a, div.ui-btn, input[type="submit"] {
+nav a, nav span, div.ui-btn, input[type="submit"] {
   width: 300px;
   background: transparent;
   display: block;
@@ -147,7 +147,42 @@ nav p {
   color: inherit;
 }
 
-nav a:hover, input[type="submit"]:hover {
+nav div.admin {
+  font-size: medium;
+  text-align: center;
+  padding: 8px;
+  color: inherit;
+  border-radius: 10px;
+}
+
+div.admin p {
+  font-size: medium;
+  font-weight: bold;
+  padding: 8px;
+}
+
+nav div.admin:hover {
+  background: rgba(0,0,255,0.1);
+}
+
+div.admin img {
+  margin: 10px;
+  display: block;
+  float: left;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  -webkit-transition: 0.3s;
+}
+
+div.admin a {
+  width: 100%;
+  margin-left: -8px;
+  margin-bottom: -8px;
+  text-align: center;
+}
+
+nav a:hover, nav span:hover, input[type="submit"]:hover {
   color: white;
   background-color: steelblue;
   -webkit-transition: 0.3s;
@@ -207,6 +242,14 @@ div.ring {
   border-radius: 100%;
   border-color: silver;
   background-color: transparent;
+}
+
+div#GamesList, div#UsersList {
+  display: none;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-style: move;
 }
 
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }

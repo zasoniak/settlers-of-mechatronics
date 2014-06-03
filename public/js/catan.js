@@ -535,6 +535,18 @@ $("#buy_card_button").hover(
   hideMessage();
 });
 
+// ADMIN MENU    ADMIN MENU    ADMIN MENU    ADMIN MENU    ADMIN MENU    
+
+$("#showGamesList").click(function(){
+  $("#GamesList").slideToggle(300);
+  $("#UsersList").slideUp(300);
+});
+
+$("#showUsersList").click(function(){
+  $("#UsersList").slideToggle(300);
+  $("#GamesList").slideUp(300);
+});
+
 // TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    TEXTSELECT    
 function disableText(e) {
   return false;

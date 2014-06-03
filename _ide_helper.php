@@ -141,7 +141,7 @@ namespace {
 		 }
 
 		/**
-		 * Get the registered service provider instnace if it exists.
+		 * Get the registered service provider instance if it exists.
 		 *
 		 * @param \Illuminate\Support\ServiceProvider|string  $provider
 		 * @return \Illuminate\Support\ServiceProvider|null
@@ -176,7 +176,7 @@ namespace {
 		 }
 
 		/**
-		 * Register a deffered provider and service.
+		 * Register a deferred provider and service.
 		 *
 		 * @param string  $provider
 		 * @param string  $service
@@ -730,12 +730,12 @@ namespace {
 		 * @param string               $abstract
 		 * @param Closure|string|null  $concrete
 		 * @param bool                 $shared
-		 * @return bool
+		 * @return void
 		 * @static 
 		 */
 		 public static function bindIf($abstract, $concrete = null, $shared = false){
 			//Method inherited from \Illuminate\Container\Container
-			return \Illuminate\Foundation\Application::bindIf($abstract, $concrete, $shared);
+			 \Illuminate\Foundation\Application::bindIf($abstract, $concrete, $shared);
 		 }
 
 		/**
@@ -1141,7 +1141,7 @@ namespace {
 		 *
 		 * @param InputInterface  $input  An Input instance
 		 * @param OutputInterface $output An Output instance
-		 * @return integer 0 if everything went fine, or an error code
+		 * @return int 0 if everything went fine, or an error code
 		 * @throws \Exception When doRun returns Exception
 		 * @api 
 		 * @static 
@@ -1156,7 +1156,7 @@ namespace {
 		 *
 		 * @param InputInterface  $input  An Input instance
 		 * @param OutputInterface $output An Output instance
-		 * @return integer 0 if everything went fine, or an error code
+		 * @return int 0 if everything went fine, or an error code
 		 * @static 
 		 */
 		 public static function doRun($input, $output){
@@ -1225,7 +1225,7 @@ namespace {
 		/**
 		 * Sets whether to catch exceptions or not during commands execution.
 		 *
-		 * @param Boolean $boolean Whether to catch exceptions or not during commands execution
+		 * @param bool $boolean Whether to catch exceptions or not during commands execution
 		 * @api 
 		 * @static 
 		 */
@@ -1337,7 +1337,7 @@ namespace {
 		 * Returns true if the command exists, false otherwise.
 		 *
 		 * @param string $name The command name or alias
-		 * @return Boolean true if the command exists, false otherwise
+		 * @return bool true if the command exists, false otherwise
 		 * @api 
 		 * @static 
 		 */
@@ -1419,8 +1419,8 @@ namespace {
 		/**
 		 * Returns a text representation of the Application.
 		 *
-		 * @param string  $namespace An optional namespace name
-		 * @param boolean $raw       Whether to return raw command list
+		 * @param string $namespace An optional namespace name
+		 * @param bool   $raw       Whether to return raw command list
 		 * @return string A string representing the Application
 		 * @deprecated Deprecated since version 2.3, to be removed in 3.0.
 		 * @static 
@@ -1433,8 +1433,8 @@ namespace {
 		/**
 		 * Returns an XML representation of the Application.
 		 *
-		 * @param string  $namespace An optional namespace name
-		 * @param Boolean $asDom     Whether to return a DOM or an XML string
+		 * @param string $namespace An optional namespace name
+		 * @param bool   $asDom     Whether to return a DOM or an XML string
 		 * @return string|\DOMDocument An XML string representing the Application
 		 * @deprecated Deprecated since version 2.3, to be removed in 3.0.
 		 * @static 
@@ -1460,8 +1460,8 @@ namespace {
 		 * 
 		 * Can be useful to force terminal dimensions for functional tests.
 		 *
-		 * @param integer $width  The width
-		 * @param integer $height The height
+		 * @param int     $width  The width
+		 * @param int     $height The height
 		 * @return Application The current application
 		 * @static 
 		 */
@@ -1637,6 +1637,17 @@ namespace {
 		 public static function user(){
 			//Method inherited from \Illuminate\Auth\Guard
 			return \Illuminate\Auth\Guard::user();
+		 }
+
+		/**
+		 * Get the ID for the currently authenticated user.
+		 *
+		 * @return int|null
+		 * @static 
+		 */
+		 public static function id(){
+			//Method inherited from \Illuminate\Auth\Guard
+			return \Illuminate\Auth\Guard::id();
 		 }
 
 		/**
@@ -3302,6 +3313,17 @@ namespace {
 		 }
 
 		/**
+		 * Get the number of active transactions.
+		 *
+		 * @return int
+		 * @static 
+		 */
+		 public static function transactionLevel(){
+			//Method inherited from \Illuminate\Database\Connection
+			return \Illuminate\Database\MySqlConnection::transactionLevel();
+		 }
+
+		/**
 		 * Execute the given callback in "dry run" mode.
 		 *
 		 * @param Closure  $callback
@@ -4221,13 +4243,12 @@ namespace {
 		 *
 		 * @param string  $column
 		 * @param array   $values
-		 * @param bool  $not
 		 * @return \Illuminate\Database\Query\Builder|static
 		 * @static 
 		 */
-		 public static function orWhereBetween($column, $values, $not = false){
+		 public static function orWhereBetween($column, $values){
 			//Method inherited from \Illuminate\Database\Query\Builder
-			return \Illuminate\Database\Query\Builder::orWhereBetween($column, $values, $not);
+			return \Illuminate\Database\Query\Builder::orWhereBetween($column, $values);
 		 }
 
 		/**
@@ -4439,6 +4460,51 @@ namespace {
 		 public static function orWhereNotNull($column){
 			//Method inherited from \Illuminate\Database\Query\Builder
 			return \Illuminate\Database\Query\Builder::orWhereNotNull($column);
+		 }
+
+		/**
+		 * Add a "where day" statement to the query.
+		 *
+		 * @param string  $column
+		 * @param string   $operator
+		 * @param int   $value
+		 * @param string   $boolean
+		 * @return \Illuminate\Database\Query\Builder|static
+		 * @static 
+		 */
+		 public static function whereDay($column, $operator, $value, $boolean = 'and'){
+			//Method inherited from \Illuminate\Database\Query\Builder
+			return \Illuminate\Database\Query\Builder::whereDay($column, $operator, $value, $boolean);
+		 }
+
+		/**
+		 * Add a "where month" statement to the query.
+		 *
+		 * @param string  $column
+		 * @param string   $operator
+		 * @param int   $value
+		 * @param string   $boolean
+		 * @return \Illuminate\Database\Query\Builder|static
+		 * @static 
+		 */
+		 public static function whereMonth($column, $operator, $value, $boolean = 'and'){
+			//Method inherited from \Illuminate\Database\Query\Builder
+			return \Illuminate\Database\Query\Builder::whereMonth($column, $operator, $value, $boolean);
+		 }
+
+		/**
+		 * Add a "where year" statement to the query.
+		 *
+		 * @param string  $column
+		 * @param string   $operator
+		 * @param int   $value
+		 * @param string   $boolean
+		 * @return \Illuminate\Database\Query\Builder|static
+		 * @static 
+		 */
+		 public static function whereYear($column, $operator, $value, $boolean = 'and'){
+			//Method inherited from \Illuminate\Database\Query\Builder
+			return \Illuminate\Database\Query\Builder::whereYear($column, $operator, $value, $boolean);
 		 }
 
 		/**
@@ -4835,13 +4901,13 @@ namespace {
 		/**
 		 * Retrieve the "count" result of the query.
 		 *
-		 * @param string  $column
+		 * @param string  $columns
 		 * @return int
 		 * @static 
 		 */
-		 public static function count($column = '*'){
+		 public static function count($columns = '*'){
 			//Method inherited from \Illuminate\Database\Query\Builder
-			return \Illuminate\Database\Query\Builder::count($column);
+			return \Illuminate\Database\Query\Builder::count($columns);
 		 }
 
 		/**
@@ -5769,12 +5835,13 @@ namespace {
 		 * @param string  $name
 		 * @param string  $selected
 		 * @param array   $options
+		 * @param string  $format
 		 * @return string
 		 * @static 
 		 */
-		 public static function selectMonth($name, $selected = null, $options = array()){
+		 public static function selectMonth($name, $selected = null, $options = array(), $format = '%B'){
 			//Method inherited from \Illuminate\Html\FormBuilder
-			return \Illuminate\Html\FormBuilder::selectMonth($name, $selected, $options);
+			return \Illuminate\Html\FormBuilder::selectMonth($name, $selected, $options, $format);
 		 }
 
 		/**
@@ -6426,7 +6493,19 @@ namespace {
 		 }
 
 		/**
-		 * Determine if the request contains a given input item.
+		 * Determine if the request contains a given input item key.
+		 *
+		 * @param string|array  $key
+		 * @return bool
+		 * @static 
+		 */
+		 public static function exists($key){
+			//Method inherited from \Illuminate\Http\Request
+			return \Illuminate\Http\Request::exists($key);
+		 }
+
+		/**
+		 * Determine if the request contains a non-emtpy value for an input item.
 		 *
 		 * @param string|array  $key
 		 * @return bool
@@ -6721,6 +6800,7 @@ namespace {
 		 * Get the session associated with the request.
 		 *
 		 * @return \Illuminate\Session\Store
+		 * @throws \RuntimeException
 		 * @static 
 		 */
 		 public static function session(){
@@ -6975,7 +7055,7 @@ namespace {
 		/**
 		 * Checks whether support for the _method request parameter is enabled.
 		 *
-		 * @return Boolean True when the _method request parameter is enabled, false otherwise
+		 * @return bool    True when the _method request parameter is enabled, false otherwise
 		 * @static 
 		 */
 		 public static function getHttpMethodParameterOverride(){
@@ -7000,7 +7080,7 @@ namespace {
 		 *
 		 * @param string  $key     the key
 		 * @param mixed   $default the default value
-		 * @param Boolean $deep    is parameter deep in multidimensional array
+		 * @param bool    $deep    is parameter deep in multidimensional array
 		 * @return mixed
 		 * @static 
 		 */
@@ -7025,7 +7105,7 @@ namespace {
 		 * Whether the request contains a Session which was started in one of the
 		 * previous requests.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @api 
 		 * @static 
 		 */
@@ -7041,7 +7121,7 @@ namespace {
 		 * like whether the session is started or not. It is just a way to check if this Request
 		 * is associated with a Session instance.
 		 *
-		 * @return Boolean true when the Request contains a Session object, false otherwise
+		 * @return bool    true when the Request contains a Session object, false otherwise
 		 * @api 
 		 * @static 
 		 */
@@ -7331,7 +7411,7 @@ namespace {
 		 * ("SSL_HTTPS" for instance), configure it via "setTrustedHeaderName()" with
 		 * the "client-proto" key.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @api 
 		 * @static 
 		 */
@@ -7527,7 +7607,7 @@ namespace {
 		 * Checks if the request method is of specified type.
 		 *
 		 * @param string $method Uppercase request method (GET, POST etc).
-		 * @return Boolean
+		 * @return bool
 		 * @static 
 		 */
 		 public static function isMethod($method){
@@ -7538,7 +7618,7 @@ namespace {
 		/**
 		 * Checks whether the method is safe or not.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @api 
 		 * @static 
 		 */
@@ -7550,7 +7630,7 @@ namespace {
 		/**
 		 * Returns the request body content.
 		 *
-		 * @param Boolean $asResource If true, a resource will be returned
+		 * @param bool    $asResource If true, a resource will be returned
 		 * @return string|resource The request body content or a resource to read the body stream.
 		 * @throws \LogicException
 		 * @static 
@@ -7574,7 +7654,7 @@ namespace {
 		/**
 		 * 
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @static 
 		 */
 		 public static function isNoCache(){
@@ -7649,7 +7729,7 @@ namespace {
 		 * It is known to work with common JavaScript frameworks:
 		 *
 		 * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
-		 * @return Boolean true if the request is an XMLHttpRequest, false otherwise
+		 * @return bool    true if the request is an XMLHttpRequest, false otherwise
 		 * @api 
 		 * @static 
 		 */
@@ -7854,7 +7934,7 @@ namespace {
 		 }
 
 		/**
-		 * Set the fallback locale being used.
+		 * Get the fallback locale being used.
 		 *
 		 * @return string
 		 * @static 
@@ -8586,12 +8666,12 @@ namespace {
 		 * @param \Illuminate\Auth\Reminders\RemindableInterface  $user
 		 * @param string   $token
 		 * @param Closure  $callback
-		 * @return void
+		 * @return int
 		 * @static 
 		 */
 		 public static function sendReminder($user, $token, $callback = null){
 			//Method inherited from \Illuminate\Auth\Reminders\PasswordBroker
-			 \Illuminate\Auth\Reminders\PasswordBroker::sendReminder($user, $token, $callback);
+			return \Illuminate\Auth\Reminders\PasswordBroker::sendReminder($user, $token, $callback);
 		 }
 
 		/**
@@ -9227,7 +9307,19 @@ namespace {
 		 }
 
 		/**
-		 * Determine if the request contains a given input item.
+		 * Determine if the request contains a given input item key.
+		 *
+		 * @param string|array  $key
+		 * @return bool
+		 * @static 
+		 */
+		 public static function exists($key){
+			//Method inherited from \Illuminate\Http\Request
+			return \Illuminate\Http\Request::exists($key);
+		 }
+
+		/**
+		 * Determine if the request contains a non-emtpy value for an input item.
 		 *
 		 * @param string|array  $key
 		 * @return bool
@@ -9522,6 +9614,7 @@ namespace {
 		 * Get the session associated with the request.
 		 *
 		 * @return \Illuminate\Session\Store
+		 * @throws \RuntimeException
 		 * @static 
 		 */
 		 public static function session(){
@@ -9776,7 +9869,7 @@ namespace {
 		/**
 		 * Checks whether support for the _method request parameter is enabled.
 		 *
-		 * @return Boolean True when the _method request parameter is enabled, false otherwise
+		 * @return bool    True when the _method request parameter is enabled, false otherwise
 		 * @static 
 		 */
 		 public static function getHttpMethodParameterOverride(){
@@ -9801,7 +9894,7 @@ namespace {
 		 *
 		 * @param string  $key     the key
 		 * @param mixed   $default the default value
-		 * @param Boolean $deep    is parameter deep in multidimensional array
+		 * @param bool    $deep    is parameter deep in multidimensional array
 		 * @return mixed
 		 * @static 
 		 */
@@ -9826,7 +9919,7 @@ namespace {
 		 * Whether the request contains a Session which was started in one of the
 		 * previous requests.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @api 
 		 * @static 
 		 */
@@ -9842,7 +9935,7 @@ namespace {
 		 * like whether the session is started or not. It is just a way to check if this Request
 		 * is associated with a Session instance.
 		 *
-		 * @return Boolean true when the Request contains a Session object, false otherwise
+		 * @return bool    true when the Request contains a Session object, false otherwise
 		 * @api 
 		 * @static 
 		 */
@@ -10132,7 +10225,7 @@ namespace {
 		 * ("SSL_HTTPS" for instance), configure it via "setTrustedHeaderName()" with
 		 * the "client-proto" key.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @api 
 		 * @static 
 		 */
@@ -10328,7 +10421,7 @@ namespace {
 		 * Checks if the request method is of specified type.
 		 *
 		 * @param string $method Uppercase request method (GET, POST etc).
-		 * @return Boolean
+		 * @return bool
 		 * @static 
 		 */
 		 public static function isMethod($method){
@@ -10339,7 +10432,7 @@ namespace {
 		/**
 		 * Checks whether the method is safe or not.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @api 
 		 * @static 
 		 */
@@ -10351,7 +10444,7 @@ namespace {
 		/**
 		 * Returns the request body content.
 		 *
-		 * @param Boolean $asResource If true, a resource will be returned
+		 * @param bool    $asResource If true, a resource will be returned
 		 * @return string|resource The request body content or a resource to read the body stream.
 		 * @throws \LogicException
 		 * @static 
@@ -10375,7 +10468,7 @@ namespace {
 		/**
 		 * 
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @static 
 		 */
 		 public static function isNoCache(){
@@ -10450,7 +10543,7 @@ namespace {
 		 * It is known to work with common JavaScript frameworks:
 		 *
 		 * @link http://en.wikipedia.org/wiki/List_of_Ajax_frameworks#JavaScript
-		 * @return Boolean true if the request is an XMLHttpRequest, false otherwise
+		 * @return bool    true if the request is an XMLHttpRequest, false otherwise
 		 * @api 
 		 * @static 
 		 */
@@ -10960,6 +11053,18 @@ namespace {
 		 }
 
 		/**
+		 * Alias for the "currentRouteNamed" method.
+		 *
+		 * @param dynamic  string
+		 * @return bool
+		 * @static 
+		 */
+		 public static function is(){
+			//Method inherited from \Illuminate\Routing\Router
+			return \Illuminate\Routing\Router::is();
+		 }
+
+		/**
 		 * Determine if the current route matches a given name.
 		 *
 		 * @param string  $name
@@ -10980,6 +11085,18 @@ namespace {
 		 public static function currentRouteAction(){
 			//Method inherited from \Illuminate\Routing\Router
 			return \Illuminate\Routing\Router::currentRouteAction();
+		 }
+
+		/**
+		 * Alias for the "currentRouteUses" method.
+		 *
+		 * @param dynamic  string
+		 * @return bool
+		 * @static 
+		 */
+		 public static function isAction(){
+			//Method inherited from \Illuminate\Routing\Router
+			return \Illuminate\Routing\Router::isAction();
 		 }
 
 		/**
@@ -11074,6 +11191,18 @@ namespace {
 		 public static function hasTable($table){
 			//Method inherited from \Illuminate\Database\Schema\MySqlBuilder
 			return \Illuminate\Database\Schema\MySqlBuilder::hasTable($table);
+		 }
+
+		/**
+		 * Get the column listing for a given table.
+		 *
+		 * @param string  $table
+		 * @return array
+		 * @static 
+		 */
+		 public static function getColumnListing($table){
+			//Method inherited from \Illuminate\Database\Schema\MySqlBuilder
+			return \Illuminate\Database\Schema\MySqlBuilder::getColumnListing($table);
 		 }
 
 		/**
@@ -11301,7 +11430,7 @@ namespace {
 		/**
 		 * Starts the session storage.
 		 *
-		 * @return Boolean True if session started.
+		 * @return bool    True if session started.
 		 * @throws \RuntimeException If session fails to start.
 		 * @api 
 		 * @static 
@@ -11365,11 +11494,11 @@ namespace {
 		 * Clears all session attributes and flashes and regenerates the
 		 * session and deletes the old session from persistence.
 		 *
-		 * @param integer $lifetime Sets the cookie lifetime for the session cookie. A null value
+		 * @param int     $lifetime Sets the cookie lifetime for the session cookie. A null value
 		 *                          will leave the system settings unchanged, 0 sets the cookie
 		 *                          to expire with browser session. Time is in seconds, and is
 		 *                          not a Unix timestamp.
-		 * @return Boolean True if session invalidated, false if error.
+		 * @return bool    True if session invalidated, false if error.
 		 * @api 
 		 * @static 
 		 */
@@ -11382,12 +11511,12 @@ namespace {
 		 * Migrates the current session to a new session id while maintaining all
 		 * session attributes.
 		 *
-		 * @param Boolean $destroy  Whether to delete the old session or leave it to garbage collection.
-		 * @param integer $lifetime Sets the cookie lifetime for the session cookie. A null value
+		 * @param bool    $destroy  Whether to delete the old session or leave it to garbage collection.
+		 * @param int     $lifetime Sets the cookie lifetime for the session cookie. A null value
 		 *                          will leave the system settings unchanged, 0 sets the cookie
 		 *                          to expire with browser session. Time is in seconds, and is
 		 *                          not a Unix timestamp.
-		 * @return Boolean True if session migrated, false if error.
+		 * @return bool    True if session migrated, false if error.
 		 * @api 
 		 * @static 
 		 */
@@ -11437,7 +11566,7 @@ namespace {
 		 * Checks if an attribute is defined.
 		 *
 		 * @param string $name The attribute name
-		 * @return Boolean true if the attribute is defined, false otherwise
+		 * @return bool    true if the attribute is defined, false otherwise
 		 * @api 
 		 * @static 
 		 */
@@ -11645,7 +11774,7 @@ namespace {
 		/**
 		 * Checks if the session was started.
 		 *
-		 * @return Boolean
+		 * @return bool
 		 * @static 
 		 */
 		 public static function isStarted(){
@@ -12064,6 +12193,7 @@ namespace {
 		 * @param array  $data
 		 * @param array  $rules
 		 * @param array  $messages
+		 * @param array  $customAttributes
 		 * @return \Illuminate\Validation\Validator
 		 * @static 
 		 */
